@@ -1,0 +1,90 @@
+[
+  {
+    "id": "001",
+    "type": "Regular",
+    "site": {
+      "siteId": "BGR1029",
+      "name": "Griya Bukit Jaya",
+      "towerType": "MCP",
+      "towerHeight": 21,
+      "fabricator": "Mulcindo",
+      "region": "Jabodetabek",
+      "province": "Jawa Barat",
+      "kabupaten": "Kab. Bogor"
+    },
+    "verifier": {
+      "nik": "33192710001",
+      "name": "Johnny"
+    },
+    "createdDate": "03/08/2023",
+    "submittedDate": null,
+    "verifiedDate": null,
+    "status": "todo"
+  },
+  {
+    "id": "002",
+    "type": "Preventive",
+    "site": {
+      "siteId": "BGR1030",
+      "name": "Cipenjo",
+      "towerType": "Monopole",
+      "towerHeight": 25,
+      "fabricator": "JET",
+      "region": "Jabodetabek",
+      "province": "Jawa Barat",
+      "kabupaten": "Kab. Bogor"
+    },
+    "verifier": {
+      "nik": "33192710126",
+      "name": "George"
+    },
+    "createdDate": "02/08/2023",
+    "submittedDate": null,
+    "verifiedDate": null,
+    "status": "review"
+  },
+  {
+    "id": "003",
+    "type": "Regular",
+    "site": {
+      "siteId": "BGR1033",
+      "name": "Puspasari",
+      "towerType": "Monopole",
+      "towerHeight": 21,
+      "fabricator": "JET",
+      "region": "Jabodetabek",
+      "province": "Jawa Barat",
+      "kabupaten": "Kab. Bogor"
+    },
+    "verifier": {
+      "nik": "331209384932",
+      "name": "Mario"
+    },
+    "createdDate": "12/08/2023",
+    "submittedDate": null,
+    "verifiedDate": null,
+    "status": "pass"
+  },
+  {
+    "id": "004",
+    "type": "Regular",
+    "site": {
+      "siteId": "BGR1036",
+      "name": "Kp. Kamurang",
+      "towerType": "MCP",
+      "towerHeight": 21,
+      "fabricator": "Mulcindo",
+      "region": "Jabodetabek",
+      "province": "Jawa Barat",
+      "kabupaten": "Kab. Bogor"
+    },
+    "verifier": {
+      "nik": "331209283478",
+      "name": "Shame"
+    },
+    "createdDate": "23/07/2023",
+    "submittedDate": null,
+    "verifiedDate": null,
+    "status": "revision"
+  }
+]
