@@ -1,18 +1,22 @@
 [
   {
     "id": "001",
-    "type": "Regular",
+    "type": "Preventive",
     "site": {
-      "siteId": "BGR1029",
-      "name": "Griya Bukit Jaya",
+      "siteId": "BGR1052",
+      "name": "Griya Waringin Elok",
       "towerType": "MCP",
       "towerHeight": 21,
       "fabricator": "Mulcindo",
+      "tenant": "SF,H3I",
       "region": "Jabodetabek",
       "province": "Jawa Barat",
-      "kabupaten": "Kab. Bogor"
+      "kabupaten": "Kab. Bogor",
+      "address": "Desa Kedung Warigin Tengah RT.03 RW.04 Kec. Bojong Gede",
+      "longitude": 106.7905,
+      "latitude": -6.50412
     },
-    "verifier": {
+    "verificator": {
       "nik": "33192710001",
       "name": "Johnny"
     },
@@ -30,11 +34,15 @@
       "towerType": "Monopole",
       "towerHeight": 25,
       "fabricator": "JET",
+      "tenant": "SF",
       "region": "Jabodetabek",
       "province": "Jawa Barat",
-      "kabupaten": "Kab. Bogor"
+      "kabupaten": "Kab. Bogor",
+      "address": "Kp. Nyangegeng, RT.006 RW.003 Kel. Cipenjo Kec. Cileungsi Kab. Bogor",
+      "longitude": 106.9924,
+      "latitude": -6.38904
     },
-    "verifier": {
+    "verificator": {
       "nik": "33192710126",
       "name": "George"
     },
@@ -45,18 +53,22 @@
   },
   {
     "id": "003",
-    "type": "Regular",
+    "type": "Preventive",
     "site": {
       "siteId": "BGR1033",
       "name": "Puspasari",
       "towerType": "Monopole",
       "towerHeight": 21,
       "fabricator": "JET",
+      "tenant": "SF",
       "region": "Jabodetabek",
       "province": "Jawa Barat",
-      "kabupaten": "Kab. Bogor"
+      "kabupaten": "Kab. Bogor",
+      "address": "Dusun Karanggan RT.001 RW.003 Desa Puspasari Kec. Citeureup Kab.  Bogor Prov. Jawa Barat",
+      "longitude": 106.87362,
+      "latitude": -6.47718
     },
-    "verifier": {
+    "verificator": {
       "nik": "331209384932",
       "name": "Mario"
     },
@@ -67,18 +79,22 @@
   },
   {
     "id": "004",
-    "type": "Regular",
+    "type": "Preventive",
     "site": {
       "siteId": "BGR1036",
       "name": "Kp. Kamurang",
       "towerType": "MCP",
       "towerHeight": 21,
       "fabricator": "Mulcindo",
+      "tenant": "SF",
       "region": "Jabodetabek",
       "province": "Jawa Barat",
-      "kabupaten": "Kab. Bogor"
+      "kabupaten": "Kab. Bogor",
+      "address": "Gunung Putri Utara RT.002 RW.013 Kel. Gunung Putri Kec. Gunung Putri Kab. Bogor",
+      "longitude": 106.90206,
+      "latitude": -6.4557
     },
-    "verifier": {
+    "verificator": {
       "nik": "331209283478",
       "name": "Shame"
     },
@@ -86,5 +102,56 @@
     "submittedDate": null,
     "verifiedDate": null,
     "status": "revision"
+  },
+  {
+    "id": "005",
+    "type": "Regular",
+    "site": {
+      "siteId": "BGR1036",
+      "name": "Kp. Kamurang",
+      "towerType": "MCP",
+      "towerHeight": 21,
+      "fabricator": "Mulcindo",
+      "tenant": "SF",
+      "region": "Jabodetabek",
+      "province": "Jawa Barat",
+      "kabupaten": "Kab. Bogor",
+      "address": "Kp. Kamurang RT.002 RW.004 Kel.Puspanegara Kec.Citeureup Kab.Bogor",
+      "longitude": 106.88211,
+      "latitude": -6.48053
+    },
+    "verificator": {
+      "nik": "33191928930",
+      "name": "Martono"
+    },
+    "createdDate": "13/08/2023",
+    "submittedDate": null,
+    "verifiedDate": null,
+    "status": "todo"
+  },{
+    "id": "006",
+    "type": "Regular",
+    "site": {
+      "siteId": "BGR1040",
+      "name": "Leuwinutug",
+      "towerType": "MCP",
+      "towerHeight": 21,
+      "fabricator": "Mulcindo",
+      "tenant": "DHJ",
+      "region": "Jabodetabek",
+      "province": "Jawa Barat",
+      "kabupaten": "Kab. Bogor",
+      "address": "Jl. Babakan Madang RT 002/002 Kel. Leuwinutug Kec. Citeureup ",
+      "longitude": 106.863171,
+      "latitude": -6.511748
+    },
+    "verificator": {
+      "nik": "33191928930",
+      "name": "Martono"
+    },
+    "createdDate": "13/08/2023",
+    "submittedDate": null,
+    "verifiedDate": null,
+    "status": "todo"
   }
 ]

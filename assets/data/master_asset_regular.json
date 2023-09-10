@@ -1,0 +1,695 @@
+[
+    {
+        "id": 1,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "Site ID Name Plate"
+    },
+    {
+        "id": 2,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "View Pole 1"
+    },
+    {
+        "id": 3,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "View Pole 2"
+    },
+    {
+        "id": 4,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "RF Antena"
+    },
+    {
+        "id": 5,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "Photo Acces view"
+    },
+    {
+        "id": 6,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "View Site ( Front)"
+    },
+    {
+        "id": 7,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "Full View of MONOPOLE"
+    },
+    {
+        "id": 8,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Photo Base Plate"
+    },
+    {
+        "id": 9,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Anchor Dimension with kaliper (M20 = 10 Pcs)"
+    },
+    {
+        "id": 10,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "id": 11,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 1"
+    },
+    {
+        "id": 11,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 2"
+    },
+    {
+        "id": 12,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 3"
+    },
+    {
+        "id": 13,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 4"
+    },
+    {
+        "id": 14,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 5"
+    },
+    {
+        "id": 15,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "id": 16,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Anchor Dimension with kaliper (M16 = 10 Pcs)"
+    },
+    {
+        "id": 17,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "id": 18,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "id": 19,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "id": 20,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "id": 21,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "id": 22,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "id": 23,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "id": 24,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Anchor Dimension with kaliper (M16 = 10 Pcs)"
+    },
+    {
+        "id": 25,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "id": 26,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "id": 27,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "id": 28,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "id": 29,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "id": 30,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "id": 31,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "id": 32,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Anchor Dimension with kaliper (M16 = 10 Pcs)"
+    },
+    {
+        "id": 33,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "id": 34,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "id": 35,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "id": 36,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "id": 37,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "id": 38,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "id": 39,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "id": 40,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "id": 41,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "id": 42,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "id": 43,
+        "taskType": "Regular",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "id": 44,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "HORIZONTALITY",
+        "description": "Surveyor Team"
+    },
+    {
+        "id": 45,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "HORIZONTALITY",
+        "description": "Nivo Vertical & Horizontal"
+    },
+    {
+        "id": 46,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "HORIZONTALITY",
+        "description": "Theodolite Position"
+    },
+    {
+        "id": 47,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "HORIZONTALITY",
+        "description": "Theodolite Level"
+    },
+    {
+        "id": 48,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "HORIZONTALITY",
+        "description": "Horizontality Kaki - 1 ( Side B-A )"
+    },
+    {
+        "id": 49,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "HORIZONTALITY",
+        "description": "Horizontality Kaki - 2 ( Side C-B )"
+    },
+    {
+        "id": 50,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "HORIZONTALITY",
+        "description": "Horizontality Kaki - 3 ( Side D-C )"
+    },
+    {
+        "id": 51,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "HORIZONTALITY",
+        "description": "Horizontality Kaki - 4 (Side A-D)"
+    },
+    {
+        "id": 52,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.1",
+        "description": "Foto Pengukuran Section Nol (Baseplate)"
+    },
+    {
+        "id": 53,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.1",
+        "description": "Foto Hasil Pengukuran Section Nol (Baseplate)"
+    },
+    {
+        "id": 54,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.1",
+        "description": "Foto Pengukuran Section 1"
+    },
+    {
+        "id": 55,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.1",
+        "description": "Foto Pengukuran Section 1 Terhadap Nol (Baseplate)"
+    },
+    {
+        "id": 56,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.1",
+        "description": "Foto Pengukuran Section 2"
+    },
+    {
+        "id": 57,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.1",
+        "description": "Foto Pengukuran Section 2 Terhadap Nol (Baseplate)"
+    },
+    {
+        "id": 58,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.1",
+        "description": "Foto Pengukuran Section 3"
+    },
+    {
+        "id": 59,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.1",
+        "description": "Foto Pengukuran Section 3 Terhadap Nol (Baseplate)"
+    },
+    {
+        "id": 60,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.1",
+        "description": "Foto Pengukuran Section 4"
+    },
+    {
+        "id": 61,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.1",
+        "description": "Foto Pengukuran Section 4 Terhadap Nol (Baseplate)"
+    },
+    {
+        "id": 62,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.2",
+        "description": "Foto Pengukuran Section Nol (Baseplate)"
+    },
+    {
+        "id": 63,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.2",
+        "description": "Foto Hasil Pengukuran Section Nol (Baseplate)"
+    },
+    {
+        "id": 64,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.2",
+        "description": "Foto Pengukuran Section 1"
+    },
+    {
+        "id": 65,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.2",
+        "description": "Foto Pengukuran Section 1 Terhadap Nol (Baseplate)"
+    },
+    {
+        "id": 66,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.2",
+        "description": "Foto Pengukuran Section 2"
+    },
+    {
+        "id": 67,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.2",
+        "description": "Foto Pengukuran Section 2 Terhadap Nol (Baseplate)"
+    },
+    {
+        "id": 68,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.2",
+        "description": "Foto Pengukuran Section 3"
+    },
+    {
+        "id": 69,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.2",
+        "description": "Foto Pengukuran Section 3 Terhadap Nol (Baseplate)"
+    },
+    {
+        "id": 70,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.2",
+        "description": "Foto Pengukuran Section 4"
+    },
+    {
+        "id": 71,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "VERTICALITY T.2",
+        "description": "Foto Pengukuran Section 4 Terhadap Nol (Baseplate)"
+    },
+    {
+        "id": 72,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "id": 73,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "id": 74,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "id": 75,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "id": 76,
+        "taskType": "Regular",
+        "section": "VERTICALITY",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    }
+]

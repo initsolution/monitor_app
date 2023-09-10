@@ -8,17 +8,17 @@ class Task extends Equatable {
   final String id;
   final String type;
   final Site site;
-  final Employee verifier;
+  final Employee verificator;
   final String createdDate;
   final String? submittedDate;
   final String? verifiedDate;
   final String status;
-  final List<TodoAsset>? assets;
+  final List<TaskAsset>? assets;
   const Task({
     required this.id,
     required this.type,
     required this.site,
-    required this.verifier,
+    required this.verificator,
     required this.createdDate,
     this.submittedDate,
     this.verifiedDate,
@@ -35,13 +35,13 @@ class Task extends Equatable {
     String? submittedDate,
     String? verifiedDate,
     String? status,
-    List<TodoAsset>? assets,
+    List<TaskAsset>? assets,
   }) {
     return Task(
       id: id ?? this.id,
       type: type ?? this.type,
       site: site ?? this.site,
-      verifier: verifier ?? this.verifier,
+      verificator: verifier ?? this.verificator,
       createdDate: createdDate ?? this.createdDate,
       submittedDate: submittedDate ?? this.submittedDate,
       verifiedDate: verifiedDate ?? this.verifiedDate,
@@ -55,7 +55,7 @@ class Task extends Equatable {
       'id': id,
       'type': type,
       'site': site.toMap(),
-      'verifier': verifier.toMap(),
+      'verificator': verificator.toMap(),
       'createdDate': createdDate,
       'submittedDate': submittedDate,
       'verifiedDate': verifiedDate,
@@ -69,14 +69,14 @@ class Task extends Equatable {
       id: map['id'] ?? '',
       type: map['type'] ?? '',
       site: Site.fromMap(map['site']),
-      verifier: Employee.fromMap(map['verifier']),
+      verificator: Employee.fromMap(map['verificator']),
       createdDate: map['createdDate'] ?? '',
       submittedDate: map['submittedDate'],
       verifiedDate: map['verifiedDate'],
       status: map['status'] ?? '',
       assets: map['assets'] != null
-          ? List<TodoAsset>.from(
-              map['assets']?.map((x) => TodoAsset.fromMap(x)))
+          ? List<TaskAsset>.from(
+              map['assets']?.map((x) => TaskAsset.fromMap(x)))
           : null,
     );
   }
@@ -87,7 +87,7 @@ class Task extends Equatable {
 
   @override
   String toString() {
-    return 'Todo(id: $id, type: $type, site: $site, verifier: $verifier, createdDate: $createdDate, submittedDate: $submittedDate, verifiedDate: $verifiedDate, status: $status, assets: $assets)';
+    return 'Todo(id: $id, type: $type, site: $site, verificator: $verificator, createdDate: $createdDate, submittedDate: $submittedDate, verifiedDate: $verifiedDate, status: $status, assets: $assets)';
   }
 
   @override
@@ -96,7 +96,7 @@ class Task extends Equatable {
       id,
       type,
       site,
-      verifier,
+      verificator,
       createdDate,
       submittedDate,
       verifiedDate,
@@ -106,7 +106,7 @@ class Task extends Equatable {
   }
 }
 
-class TodoAsset extends Equatable {
+class TaskAsset extends Equatable {
   final int id;
   final String category;
   final String? subcategory;
@@ -115,7 +115,7 @@ class TodoAsset extends Equatable {
   final String? createdDate;
   final String? lastModified;
   final bool isPassed;
-  const TodoAsset({
+  const TaskAsset({
     required this.id,
     required this.category,
     this.subcategory,
@@ -126,7 +126,7 @@ class TodoAsset extends Equatable {
     required this.isPassed,
   });
 
-  TodoAsset copyWith({
+  TaskAsset copyWith({
     int? id,
     String? category,
     String? subcategory,
@@ -136,7 +136,7 @@ class TodoAsset extends Equatable {
     String? lastModified,
     bool? isPassed,
   }) {
-    return TodoAsset(
+    return TaskAsset(
       id: id ?? this.id,
       category: category ?? this.category,
       subcategory: subcategory ?? this.subcategory,
@@ -161,8 +161,8 @@ class TodoAsset extends Equatable {
     };
   }
 
-  factory TodoAsset.fromMap(Map<String, dynamic> map) {
-    return TodoAsset(
+  factory TaskAsset.fromMap(Map<String, dynamic> map) {
+    return TaskAsset(
       id: map['id']?.toInt() ?? 0,
       category: map['category'] ?? '',
       subcategory: map['subcategory'],
@@ -176,8 +176,8 @@ class TodoAsset extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory TodoAsset.fromJson(String source) =>
-      TodoAsset.fromMap(json.decode(source));
+  factory TaskAsset.fromJson(String source) =>
+      TaskAsset.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -249,7 +249,7 @@ class Site extends Equatable {
   final String towerType;
   final int towerHeight;
   final String fabricator;
-  final String? totalTenant;
+  final String? tenant;
   final String region;
   final String province;
   final String kabupaten;
@@ -262,7 +262,7 @@ class Site extends Equatable {
     required this.towerType,
     required this.towerHeight,
     required this.fabricator,
-    this.totalTenant,
+    this.tenant,
     required this.region,
     required this.province,
     required this.kabupaten,
@@ -277,7 +277,7 @@ class Site extends Equatable {
     String? towerType,
     int? towerHeight,
     String? fabricator,
-    String? totalTenant,
+    String? tenant,
     String? region,
     String? province,
     String? kabupaten,
@@ -291,7 +291,7 @@ class Site extends Equatable {
       towerType: towerType ?? this.towerType,
       towerHeight: towerHeight ?? this.towerHeight,
       fabricator: fabricator ?? this.fabricator,
-      totalTenant: totalTenant ?? this.totalTenant,
+      tenant: tenant ?? this.tenant,
       region: region ?? this.region,
       province: province ?? this.province,
       kabupaten: kabupaten ?? this.kabupaten,
@@ -308,7 +308,7 @@ class Site extends Equatable {
       'towerType': towerType,
       'towerHeight': towerHeight,
       'fabricator': fabricator,
-      'totalTenant': totalTenant,
+      'tenant': tenant,
       'region': region,
       'province': province,
       'kabupaten': kabupaten,
@@ -325,7 +325,7 @@ class Site extends Equatable {
       towerType: map['towerType'] ?? '',
       towerHeight: map['towerHeight']?.toInt() ?? 0,
       fabricator: map['fabricator'] ?? '',
-      totalTenant: map['totalTenant'],
+      tenant: map['tenant'],
       region: map['region'] ?? '',
       province: map['province'] ?? '',
       kabupaten: map['kabupaten'] ?? '',
@@ -341,7 +341,7 @@ class Site extends Equatable {
 
   @override
   String toString() {
-    return '_Site(siteId: $siteId, name: $name, towerType: $towerType, towerHeight: $towerHeight, fabricator: $fabricator, totalTenant: $totalTenant, region: $region, province: $province, kabupaten: $kabupaten, address: $address, longitude: $longitude, latitude: $latitude)';
+    return '_Site(siteId: $siteId, name: $name, towerType: $towerType, towerHeight: $towerHeight, fabricator: $fabricator, tenant: $tenant, region: $region, province: $province, kabupaten: $kabupaten, address: $address, longitude: $longitude, latitude: $latitude)';
   }
 
   @override
@@ -352,7 +352,7 @@ class Site extends Equatable {
       towerType,
       towerHeight,
       fabricator,
-      totalTenant,
+      tenant,
       region,
       province,
       kabupaten,

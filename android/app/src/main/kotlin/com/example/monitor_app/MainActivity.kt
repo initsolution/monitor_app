@@ -1,4 +1,4 @@
-package com.example.monitor_app
+package com.bci.monitor_app
 
 import io.flutter.embedding.android.FlutterActivity
 

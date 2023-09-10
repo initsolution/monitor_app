@@ -1,0 +1,812 @@
+[
+    {
+        "id": 1,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "SITE VIEW",
+        "description": "Site Masuk"
+    },
+    {
+        "id": 2,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "SITE VIEW",
+        "description": "Site ID Name Plate"
+    },
+    {
+        "id": 3,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "SITE VIEW",
+        "description": "View Kebersihan Site"
+    },
+    {
+        "id": 4,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "SITE VIEW",
+        "description": "Site Tampak Depan"
+    },
+    {
+        "id": 5,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "SITE VIEW",
+        "description": "Site Tampak Samping Kanan"
+    },
+    {
+        "id": 6,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "SITE VIEW",
+        "description": "Site Tampak Samping Kiri"
+    },
+    {
+        "id": 7,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "SITE VIEW",
+        "description": "Site Tampak Belakang"
+    },
+    {
+        "id": 8,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "SITE VIEW",
+        "description": "View Pole 1"
+    },
+    {
+        "id": 9,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "SITE VIEW",
+        "description": "View Pole 2"
+    },
+    {
+        "id": 10,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "SITE VIEW",
+        "description": "RF Antena"
+    },
+    {
+        "id": 11,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "SITE VIEW",
+        "description": "BTS / Recfiter"
+    },
+    {
+        "id": 12,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "SITE VIEW",
+        "description": "Lampu PJU (jika ada)"
+    },
+    {
+        "id": 13,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PEDESTAL",
+        "description": "Baseplate"
+    },
+    {
+        "id": 14,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PEDESTAL",
+        "description": "Angkur dan Bolt pada pedestal"
+    },
+    {
+        "id": 15,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PEDESTAL",
+        "description": "Kabel Grounding (didalam lubang Pole)"
+    },
+    {
+        "id": 16,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PEDESTAL",
+        "description": "Kabel PLN ke KWH Panel"
+    },
+    {
+        "id": 17,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "Panel KWH Tertutup + Cage terpasang"
+    },
+    {
+        "id": 18,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "Panel KWH Terbuka"
+    },
+    {
+        "id": 19,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "Wire Diagram"
+    },
+    {
+        "id": 20,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "Clam Support Panel KWH"
+    },
+    {
+        "id": 21,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "Inlet Kabel Panel"
+    },
+    {
+        "id": 22,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "Padlock Panel"
+    },
+    {
+        "id": 23,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "KWH Meter"
+    },
+    {
+        "id": 24,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "Terminal BC50"
+    },
+    {
+        "id": 25,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "COS"
+    },
+    {
+        "id": 26,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "Receptakle Genset"
+    },
+    {
+        "id": 27,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "Kabel Grounding KWH"
+    },
+    {
+        "id": 28,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "R-N"
+    },
+    {
+        "id": 29,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "S-N"
+    },
+    {
+        "id": 30,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "T-N"
+    },
+    {
+        "id": 31,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "R-S"
+    },
+    {
+        "id": 32,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "S-T"
+    },
+    {
+        "id": 33,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "T-R"
+    },
+    {
+        "id": 34,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "G-N"
+    },
+    {
+        "id": 35,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL KWH",
+        "description": "Ampere"
+    },
+    {
+        "id": 36,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "Panel ACPDB Tertutup"
+    },
+    {
+        "id": 37,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "Panel KWH Terbuka"
+    },
+    {
+        "id": 38,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "Wire Diagram"
+    },
+    {
+        "id": 39,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "Clam Support Panel KWH"
+    },
+    {
+        "id": 40,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "Inlet Kabel Panel"
+    },
+    {
+        "id": 41,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "Padlock Panel"
+    },
+    {
+        "id": 42,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "Arrester"
+    },
+    {
+        "id": 43,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "View MCB Power"
+    },
+    {
+        "id": 44,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "View MCB Distribusi"
+    },
+    {
+        "id": 45,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "View Fuse"
+    },
+    {
+        "id": 46,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "View Relay"
+    },
+    {
+        "id": 47,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "Kabel Grounding ACPDB"
+    },
+    {
+        "id": 48,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "R-N"
+    },
+    {
+        "id": 49,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "S-N"
+    },
+    {
+        "id": 50,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "T-N"
+    },
+    {
+        "id": 51,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "R-S"
+    },
+    {
+        "id": 52,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "S-T"
+    },
+    {
+        "id": 53,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "T-R"
+    },
+    {
+        "id": 54,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "G-N"
+    },
+    {
+        "id": 55,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PANEL ACPDB",
+        "description": "Ampere"
+    },
+    {
+        "id": 56,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "GROUNDING & LIGHTNING PROTECTION",
+        "description": "View Grounding PIT Tertutup"
+    },
+    {
+        "id": 57,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "GROUNDING & LIGHTNING PROTECTION",
+        "description": "View Grounding PIT Terbuka"
+    },
+    {
+        "id": 58,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "GROUNDING & LIGHTNING PROTECTION",
+        "description": "Padlock PIT"
+    },
+    {
+        "id": 59,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "GROUNDING & LIGHTNING PROTECTION",
+        "description": "View Internal Busbar"
+    },
+    {
+        "id": 60,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "GROUNDING & LIGHTNING PROTECTION",
+        "description": "View External Busbar"
+    },
+    {
+        "id": 61,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "GROUNDING & LIGHTNING PROTECTION",
+        "description": "View Busbar Upper (Atas)"
+    },
+    {
+        "id": 62,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "GROUNDING & LIGHTNING PROTECTION",
+        "description": "View Busbar Middle (Tengah)"
+    },
+    {
+        "id": 63,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "GROUNDING & LIGHTNING PROTECTION",
+        "description": "View Splitzen"
+    },
+    {
+        "id": 64,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "GROUNDING & LIGHTNING PROTECTION",
+        "description": "View Koneksi Grounding ke Body Pole"
+    },
+    {
+        "id": 65,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "GROUNDING & LIGHTNING PROTECTION",
+        "description": "Grounding Panel KWH"
+    },
+    {
+        "id": 66,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "GROUNDING & LIGHTNING PROTECTION",
+        "description": "Grounding Panel ACPDB"
+    },
+    {
+        "id": 67,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "GROUNDING & LIGHTNING PROTECTION",
+        "description": "Grounding Internal Busbar"
+    },
+    {
+        "id": 68,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "GROUNDING & LIGHTNING PROTECTION",
+        "description": "Grounding External Busbar"
+    },
+    {
+        "id": 69,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "GROUNDING & LIGHTNING PROTECTION",
+        "description": "Grounding Koneksi Cadwel Body Pole"
+    },
+    {
+        "id": 70,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "GROUNDING & LIGHTNING PROTECTION",
+        "description": "Grounding Body Pole"
+    },
+    {
+        "id": 71,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PJU",
+        "description": "Panel PJU Tertutup"
+    },
+    {
+        "id": 72,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PJU",
+        "description": "Panel PJU Terbuka"
+    },
+    {
+        "id": 73,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PJU",
+        "description": "Wire Diagram"
+    },
+    {
+        "id": 74,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PJU",
+        "description": "Clam Support Panel PJU"
+    },
+    {
+        "id": 75,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PJU",
+        "description": "Inlet Kabel PJU"
+    },
+    {
+        "id": 76,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PJU",
+        "description": "Padlock PJU"
+    },
+    {
+        "id": 77,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PJU",
+        "description": "Arrester"
+    },
+    {
+        "id": 78,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PJU",
+        "description": "View Main MCB"
+    },
+    {
+        "id": 79,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PJU",
+        "description": "KWH PJU"
+    },
+    {
+        "id": 80,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PJU",
+        "description": "Timer"
+    },
+    {
+        "id": 81,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PJU",
+        "description": "View Fuse"
+    },
+    {
+        "id": 82,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PJU",
+        "description": "R-N"
+    },
+    {
+        "id": 83,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PJU",
+        "description": "G-N"
+    },
+    {
+        "id": 84,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PJU",
+        "description": "Amper"
+    },
+    {
+        "id": 85,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "PJU",
+        "description": "Grounding PJU"
+    },
+    {
+        "id": 86,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "TEMUAN",
+        "description": "Foto Temuan 1"
+    },
+    {
+        "id": 87,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "TEMUAN",
+        "description": "Foto Temuan 2"
+    },
+    {
+        "id": 88,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "TEMUAN",
+        "description": "Foto Temuan 3"
+    },
+    {
+        "id": 89,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "TEMUAN",
+        "description": "Foto Temuan 4"
+    },
+    {
+        "id": 90,
+        "taskType": "Preventive",
+        "section": "Section",
+        "fabricator": "",
+        "towerHeight": 0,
+        "category": "TEMUAN",
+        "description": "Foto Temuan 5"
+    }
+]

@@ -1,12 +1,19 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:monitor_app/components/task_card.dart';
+import 'package:monitor_app/model/task_state.dart';
 import 'package:monitor_app/provider/task_provider.dart';
-import 'package:monitor_app/provider/task_state.dart';
 import 'package:monitor_app/utils/strings.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  static String routeName = 'home';
+  final String nik;
+  const HomeScreen({
+    Key? key,
+    required this.nik,
+  }) : super(key: key);
 
   @override
   HomeScreenState createState() => HomeScreenState();
@@ -17,7 +24,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref.read(taskNotifierProvider.notifier).getAllTasks();
+      ref.read(taskNotifierProvider.notifier).getAllTasks(widget.nik);
     });
   }
 
@@ -25,7 +32,6 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         forceMaterialTransparency: false,
         title: const Text(titleHomeScreen),
       ),

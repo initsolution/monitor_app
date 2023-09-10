@@ -9,7 +9,7 @@ class IconTaskStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(taskStatus);
+    // debugPrint(taskStatus);
     switch (taskStatus.toLowerCase()) {
       case 'todo':
         return Container(

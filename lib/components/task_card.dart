@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:monitor_app/components/icon_task_status.dart';
 import 'package:monitor_app/model/task.dart';
@@ -15,9 +14,10 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('status : ${task.status}');
+    // debugPrint('status : ${task.status}');
     return InkWell(
-      onTap: () => context.goNamed('task', extra: task),
+      onTap: () => Navigator.of(context).pushNamed('task',
+          arguments: task), //context.goNamed('task', extra: task),
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(

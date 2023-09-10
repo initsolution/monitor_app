@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "fabricator": "MULCINDO",
+        "towerHeight": 21,
+        "towerSegment": "Pedestal/Anchor",
+        "elevasi": 0,
+        "boltSize": "M20",
+        "minimumTorque": 200,
+        "qtyBolt": 10
+    },
+    {
+        "id": 2,
+        "fabricator": "MULCINDO",
+        "towerHeight": 21,
+        "towerSegment": "Joint 1",
+        "elevasi": 6000,
+        "boltSize": "M16",
+        "minimumTorque": 100,
+        "qtyBolt": 10
+    },
+    {
+        "id": 3,
+        "fabricator": "MULCINDO",
+        "towerHeight": 21,
+        "towerSegment": "Joint 2",
+        "elevasi": 12000,
+        "boltSize": "M16",
+        "minimumTorque": 100,
+        "qtyBolt": 10
+    },
+    {
+        "id": 4,
+        "fabricator": "MULCINDO",
+        "towerHeight": 21,
+        "towerSegment": "Joint 3",
+        "elevasi": 18000,
+        "boltSize": "M16",
+        "minimumTorque": 100,
+        "qtyBolt": 10
+    }
+]

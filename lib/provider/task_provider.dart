@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:monitor_app/provider/task_state.dart';
+import 'package:monitor_app/model/task_state.dart';
 import 'package:monitor_app/repository/app_repo.dart';
 import 'package:monitor_app/repository/test_repo_impl.dart';
 
@@ -19,10 +19,10 @@ class TaskNotifier extends AutoDisposeNotifier<TaskState> {
     return TaskInitial();
   }
 
-  getAllTasks() async {
+  getAllTasks(String nik) async {
     state = TaskLoading();
     try {
-      final tasks = await repository.getAllTasks();
+      final tasks = await repository.getAllTasks(nik);
       state = TaskLoaded(tasks: tasks);
     } on Exception catch (e) {
       state = TaskLoadedWithError(message: e.toString());

@@ -1,0 +1,116 @@
+[
+    {
+        "id": 1,
+        "created_at": "2023-08-26T09:07:28.474Z",
+        "updated_at": "2023-08-26T09:07:28.474Z",
+        "categoryName": "Site Condition",
+        "mpointchecklistpreventive": [
+            {
+                "id": 1,
+                "created_at": "2023-08-26T09:12:35.889Z",
+                "updated_at": "2023-08-26T09:12:35.889Z",
+                "uraian": "Kebersihan Lingkungan Site",
+                "kriteria": "periksa kondisi site, tidak ada rumput dan tanaman liar yang tumbuh, kabel yang tidak terpakai, bagian peralatan, atau barang sisa yang berserakan."
+            },
+            {
+                "id": 2,
+                "created_at": "2023-08-26T09:12:35.889Z",
+                "updated_at": "2023-08-26T09:12:35.889Z",
+                "uraian": "Akses Masuk",
+                "kriteria": "tidak ada halangan berupa bangunan baru dan permasalahan akses (dengan warga atau instansi terkait)"
+            },
+            {
+                "id": 3,
+                "created_at": "2023-08-26T09:12:35.889Z",
+                "updated_at": "2023-08-26T09:12:35.889Z",
+                "uraian": "Lampu Penerangan",
+                "kriteria": "periksa lampu penerangan berfungsi dan terpasang dengan baik"
+            },
+            {
+                "id": 4,
+                "created_at": "2023-08-26T09:12:35.889Z",
+                "updated_at": "2023-08-26T09:12:35.889Z",
+                "uraian": "Dudukan atau Pondasi BTS",
+                "kriteria": "Periksa kondisi pondasi BTS atau Dudukan BTS beserta clamp support"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "created_at": "2023-08-26T09:07:28.474Z",
+        "updated_at": "2023-08-26T09:07:28.474Z",
+        "categoryName": "Pedestal",
+        "mpointchecklistpreventive": [
+            {
+                "id": 5,
+                "created_at": "2023-08-30T04:35:32.652Z",
+                "updated_at": "2023-08-30T04:35:32.652Z",
+                "uraian": "Kondisi umum lokasi (genangan air, drainase, dll) dan kondisi pendukung struktural",
+                "kriteria": "Periksa lokasi site tidak boleh ada kondisi geangan air, beton retak, terkelupas atau pecah"
+            },
+            {
+                "id": 6,
+                "created_at": "2023-08-30T04:36:59.858Z",
+                "updated_at": "2023-08-30T04:36:59.858Z",
+                "uraian": "Periksa angkur dan bolt",
+                "kriteria": "Tidak terdapat karat; jumlah nut tiap angkur 2 pcs"
+            },
+            {
+                "id": 7,
+                "created_at": "2023-08-30T04:37:32.144Z",
+                "updated_at": "2023-08-30T04:37:32.144Z",
+                "uraian": "Periksa grouting pedestal",
+                "kriteria": "Grouting tidak terkikis"
+            },
+            {
+                "id": 8,
+                "created_at": "2023-08-30T04:37:54.699Z",
+                "updated_at": "2023-08-30T04:37:54.699Z",
+                "uraian": "Periksa baseplate struktur pole / tower",
+                "kriteria": "Tidak terdapat karat"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "created_at": "2023-08-26T09:07:28.474Z",
+        "updated_at": "2023-08-26T09:07:28.474Z",
+        "categoryName": "Panel ACPDB",
+        "mpointchecklistpreventive": []
+    },
+    {
+        "id": 8,
+        "created_at": "2023-08-26T13:59:52.292Z",
+        "updated_at": "2023-08-26T13:59:52.292Z",
+        "categoryName": "PDA",
+        "mpointchecklistpreventive": []
+    },
+    {
+        "id": 6,
+        "created_at": "2023-08-26T09:07:28.474Z",
+        "updated_at": "2023-08-26T09:07:28.474Z",
+        "categoryName": "Grounding & Lightning Protection System",
+        "mpointchecklistpreventive": []
+    },
+    {
+        "id": 4,
+        "created_at": "2023-08-26T09:07:28.474Z",
+        "updated_at": "2023-08-26T09:07:28.474Z",
+        "categoryName": "Site Condition",
+        "mpointchecklistpreventive": []
+    },
+    {
+        "id": 3,
+        "created_at": "2023-08-26T09:07:28.474Z",
+        "updated_at": "2023-08-26T09:07:28.474Z",
+        "categoryName": "Panel KWH",
+        "mpointchecklistpreventive": []
+    },
+    {
+        "id": 7,
+        "created_at": "2023-08-26T09:07:28.474Z",
+        "updated_at": "2023-08-26T09:07:28.474Z",
+        "categoryName": "PJU",
+        "mpointchecklistpreventive": []
+    }
+]
