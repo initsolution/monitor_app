@@ -4,20 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:monitor_app/screen/preview_screen.dart';
 import 'package:path_provider/path_provider.dart';
 
-class CapturesScreen extends StatefulWidget {
-  static String routeName = 'capture';
+class AlbumScreen extends StatefulWidget {
+  static String routeName = 'album';
   final bool isPickable;
+  final File? lastImage;
 
-  const CapturesScreen({
+  const AlbumScreen({
     super.key,
     this.isPickable = false,
+    this.lastImage,
   });
 
   @override
-  State<CapturesScreen> createState() => _CapturesScreenState();
+  State<AlbumScreen> createState() => _AlbumScreenState();
 }
 
-class _CapturesScreenState extends State<CapturesScreen> {
+class _AlbumScreenState extends State<AlbumScreen> {
   List<File> allFileList = [];
 
   @override
@@ -59,7 +61,7 @@ class _CapturesScreenState extends State<CapturesScreen> {
               physics: const NeverScrollableScrollPhysics(),
               crossAxisCount: 2,
               children: [
-                for (File imageFile in allFileList)
+                for (int i = 0; i < allFileList.length; i++)
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(
@@ -69,25 +71,46 @@ class _CapturesScreenState extends State<CapturesScreen> {
                     ),
                     child: InkWell(
                       onTap: () async {
+                        // await Navigator.of(context)
+                        //     .push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => PreviewScreen(
+                        //       fileList: allFileList,
+                        //       imageFile: imageFile,
+                        //       isPickable: widget.isPickable,
+                        //     ),
+                        //   ),
+                        // )
+                        //     .then((value) async {
+                        //   if (value != null) {
+                        //     if (value) {
+                        //       debugPrint('recentFileName : p1');
+                        //       Navigator.of(context).pop();
+                        //     }
+                        //   } else {
+                        //     refreshAlreadyCapturedImages();
+                        //   }
+                        // });
                         await Navigator.of(context)
                             .push(
                           MaterialPageRoute(
                             builder: (context) => PreviewScreen(
-                              isOnTap: true,
-                              fileList: allFileList,
-                              imageFile: imageFile,
+                              imageFile: allFileList[i],
                               isPickable: widget.isPickable,
                             ),
                           ),
                         )
-                            .then((value) async {
-                          if (value) {
-                            Navigator.of(context).pop();
+                            .then((value) {
+                          if (value != null) {
+                            if (value) {
+                              Navigator.of(context).pop();
+                            }
                           }
                         });
+                        refreshAlreadyCapturedImages();
                       },
                       child: Image.file(
-                        imageFile,
+                        allFileList[i],
                         fit: BoxFit.cover,
                       ),
                     ),

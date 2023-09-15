@@ -1,0 +1,2970 @@
+[
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "SITE VIEW",
+        "description": "Site ID Name Plate"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "SITE VIEW",
+        "description": "View Pole 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "SITE VIEW",
+        "description": "View Pole 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "SITE VIEW",
+        "description": "RF Antena"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "SITE VIEW",
+        "description": "Photo Acces view"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "SITE VIEW",
+        "description": "View Site ( Front)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "SITE VIEW",
+        "description": "Full View of MONOPOLE"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "BASEPLATE",
+        "description": "Photo Base Plate"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "BASEPLATE",
+        "description": "Anchor Dimension with kaliper (M24 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "BASEPLATE",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "BASEPLATE",
+        "description": "Torque Value M24 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "BASEPLATE",
+        "description": "Torque Value M24 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "BASEPLATE",
+        "description": "Torque Value M24 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "BASEPLATE",
+        "description": "Torque Value M24 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "BASEPLATE",
+        "description": "Torque Value M24 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 1",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 1",
+        "description": "Anchor Dimension with kaliper (M24 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 1",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 1",
+        "description": "Torque Value M24 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 1",
+        "description": "Torque Value M24 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 1",
+        "description": "Torque Value M24 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 1",
+        "description": "Torque Value M24 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 1",
+        "description": "Torque Value M24 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 2",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 2",
+        "description": "Anchor Dimension with kaliper (M24 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 2",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 2",
+        "description": "Torque Value M24 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 2",
+        "description": "Torque Value M24 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 2",
+        "description": "Torque Value M24 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 2",
+        "description": "Torque Value M24 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 2",
+        "description": "Torque Value M24 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 3",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 3",
+        "description": "Anchor Dimension with kaliper (M24 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 3",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 3",
+        "description": "Torque Value M24 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 3",
+        "description": "Torque Value M24 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 3",
+        "description": "Torque Value M24 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 3",
+        "description": "Torque Value M24 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 3",
+        "description": "Torque Value M24 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 4",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 4",
+        "description": "Anchor Dimension with kaliper (M24 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 4",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 4",
+        "description": "Torque Value M24 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 4",
+        "description": "Torque Value M24 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 4",
+        "description": "Torque Value M24 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 4",
+        "description": "Torque Value M24 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 4",
+        "description": "Torque Value M24 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 5",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 5",
+        "description": "Anchor Dimension with kaliper (M24 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 5",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 5",
+        "description": "Torque Value M24 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 5",
+        "description": "Torque Value M24 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 5",
+        "description": "Torque Value M24 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 5",
+        "description": "Torque Value M24 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 5",
+        "description": "Torque Value M24 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 6",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 6",
+        "description": "Anchor Dimension with kaliper (M24 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 6",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 6",
+        "description": "Torque Value M24 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 6",
+        "description": "Torque Value M24 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 6",
+        "description": "Torque Value M24 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 6",
+        "description": "Torque Value M24 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "JOINT 6",
+        "description": "Torque Value M24 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 30,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "SITE VIEW",
+        "description": "Site ID Name Plate"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "SITE VIEW",
+        "description": "View Pole 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "SITE VIEW",
+        "description": "View Pole 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "SITE VIEW",
+        "description": "RF Antena"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "SITE VIEW",
+        "description": "Photo Acces view"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "SITE VIEW",
+        "description": "View Site ( Front)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "SITE VIEW",
+        "description": "Full View of MONOPOLE"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "BASEPLATE",
+        "description": "Photo Base Plate"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "BASEPLATE",
+        "description": "Anchor Dimension with kaliper (M24 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "BASEPLATE",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "BASEPLATE",
+        "description": "Torque Value M24 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "BASEPLATE",
+        "description": "Torque Value M24 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "BASEPLATE",
+        "description": "Torque Value M24 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "BASEPLATE",
+        "description": "Torque Value M24 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "BASEPLATE",
+        "description": "Torque Value M24 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 1",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 1",
+        "description": "Anchor Dimension with kaliper (M20 = 8 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 1",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 1",
+        "description": "Torque Value M20 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 1",
+        "description": "Torque Value M20 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 1",
+        "description": "Torque Value M20 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 1",
+        "description": "Torque Value M20 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 1",
+        "description": "Torque Value M20 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 2",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 2",
+        "description": "Anchor Dimension with kaliper (M20 = 8 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 2",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 2",
+        "description": "Torque Value M20 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 2",
+        "description": "Torque Value M20 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 2",
+        "description": "Torque Value M20 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 2",
+        "description": "Torque Value M20 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 2",
+        "description": "Torque Value M20 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 3",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 3",
+        "description": "Anchor Dimension with kaliper (M16 = 8 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 3",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 4",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 4",
+        "description": "Anchor Dimension with kaliper (M16 = 8 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 4",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 4",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 4",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 4",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 4",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 4",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 5",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 5",
+        "description": "Anchor Dimension with kaliper (M16 = 6 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 5",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 5",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 5",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 5",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 5",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 5",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 6",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 6",
+        "description": "Anchor Dimension with kaliper (M16 = 6 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 6",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 6",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 6",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 6",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 6",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 6",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 7",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 7",
+        "description": "Anchor Dimension with kaliper (M16 = 8 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 7",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 7",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 7",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 7",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 7",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 7",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 8",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 8",
+        "description": "Anchor Dimension with kaliper (M16 = 6 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 8",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 8",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 8",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 8",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 8",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "JOINT 8",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 25,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "Site ID Name Plate"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "View Pole 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "View Pole 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "RF Antena"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "Photo Acces view"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "View Site ( Front)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "Full View of MONOPOLE"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Photo Base Plate"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Anchor Dimension with kaliper (M20 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Anchor Dimension with kaliper (M16 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Anchor Dimension with kaliper (M16 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Anchor Dimension with kaliper (M16 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "DHJ",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "SITE VIEW",
+        "description": "Site ID Name Plate"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "SITE VIEW",
+        "description": "View Pole 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "SITE VIEW",
+        "description": "View Pole 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "SITE VIEW",
+        "description": "RF Antena"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "SITE VIEW",
+        "description": "Photo Acces view"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "SITE VIEW",
+        "description": "View Site ( Front)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "SITE VIEW",
+        "description": "Full View of MONOPOLE"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "BASEPLATE",
+        "description": "Photo Base Plate"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "BASEPLATE",
+        "description": "Anchor Dimension with kaliper (M24 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "BASEPLATE",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "BASEPLATE",
+        "description": "Torque Value M24 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "BASEPLATE",
+        "description": "Torque Value M24 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "BASEPLATE",
+        "description": "Torque Value M24 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "BASEPLATE",
+        "description": "Torque Value M24 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "BASEPLATE",
+        "description": "Torque Value M24 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 1",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 1",
+        "description": "Anchor Dimension with kaliper (M20 = 8 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 1",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 1",
+        "description": "Torque Value M20 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 1",
+        "description": "Torque Value M20 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 1",
+        "description": "Torque Value M20 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 1",
+        "description": "Torque Value M20 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 1",
+        "description": "Torque Value M20 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 2",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 2",
+        "description": "Anchor Dimension with kaliper (M20 = 8 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 2",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 2",
+        "description": "Torque Value M20 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 2",
+        "description": "Torque Value M20 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 2",
+        "description": "Torque Value M20 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 2",
+        "description": "Torque Value M20 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 2",
+        "description": "Torque Value M20 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 3",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 3",
+        "description": "Anchor Dimension with kaliper (M16 = 8 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 3",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 4",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 4",
+        "description": "Anchor Dimension with kaliper (M16 = 8 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 4",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 4",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 4",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 4",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 4",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 4",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 5",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 5",
+        "description": "Anchor Dimension with kaliper (M16 = 6 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 5",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 5",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 5",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 5",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 5",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 5",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 6",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 6",
+        "description": "Anchor Dimension with kaliper (M16 = 8 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 6",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 6",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 6",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 6",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 6",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 6",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 7",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 7",
+        "description": "Anchor Dimension with kaliper (M16 = 8 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 7",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 7",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 7",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 7",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 7",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 7",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 8",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 8",
+        "description": "Anchor Dimension with kaliper (M16 = 6 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 8",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 8",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 8",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 8",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 8",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "JOINT 8",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 25,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "Site ID Name Plate"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "View Pole 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "View Pole 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "RF Antena"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "Photo Acces view"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "View Site ( Front)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "Full View of MONOPOLE"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Photo Base Plate"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Anchor Dimension with kaliper (M20 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Anchor Dimension with kaliper (M16 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Anchor Dimension with kaliper (M16 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Anchor Dimension with kaliper (M16 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "JET",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "Site ID Name Plate"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "View Pole 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "View Pole 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "RF Antena"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "Photo Acces view"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "View Site ( Front)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "SITE VIEW",
+        "description": "Full View of MONOPOLE"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Photo Base Plate"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Anchor Dimension with kaliper (M20 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "BASEPLATE",
+        "description": "Torque Value M20 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Anchor Dimension with kaliper (M16 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 1",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Anchor Dimension with kaliper (M16 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 2",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Photo View Joint & Baut"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Anchor Dimension with kaliper (M16 = 10 Pcs)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Capture (Anchor)"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 1"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 2"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 3"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 4"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "JOINT 3",
+        "description": "Torque Value M16 = ….......... Nm After 5"
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    },
+    {
+        "taskType": "Reguler",
+        "section": "TORQUE",
+        "fabricator": "Mulcindo",
+        "towerHeight": 21,
+        "category": "TEMUAN",
+        "description": "..."
+    }
+]

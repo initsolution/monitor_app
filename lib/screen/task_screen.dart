@@ -16,10 +16,7 @@ import 'package:monitor_app/screen/form_report_verticality.dart';
 class TaskScreen extends ConsumerStatefulWidget {
   static String routeName = 'task';
   final Task task;
-  const TaskScreen({
-    Key? key,
-    required this.task,
-  }) : super(key: key);
+  const TaskScreen({Key? key, required this.task}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _TaskScreenState();
@@ -27,7 +24,7 @@ class TaskScreen extends ConsumerStatefulWidget {
 
 class _TaskScreenState extends ConsumerState<TaskScreen> {
   // ignore: prefer_typing_uninitialized_variables
-  late AsyncValue<List<MasterAsset>> mAssetProv;
+  // late AsyncValue<List<MasterAsset>> mAssetProv;
 
   List<String> header = [];
   List<dynamic> items = [];
@@ -36,23 +33,16 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // put providers here !
-    mAssetProv = ref.watch(masterAssetProvider(Param(
-      type: widget.task.type,
-      fabricator: widget.task.site.fabricator,
-      towerHeight: widget.task.site.towerHeight,
-    )));
+    // mAssetProv = ref.watch(masterAssetProvider(Param(
+    //   type: widget.task.type,
+    //   fabricator: widget.task.site.fabricator,
+    //   towerHeight: widget.task.site.towerHeight,
+    // )));
 
     return Scaffold(
       appBar: AppBar(
         // title: Text(widget.task.site.name),
         actions: [
-          // IconButton(
-          //     onPressed: () => showModalBottomSheet(
-          //           context: context,
-          //           builder: (context) => _getBody(),
-          //         ),
-          //     icon: const Icon(Icons.info)),
           IconButton(
               onPressed: () async =>
                   // context.push('/task/camera', extra: await availableCameras()),
@@ -116,7 +106,8 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
         color: const Color(0xFFEAEEF2),
         child: ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(FormChecklistScreen.routeName);
+              Navigator.of(context).pushNamed(FormChecklistScreen.routeName,
+                  arguments: widget.task.masterChecklist);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,
@@ -149,14 +140,6 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
               return _getBody();
             } else {
               return _getBody2();
-              // return Container(
-              //     width: MediaQuery.of(context).size.width,
-              //     margin: const EdgeInsets.symmetric(horizontal: 5.0),
-              //     decoration: const BoxDecoration(color: Colors.amber),
-              //     child: const Text(
-              //       'text',
-              //       style: TextStyle(fontSize: 16.0),
-              //     ));
             }
           },
           itemCount: 2,
@@ -196,12 +179,8 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
             widget.task.site.name.toUpperCase(),
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-          Text(widget.task.site.siteId),
+          Text(widget.task.site.id),
           Text(widget.task.site.address ?? ''),
-          // Text('Height : ${task.site.towerHeight.toString()}'),
-          // Text('Type : ${task.site.towerType}'),
-          // Text('Fabricator : ${task.site.fabricator}'),
-          // Text('Kabupaten : ${todo.site.kabupaten}'),
           Text('${widget.task.site.region}, ${widget.task.site.province}'),
         ],
       ),
@@ -224,7 +203,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
               Text('Height : ${widget.task.site.towerHeight.toString()}'),
               Text('Type : ${widget.task.site.towerType}'),
               Text('Fabricator : ${widget.task.site.fabricator}'),
-              Text('Tenant : ${widget.task.site.tenant}'),
+              Text('Tenant : ${widget.task.site.tenants}'),
               Text('Created Date : ${widget.task.createdDate}'),
             ],
           ),
@@ -239,76 +218,147 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
         child: Container(
       color: const Color(0xFFEAEEF2),
       padding: const EdgeInsets.only(left: 20, right: 20, top: 8, bottom: 20),
-      child: mAssetProv.when(
-        data: (data) {
-          // print(data);
-          bool isMultiTenant = false;
-          List<String> tenants = widget.task.site.tenant!.split(',');
-          if (tenants.length > 1) {
-            isMultiTenant = true;
-          }
-          var sections = groupBy(data, (obj) => obj.section);
-          List<dynamic> result = [];
-          for (var element in sections.keys) {
-            result.add(element);
-            var categories = groupBy(sections[element]!, (obj) => obj.category);
+      child: widget.task.masterAsset != null
+          ? _buildCategoriesAsset()
+          : Container(),
+      // child: mAssetProv.when(
+      //   data: (data) {
+      //     // print(data);
+      //     bool isMultiTenant = false;
+      //     List<String> tenants = widget.task.site.tenants!.split(',');
+      //     if (tenants.length > 1) {
+      //       isMultiTenant = true;
+      //     }
+      //     var sections = groupBy(data, (obj) => obj.section);
+      //     List<dynamic> result = [];
+      //     for (var element in sections.keys) {
+      //       result.add(element);
+      //       var categories = groupBy(sections[element]!, (obj) => obj.category);
 
-            for (var cat in categories.keys) {
-              if (isMultiTenant) {
-                if (cat.toUpperCase() == "PANEL KWH" ||
-                    cat.toUpperCase() == "PANEL ACPDB" ||
-                    cat.toUpperCase() == "GROUNDING & LIGHTNING PROTECTION") {
-                  for (int i = 0; i < tenants.length; i++) {
-                    var newCat = '$cat (${tenants[i]})';
-                    result.add({newCat: categories[cat]!});
-                  }
-                } else {
-                  result.add({cat: categories[cat]!});
-                }
-              } else {
-                result.add({cat: categories[cat]!});
-              }
-            }
-          }
+      //       for (var cat in categories.keys) {
+      //         if (isMultiTenant) {
+      //           if (cat.toUpperCase() == "PANEL KWH" ||
+      //               cat.toUpperCase() == "PANEL ACPDB" ||
+      //               cat.toUpperCase() == "GROUNDING & LIGHTNING PROTECTION") {
+      //             for (int i = 0; i < tenants.length; i++) {
+      //               var newCat = '$cat (${tenants[i]})';
+      //               result.add({newCat: categories[cat]!});
+      //             }
+      //           } else {
+      //             result.add({cat: categories[cat]!});
+      //           }
+      //         } else {
+      //           result.add({cat: categories[cat]!});
+      //         }
+      //       }
+      //     }
 
-          return ListView.separated(
-              itemBuilder: (context, index) {
-                if (result[index] is String) {
-                  return Text(result[index].toString().toUpperCase());
-                } else {
-                  return GestureDetector(
-                    onTap: () {
-                      // for (var element
-                      //     in result[result.keys.elementAt(index)]!) {
-                      //   print(element.description);
-                      // }
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => DetailTaskScreen(
-                            title: result[index].keys.elementAt(0),
-                            masterAsset: result[index]
-                                [result[index].keys.elementAt(0)]!,
-                          ),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(result[index].keys.elementAt(0)),
-                    ),
-                  );
-                }
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 10),
-              itemCount: result.length);
-        },
-        error: (error, stackTrace) => Text(error.toString()),
-        loading: () => const Center(child: CircularProgressIndicator()),
-      ),
+      //     return ListView.separated(
+      //         itemBuilder: (context, index) {
+      //           if (result[index] is String) {
+      //             return Text(result[index].toString().toUpperCase());
+      //           } else {
+      //             return GestureDetector(
+      //               onTap: () {
+      //                 // for (var element
+      //                 //     in result[result.keys.elementAt(index)]!) {
+      //                 //   print(element.description);
+      //                 // }
+      //                 Navigator.of(context).push(
+      //                   MaterialPageRoute(
+      //                     builder: (context) => DetailTaskScreen(
+      //                       title: result[index].keys.elementAt(0),
+      //                       masterAsset: result[index]
+      //                           [result[index].keys.elementAt(0)]!,
+      //                     ),
+      //                   ),
+      //                 );
+      //               },
+      //               child: Container(
+      //                 padding: const EdgeInsets.all(20),
+      //                 decoration: BoxDecoration(
+      //                   color: Colors.white,
+      //                   borderRadius: BorderRadius.circular(10),
+      //                 ),
+      //                 child: Text(result[index].keys.elementAt(0)),
+      //               ),
+      //             );
+      //           }
+      //         },
+      //         separatorBuilder: (context, index) => const SizedBox(height: 10),
+      //         itemCount: result.length);
+      //   },
+      //   error: (error, stackTrace) => Text(error.toString()),
+      //   loading: () => const Center(child: CircularProgressIndicator()),
+      // ),
     ));
+  }
+
+  Widget _buildCategoriesAsset() {
+    bool isMultiTenant = false;
+    List<String> tenants = widget.task.site.tenants != null
+        ? widget.task.site.tenants!.split(';')
+        : [];
+    if (tenants.length > 1) {
+      isMultiTenant = true;
+    }
+    var sections = groupBy(widget.task.masterAsset!, (obj) => obj.section);
+    List<dynamic> result = [];
+    for (var element in sections.keys) {
+      result.add(element);
+      var categories = groupBy(sections[element]!, (obj) => obj.category);
+
+      for (var cat in categories.keys) {
+        if (isMultiTenant) {
+          if (cat.toUpperCase() == "PANEL KWH" ||
+              cat.toUpperCase() == "PANEL ACPDB" ||
+              cat.toUpperCase() == "GROUNDING & LIGHTNING PROTECTION") {
+            for (int i = 0; i < tenants.length; i++) {
+              var newCat = '$cat (${tenants[i]})';
+              result.add({newCat: categories[cat]!});
+            }
+          } else {
+            result.add({cat: categories[cat]!});
+          }
+        } else {
+          result.add({cat: categories[cat]!});
+        }
+      }
+    }
+
+    return ListView.separated(
+        itemBuilder: (context, index) {
+          if (result[index] is String) {
+            return Text(result[index].toString().toUpperCase());
+          } else {
+            return GestureDetector(
+              onTap: () {
+                // for (var element
+                //     in result[result.keys.elementAt(index)]!) {
+                //   print(element.description);
+                // }
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DetailTaskScreen(
+                      title: result[index].keys.elementAt(0),
+                      masterAsset: result[index]
+                          [result[index].keys.elementAt(0)]!,
+                    ),
+                  ),
+                );
+              },
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(result[index].keys.elementAt(0)),
+              ),
+            );
+          }
+        },
+        separatorBuilder: (context, index) => const SizedBox(height: 10),
+        itemCount: result.length);
   }
 }

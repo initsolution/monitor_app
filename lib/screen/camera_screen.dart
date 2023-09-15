@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:monitor_app/screen/album_screen.dart';
 import 'package:monitor_app/screen/preview_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -38,6 +39,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
 
   double _currentZoomLevel = 1.0;
   double _currentExposureOffset = 0.0;
+  // ignore: unused_field
   FlashMode? _currentFlashMode;
 
   getPermissionStatus() async {
@@ -72,14 +74,19 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
         fileNames.add({0: int.parse(name), 1: file.path.split('/').last});
       }
     }
-
+    debugPrint('recentFileName : passed');
     if (fileNames.isNotEmpty) {
       final recentFile =
           fileNames.reduce((curr, next) => curr[0] > next[0] ? curr : next);
       String recentFileName = recentFile[1];
-
+      debugPrint('recentFileName : $recentFileName');
       _imageFile = File('${directory.path}/$recentFileName');
       setState(() {});
+    } else {
+      if (_imageFile != null) {
+        _imageFile = null;
+        setState(() {});
+      }
     }
   }
 
@@ -454,18 +461,30 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
                                       ),
                                       InkWell(
                                         onTap: _imageFile != null
-                                            ? () {
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        PreviewScreen(
-                                                      isOnTap: false,
-                                                      imageFile: _imageFile!,
-                                                      fileList: allFileList,
-                                                      isPickable: false,
-                                                    ),
-                                                  ),
+                                            ? () async {
+                                                // await Navigator.of(context)
+                                                //     .push(
+                                                //   MaterialPageRoute(
+                                                //     builder: (context) =>
+                                                //         PreviewScreen(
+                                                //       isOnTap: false,
+                                                //       imageFile: _imageFile!,
+                                                //       fileList: allFileList,
+                                                //       isPickable: false,
+                                                //     ),
+                                                //   ),
+                                                // )
+                                                //     .then((value) {
+                                                //   debugPrint(
+                                                //       'recentFileName : p3');
+                                                //   refreshAlreadyCapturedImages();
+                                                // });
+                                                await Navigator.of(context)
+                                                    .pushNamed(
+                                                  AlbumScreen.routeName,
+                                                  arguments: false,
                                                 );
+                                                refreshAlreadyCapturedImages();
                                               }
                                             : null,
                                         child: Container(

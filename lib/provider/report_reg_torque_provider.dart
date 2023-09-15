@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:monitor_app/model/param.dart';
-import 'package:monitor_app/model/report_reg_torque_state.dart';
+import 'package:monitor_app/mstate/report_reg_torque_state.dart';
 import 'package:monitor_app/provider/app_provider.dart';
 
 class ReportRegTorqueNotifier

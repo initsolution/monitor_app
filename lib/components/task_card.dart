@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:monitor_app/components/icon_task_status.dart';
 import 'package:monitor_app/model/task.dart';
-import 'package:monitor_app/utils/images.dart';
+import 'package:monitor_app/constants/images.dart';
 
 class TaskCard extends StatelessWidget {
   final Task task;
@@ -41,7 +41,7 @@ class TaskCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          Text('${task.site.siteId} - ${task.site.name}'),
+          Text('${task.site.id} - ${task.site.name}'),
           // const SizedBox(height: 20),
           // Row(
           //   mainAxisAlignment: MainAxisAlignment.spaceBetween,

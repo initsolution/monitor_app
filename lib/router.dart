@@ -1,13 +1,15 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:monitor_app/model/master_checklist.dart';
 import 'package:monitor_app/model/task.dart';
 import 'package:monitor_app/screen/camera_screen.dart';
-import 'package:monitor_app/screen/captures_screen.dart';
+import 'package:monitor_app/screen/album_screen.dart';
 import 'package:monitor_app/screen/form_checklist_screen.dart';
 import 'package:monitor_app/screen/form_report_torque.dart';
 import 'package:monitor_app/screen/form_report_verticality.dart';
 import 'package:monitor_app/screen/home_screen.dart';
-import 'package:monitor_app/screen/preview_screen.dart';
 import 'package:monitor_app/screen/task_screen.dart';
 
 // final GoRouter router = GoRouter(
@@ -39,10 +41,10 @@ import 'package:monitor_app/screen/task_screen.dart';
 Route<dynamic>? onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
     case 'home':
-      String nik = settings.arguments as String;
+      String email = settings.arguments as String;
       return PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            HomeScreen(nik: nik),
+            HomeScreen(email: email),
         settings: RouteSettings(name: HomeScreen.routeName),
       );
     case 'task':
@@ -72,17 +74,20 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
             CameraExampleHome(cameras: camera),
         settings: RouteSettings(name: CameraExampleHome.routeName),
       );
-    case 'capture':
+    case 'album':
+      // Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;
       bool isPickable = settings.arguments as bool;
       return PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            CapturesScreen(isPickable: isPickable),
-        settings: RouteSettings(name: CapturesScreen.routeName),
+            AlbumScreen(isPickable: isPickable),
+        settings: RouteSettings(name: AlbumScreen.routeName),
       );
     case 'checklist':
+      List<MasterChecklist> checklist =
+          settings.arguments as List<MasterChecklist>;
       return PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            const FormChecklistScreen(),
+            FormChecklistScreen(checklist: checklist),
         settings: RouteSettings(name: FormChecklistScreen.routeName),
       );
     case 'report_torque':

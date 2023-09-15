@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:monitor_app/components/task_card.dart';
-import 'package:monitor_app/model/task_state.dart';
+import 'package:monitor_app/constants/strings.dart';
+import 'package:monitor_app/mstate/task_state.dart';
 import 'package:monitor_app/provider/task_provider.dart';
-import 'package:monitor_app/utils/strings.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   static String routeName = 'home';
-  final String nik;
+  final String email;
   const HomeScreen({
     Key? key,
-    required this.nik,
+    required this.email,
   }) : super(key: key);
 
   @override
@@ -24,7 +24,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref.read(taskNotifierProvider.notifier).getAllTasks(widget.nik);
+      debugPrint('HomeScreen initState : email ${widget.email}');
+      ref.read(taskNotifierProvider.notifier).getAllTasks(widget.email);
     });
   }
 
@@ -70,13 +71,6 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                   return const Center(child: CircularProgressIndicator());
                 }
               },
-              // child: ListView.separated(
-              //     itemBuilder: (context, index) {
-              //       return const TodoCard();
-              //     },
-              //     separatorBuilder: (context, index) =>
-              //         const SizedBox(height: 10),
-              //     itemCount: 20),
             ),
           ),
         ),

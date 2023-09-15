@@ -1,13 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:monitor_app/model/master_point_checklist_preventive.dart';
-import 'package:monitor_app/model/point_checklist_preventive_state.dart';
-import 'package:monitor_app/provider/app_provider.dart';
-import 'package:monitor_app/utils/enum.dart';
+
+import 'package:monitor_app/constants/enum.dart';
+import 'package:monitor_app/model/master_checklist.dart';
 
 class FormChecklistScreen extends ConsumerStatefulWidget {
   static String routeName = 'checklist';
-  const FormChecklistScreen({super.key});
+  final List<MasterChecklist> checklist;
+  const FormChecklistScreen({Key? key, required this.checklist})
+      : super(key: key);
 
   @override
   ConsumerState<FormChecklistScreen> createState() =>
@@ -20,17 +22,37 @@ class _FormChecklistScreenState extends ConsumerState<FormChecklistScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref
-          .read(pointChecklistProvider.notifier)
-          .getAllMasterPointChecklistPreventive();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   ref
+    //       .read(pointChecklistProvider.notifier)
+    //       .getAllMasterPointChecklistPreventive();
+    // });
     values = {};
   }
 
   @override
   Widget build(BuildContext context) {
-    final mPointChecklist = ref.watch(pointChecklistProvider);
+    // final mPointChecklist = ref.watch(pointChecklistProvider);
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: const Text('Form Checklist'),
+    //   ),
+    //   body: Container(
+    //     padding: const EdgeInsets.all(10),
+    //     color: const Color(0xFFEAEEF2),
+    //     child: Consumer(
+    //       builder: (context, ref, child) {
+    //         if (mPointChecklist is PointChecklistPreventiveLoading) {
+    //           return const Center(child: CircularProgressIndicator());
+    //         } else if (mPointChecklist is PointChecklistPreventiveLoaded) {
+    //           return buildListPointsChecklist(mPointChecklist);
+    //         } else {
+    //           return Container();
+    //         }
+    //       },
+    //     ),
+    //   ),
+    // );
     return Scaffold(
       appBar: AppBar(
         title: const Text('Form Checklist'),
@@ -38,33 +60,20 @@ class _FormChecklistScreenState extends ConsumerState<FormChecklistScreen> {
       body: Container(
         padding: const EdgeInsets.all(10),
         color: const Color(0xFFEAEEF2),
-        child: Consumer(
-          builder: (context, ref, child) {
-            if (mPointChecklist is PointChecklistPreventiveLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (mPointChecklist is PointChecklistPreventiveLoaded) {
-              return buildListPointsChecklist(mPointChecklist);
-            } else {
-              return Container();
-            }
-          },
-        ),
+        child: buildListPointsChecklist(),
       ),
     );
   }
 
-  ListView buildListPointsChecklist(
-      PointChecklistPreventiveLoaded mPointChecklist) {
+  ListView buildListPointsChecklist() {
     return ListView.separated(
         itemBuilder: (context, index) {
-          MasterPointChecklistPreventive point =
-              mPointChecklist.pointsChecklist[index];
-
+          MasterChecklist masterChecklist = widget.checklist[index];
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                point.categoryName.toUpperCase(),
+                masterChecklist.categoryName.toUpperCase(),
                 style:
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
@@ -82,71 +91,33 @@ class _FormChecklistScreenState extends ConsumerState<FormChecklistScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(point.mpointchecklistpreventive[index].uraian,
+                            Text(
+                                masterChecklist
+                                    .mpointchecklistpreventive[index].uraian,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold)),
                             const SizedBox(height: 10),
-                            Text(point
+                            Text(masterChecklist
                                 .mpointchecklistpreventive[index].kriteria),
                             const SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 buildChecklistButton(
-                                    point.mpointchecklistpreventive[index].id,
+                                    masterChecklist
+                                        .mpointchecklistpreventive[index].id,
                                     ChecklistValue.ok,
                                     "OK"),
                                 buildChecklistButton(
-                                    point.mpointchecklistpreventive[index].id,
+                                    masterChecklist
+                                        .mpointchecklistpreventive[index].id,
                                     ChecklistValue.notok,
                                     "NOT OK"),
                                 buildChecklistButton(
-                                    point.mpointchecklistpreventive[index].id,
+                                    masterChecklist
+                                        .mpointchecklistpreventive[index].id,
                                     ChecklistValue.na,
                                     "NA"),
-                                // OutlinedButton(
-                                //   onPressed: () {
-                                //     setState(() {
-                                //       values[point
-                                //           .mpointchecklistpreventive[index]
-                                //           .id] = ChecklistValue.notok;
-                                //     });
-                                //   },
-                                //   style: OutlinedButton.styleFrom(
-                                //     minimumSize: const Size(80, 40),
-                                //     backgroundColor: (values[point
-                                //                 .mpointchecklistpreventive[
-                                //                     index]
-                                //                 .id] ==
-                                //             ChecklistValue.notok)
-                                //         ? Colors.lightBlue
-                                //         : Colors.transparent,
-                                //     padding: const EdgeInsets.symmetric(
-                                //         horizontal: 5, vertical: 5),
-                                //     shape: RoundedRectangleBorder(
-                                //         borderRadius:
-                                //             BorderRadius.circular(20)),
-                                //     side: BorderSide(
-                                //         color: (values[point
-                                //                     .mpointchecklistpreventive[
-                                //                         index]
-                                //                     .id] ==
-                                //                 ChecklistValue.notok)
-                                //             ? Colors.lightBlue
-                                //             : Colors.black),
-                                //   ),
-                                //   child: Text(
-                                //     'NOT OK',
-                                //     style: TextStyle(
-                                //         color: (values[point
-                                //                     .mpointchecklistpreventive[
-                                //                         index]
-                                //                     .id] ==
-                                //                 ChecklistValue.notok)
-                                //             ? Colors.white
-                                //             : Colors.black),
-                                //   ),
-                                // ),
                               ],
                             ),
                           ],
@@ -154,13 +125,121 @@ class _FormChecklistScreenState extends ConsumerState<FormChecklistScreen> {
                       ),
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 10),
-                  itemCount: point.mpointchecklistpreventive.length),
+                  itemCount: masterChecklist.mpointchecklistpreventive.length),
             ],
           );
         },
         separatorBuilder: (context, index) => const SizedBox(height: 20),
-        itemCount: mPointChecklist.pointsChecklist.length);
+        itemCount: widget.checklist.length);
   }
+
+  // ListView buildListPointsChecklist(
+  //     PointChecklistPreventiveLoaded mPointChecklist) {
+  //   return ListView.separated(
+  //       itemBuilder: (context, index) {
+  //         MasterChecklist point = mPointChecklist.checklist[index];
+
+  //         return Column(
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           children: [
+  //             Text(
+  //               point.categoryName.toUpperCase(),
+  //               style:
+  //                   const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+  //             ),
+  //             const SizedBox(height: 10),
+  //             // PointChecklistCard(point: point),
+  //             ListView.separated(
+  //                 shrinkWrap: true,
+  //                 physics: const ClampingScrollPhysics(),
+  //                 itemBuilder: (context, index) => Container(
+  //                       padding: const EdgeInsets.all(20),
+  //                       decoration: BoxDecoration(
+  //                         color: Colors.white,
+  //                         borderRadius: BorderRadius.circular(10),
+  //                       ),
+  //                       child: Column(
+  //                         crossAxisAlignment: CrossAxisAlignment.start,
+  //                         children: [
+  //                           Text(point.mpointchecklistpreventive[index].uraian,
+  //                               style: const TextStyle(
+  //                                   fontWeight: FontWeight.bold)),
+  //                           const SizedBox(height: 10),
+  //                           Text(point
+  //                               .mpointchecklistpreventive[index].kriteria),
+  //                           const SizedBox(height: 10),
+  //                           Row(
+  //                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                             children: [
+  //                               buildChecklistButton(
+  //                                   point.mpointchecklistpreventive[index].id,
+  //                                   ChecklistValue.ok,
+  //                                   "OK"),
+  //                               buildChecklistButton(
+  //                                   point.mpointchecklistpreventive[index].id,
+  //                                   ChecklistValue.notok,
+  //                                   "NOT OK"),
+  //                               buildChecklistButton(
+  //                                   point.mpointchecklistpreventive[index].id,
+  //                                   ChecklistValue.na,
+  //                                   "NA"),
+  //                               // OutlinedButton(
+  //                               //   onPressed: () {
+  //                               //     setState(() {
+  //                               //       values[point
+  //                               //           .mpointchecklistpreventive[index]
+  //                               //           .id] = ChecklistValue.notok;
+  //                               //     });
+  //                               //   },
+  //                               //   style: OutlinedButton.styleFrom(
+  //                               //     minimumSize: const Size(80, 40),
+  //                               //     backgroundColor: (values[point
+  //                               //                 .mpointchecklistpreventive[
+  //                               //                     index]
+  //                               //                 .id] ==
+  //                               //             ChecklistValue.notok)
+  //                               //         ? Colors.lightBlue
+  //                               //         : Colors.transparent,
+  //                               //     padding: const EdgeInsets.symmetric(
+  //                               //         horizontal: 5, vertical: 5),
+  //                               //     shape: RoundedRectangleBorder(
+  //                               //         borderRadius:
+  //                               //             BorderRadius.circular(20)),
+  //                               //     side: BorderSide(
+  //                               //         color: (values[point
+  //                               //                     .mpointchecklistpreventive[
+  //                               //                         index]
+  //                               //                     .id] ==
+  //                               //                 ChecklistValue.notok)
+  //                               //             ? Colors.lightBlue
+  //                               //             : Colors.black),
+  //                               //   ),
+  //                               //   child: Text(
+  //                               //     'NOT OK',
+  //                               //     style: TextStyle(
+  //                               //         color: (values[point
+  //                               //                     .mpointchecklistpreventive[
+  //                               //                         index]
+  //                               //                     .id] ==
+  //                               //                 ChecklistValue.notok)
+  //                               //             ? Colors.white
+  //                               //             : Colors.black),
+  //                               //   ),
+  //                               // ),
+  //                             ],
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ),
+  //                 separatorBuilder: (context, index) =>
+  //                     const SizedBox(height: 10),
+  //                 itemCount: point.mpointchecklistpreventive.length),
+  //           ],
+  //         );
+  //       },
+  //       separatorBuilder: (context, index) => const SizedBox(height: 20),
+  //       itemCount: mPointChecklist.checklist.length);
+  // }
 
   Widget buildChecklistButton(int idPoint, ChecklistValue value, String text) {
     return OutlinedButton(

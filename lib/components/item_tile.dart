@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
 import 'package:monitor_app/model/master_asset.dart';
-import 'package:monitor_app/utils/utils.dart';
+import 'package:monitor_app/constants/utils.dart';
 
 class ItemTile extends StatefulWidget {
   final MasterAsset asset;
@@ -31,7 +31,7 @@ class _ItemTileState extends State<ItemTile> {
       children: [
         InkWell(
           onTap: () =>
-              Navigator.of(context).pushNamed('capture', arguments: true),
+              Navigator.of(context).pushNamed('album', arguments: true),
           child: Container(
             decoration: BoxDecoration(
               color: Colors.grey,

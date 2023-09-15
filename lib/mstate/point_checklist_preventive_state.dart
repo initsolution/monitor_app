@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
+import 'package:monitor_app/model/master_checklist.dart';
 
 import 'package:monitor_app/model/master_point_checklist_preventive.dart';
 
@@ -13,13 +14,13 @@ class PointChecklistPreventiveInitial extends PointChecklistPreventiveState {}
 class PointChecklistPreventiveLoading extends PointChecklistPreventiveState {}
 
 class PointChecklistPreventiveLoaded extends PointChecklistPreventiveState {
-  final List<MasterPointChecklistPreventive> pointsChecklist;
+  final List<MasterChecklist> checklist;
   PointChecklistPreventiveLoaded({
-    required this.pointsChecklist,
+    required this.checklist,
   });
 
   @override
-  List<Object?> get props => [pointsChecklist];
+  List<Object?> get props => [checklist];
 }
 
 class PointChecklistPreventiveLoadedWithError
