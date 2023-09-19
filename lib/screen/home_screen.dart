@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monitor_app/components/task_card.dart';
 import 'package:monitor_app/constants/strings.dart';
 import 'package:monitor_app/mstate/task_state.dart';
-import 'package:monitor_app/provider/task_provider.dart';
+import 'package:monitor_app/controller/task_controller.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   static String routeName = 'home';
@@ -25,7 +25,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       debugPrint('HomeScreen initState : email ${widget.email}');
-      ref.read(taskNotifierProvider.notifier).getAllTasks(widget.email);
+      ref.read(taskControllerProvider.notifier).getAllTasks(widget.email);
     });
   }
 
@@ -41,7 +41,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Widget _getBody() {
-    final state = ref.watch(taskNotifierProvider);
+    final state = ref.watch(taskControllerProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [

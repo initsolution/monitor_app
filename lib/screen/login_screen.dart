@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monitor_app/controller/auth_controller.dart';
 import 'package:monitor_app/mstate/auth_state.dart';
-import 'package:monitor_app/provider/app_provider.dart';
 import 'package:monitor_app/screen/home_screen.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -24,7 +24,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       // Validation passed.
       _formKey.currentState!.save();
       _isFormLoading = true;
-      ref.read(authProvider.notifier).login(username, password);
+      ref.read(authControllerProvider.notifier).login(username, password);
     }
   }
 
@@ -51,13 +51,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   void dispose() {
     super.dispose();
-    ref.invalidate(authProvider);
+    ref.invalidate(authControllerProvider);
   }
 
   @override
   Widget build(BuildContext context) {
     ref.listen<AuthState>(
-      authProvider,
+      authControllerProvider,
       (previous, next) {
         if (next is AuthAuthorized) {
           _onLoginSuccess(context);

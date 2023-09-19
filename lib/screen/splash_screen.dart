@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monitor_app/controller/auth_controller.dart';
 import 'package:monitor_app/mstate/auth_state.dart';
-import 'package:monitor_app/provider/app_provider.dart';
 import 'package:monitor_app/screen/home_screen.dart';
 import 'package:monitor_app/screen/login_screen.dart';
 
@@ -20,7 +20,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(authProvider, (previous, next) {
+    ref.listen(authControllerProvider, (previous, next) {
       if (next is AuthAuthorized) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
@@ -50,7 +50,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                           fit: BoxFit.none))),
             );
           },
-          onEnd: () => ref.read(authProvider.notifier).appStarted(),
+          onEnd: () => ref.read(authControllerProvider.notifier).appStarted(),
         ),
       ),
     );

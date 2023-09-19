@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monitor_app/mstate/report_reg_torque_state.dart';
-import 'package:monitor_app/provider/app_provider.dart';
+import 'package:monitor_app/controller/app_provider.dart';
 
 class ReportRegTorqueNotifier
     extends AutoDisposeNotifier<ReportRegTorqueState> {

@@ -1,17 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'userdata.dart';
+part of 'user_preferences.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData(
+UserPreferences _$UserPreferencesFromJson(Map<String, dynamic> json) =>
+    UserPreferences(
       json['username'] as String,
       json['token'] as String,
     );
 
-Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
+Map<String, dynamic> _$UserPreferencesToJson(UserPreferences instance) =>
+    <String, dynamic>{
       'username': instance.username,
       'token': instance.token,
     };

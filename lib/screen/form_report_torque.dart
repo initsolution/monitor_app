@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monitor_app/model/master_report_reg_torque.dart';
-import 'package:monitor_app/mstate/report_reg_torque_state.dart';
 import 'package:monitor_app/model/task.dart';
-import 'package:monitor_app/provider/app_provider.dart';
 
 class FormReportTorque extends ConsumerStatefulWidget {
   static String routeName = 'report_torque';

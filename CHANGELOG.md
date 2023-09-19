@@ -7,3 +7,5 @@
 - Camera update and fixing (belum bisa picking image)
 - State management Riverpod untuk Authentication dan Get Data
 - Update icon apps, name and package
+# 18/9/2023
+- implementasi isar part (1)

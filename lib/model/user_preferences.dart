@@ -3,11 +3,11 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
-part 'userdata.g.dart';
+part 'user_preferences.g.dart';
 
 @JsonSerializable()
-class UserData {
+class UserPreferences {
   String username;
   String token;
-  UserData(this.username, this.token);
+  UserPreferences(this.username, this.token);
 }

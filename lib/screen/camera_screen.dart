@@ -4,8 +4,8 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:monitor_app/helpers/image_helper.dart';
 import 'package:monitor_app/screen/album_screen.dart';
-import 'package:monitor_app/screen/preview_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -436,9 +436,11 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
                                           print(fileFormat);
                                           print(
                                               '${directory.path}/$currentUnix.$fileFormat');
-                                          await imageFile.copy(
-                                            '${directory.path}/$currentUnix.$fileFormat',
-                                          );
+                                          await captureDrawImageInfo(imageFile,
+                                              '${directory.path}/$currentUnix.$fileFormat');
+                                          // await imageFile.copy(
+                                          //   '${directory.path}/$currentUnix.$fileFormat',
+                                          // );
 
                                           refreshAlreadyCapturedImages();
                                         },

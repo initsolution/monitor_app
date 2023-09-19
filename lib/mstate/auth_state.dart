@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 
-import 'package:monitor_app/model/userdata.dart';
+import 'package:monitor_app/model/user_preferences.dart';
 
 abstract class AuthState extends Equatable {
   @override
@@ -11,7 +11,7 @@ abstract class AuthState extends Equatable {
 class AuthInitial extends AuthState {}
 
 class AuthAuthorized extends AuthState {
-  final UserData userdata;
+  final UserPreferences userdata;
   AuthAuthorized({required this.userdata});
   @override
   List<Object?> get props => [userdata];
