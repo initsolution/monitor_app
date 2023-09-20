@@ -1,8 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'package:monitor_app/model/asset.dart';
+import 'package:monitor_app/model/category_checklist_preventive.dart';
 import 'package:monitor_app/model/employee.dart';
 import 'package:monitor_app/model/master_asset.dart';
 import 'package:monitor_app/model/master_checklist.dart';
@@ -24,7 +27,9 @@ class Task {
   final List<MasterAsset>? masterAsset;
   final List<MasterChecklist>? masterChecklist;
   final List<MasterReportRegTorque>? masterReportRegTorque;
-  
+  final List<Asset>? assets;
+  final List<CategoryChecklistPreventive>? categoriesChecklist;
+
   Task(
     this.id,
     this.type,
@@ -37,6 +42,8 @@ class Task {
     this.masterAsset,
     this.masterChecklist,
     this.masterReportRegTorque,
+    this.assets,
+    this.categoriesChecklist,
   );
 
   Map<String, dynamic> toJson() => _$TaskToJson(this);

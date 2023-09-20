@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:monitor_app/model/category_checklist_preventive.dart';
 import 'package:monitor_app/model/master_checklist.dart';
 import 'package:monitor_app/model/task.dart';
 import 'package:monitor_app/screen/camera_screen.dart';
@@ -83,8 +84,8 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
         settings: RouteSettings(name: AlbumScreen.routeName),
       );
     case 'checklist':
-      List<MasterChecklist> checklist =
-          settings.arguments as List<MasterChecklist>;
+      List<CategoryChecklistPreventive> checklist =
+          settings.arguments as List<CategoryChecklistPreventive>;
       return PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
             FormChecklistScreen(checklist: checklist),

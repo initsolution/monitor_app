@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
+import 'package:monitor_app/model/asset.dart';
 import 'package:monitor_app/model/master_asset.dart';
 import 'package:monitor_app/constants/utils.dart';
 
 class TaskItemCard extends StatefulWidget {
-  final MasterAsset asset;
+  final Asset asset;
   const TaskItemCard({
     Key? key,
     required this.asset,

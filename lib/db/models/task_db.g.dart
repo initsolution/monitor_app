@@ -80,6 +80,18 @@ const TaskDBSchema = CollectionSchema(
       name: r'verifierEmployee',
       target: r'employees',
       single: true,
+    ),
+    r'assets': LinkSchema(
+      id: -3388227533028831456,
+      name: r'assets',
+      target: r'assets',
+      single: false,
+    ),
+    r'categoriesChecklist': LinkSchema(
+      id: -1578320513373531945,
+      name: r'categoriesChecklist',
+      target: r'category_point_checklist',
+      single: false,
     )
   },
   embeddedSchemas: {},
@@ -173,7 +185,12 @@ Id _taskDBGetId(TaskDB object) {
 }
 
 List<IsarLinkBase<dynamic>> _taskDBGetLinks(TaskDB object) {
-  return [object.site, object.verifierEmployee];
+  return [
+    object.site,
+    object.verifierEmployee,
+    object.assets,
+    object.categoriesChecklist
+  ];
 }
 
 void _taskDBAttach(IsarCollection<dynamic> col, Id id, TaskDB object) {
@@ -181,6 +198,12 @@ void _taskDBAttach(IsarCollection<dynamic> col, Id id, TaskDB object) {
   object.site.attach(col, col.isar.collection<SiteDB>(), r'site', id);
   object.verifierEmployee
       .attach(col, col.isar.collection<EmployeeDB>(), r'verifierEmployee', id);
+  object.assets.attach(col, col.isar.collection<AssetsDB>(), r'assets', id);
+  object.categoriesChecklist.attach(
+      col,
+      col.isar.collection<CategoryPointChecklistDB>(),
+      r'categoriesChecklist',
+      id);
 }
 
 extension TaskDBByIndex on IsarCollection<TaskDB> {
@@ -1221,6 +1244,125 @@ extension TaskDBQueryLinks on QueryBuilder<TaskDB, TaskDB, QFilterCondition> {
   QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> verifierEmployeeIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'verifierEmployee', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> assets(
+      FilterQuery<AssetsDB> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'assets');
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> assetsLengthEqualTo(
+      int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'assets', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> assetsIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'assets', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> assetsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'assets', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> assetsLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'assets', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> assetsLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'assets', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> assetsLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(
+          r'assets', lower, includeLower, upper, includeUpper);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> categoriesChecklist(
+      FilterQuery<CategoryPointChecklistDB> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'categoriesChecklist');
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition>
+      categoriesChecklistLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(
+          r'categoriesChecklist', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition>
+      categoriesChecklistIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'categoriesChecklist', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition>
+      categoriesChecklistIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'categoriesChecklist', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition>
+      categoriesChecklistLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'categoriesChecklist', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition>
+      categoriesChecklistLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(
+          r'categoriesChecklist', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition>
+      categoriesChecklistLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(
+          r'categoriesChecklist', lower, includeLower, upper, includeUpper);
     });
   }
 }

@@ -2,15 +2,18 @@
 import 'package:flutter/material.dart';
 import 'package:monitor_app/components/item_tile.dart';
 import 'package:monitor_app/components/task_item_card.dart';
+import 'package:monitor_app/model/asset.dart';
 import 'package:monitor_app/model/master_asset.dart';
 
 class DetailTaskScreen extends StatefulWidget {
   final String title;
-  final List<MasterAsset> masterAsset;
+  // final List<MasterAsset> masterAsset;
+  final List<Asset> assets;
   const DetailTaskScreen({
     Key? key,
     required this.title,
-    required this.masterAsset,
+    // required this.masterAsset,
+    required this.assets,
   }) : super(key: key);
 
   @override
@@ -36,7 +39,7 @@ class _DetailTaskScreenState extends State<DetailTaskScreen> {
             color: const Color(0xFFEAEEF2),
             padding: const EdgeInsets.all(10),
             child: GridView.builder(
-              itemCount: widget.masterAsset.length,
+              itemCount: widget.assets.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 8,
@@ -44,7 +47,7 @@ class _DetailTaskScreenState extends State<DetailTaskScreen> {
                 childAspectRatio: 0.5,
               ),
               itemBuilder: (context, index) {
-                return TaskItemCard(asset: widget.masterAsset[index]);
+                return TaskItemCard(asset: widget.assets[index]);
               },
             ),
           ),

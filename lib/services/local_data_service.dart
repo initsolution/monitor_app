@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:monitor_app/db/config/database.dart';
+import 'package:monitor_app/db/models/assets_db.dart';
+import 'package:monitor_app/db/models/category_point_checklist_db.dart';
 import 'package:monitor_app/db/models/employee_db.dart';
+import 'package:monitor_app/db/models/point_checklist_db.dart';
 import 'package:monitor_app/db/models/site_db.dart';
 import 'package:monitor_app/db/models/task_db.dart';
+import 'package:monitor_app/model/asset.dart';
+import 'package:monitor_app/model/category_checklist_preventive.dart';
 import 'package:monitor_app/model/employee.dart';
+import 'package:monitor_app/model/point_checklist_preventive.dart';
 import 'package:monitor_app/model/site.dart';
 import 'package:monitor_app/model/task.dart';
 
@@ -13,46 +19,98 @@ class LocalDataService {
     final result = await isarDB.tasks.where().findAll();
     final tasks = result
         .map((task) => Task(
-              task.id,
-              task.type,
-              Site(
-                  task.site.value!.idSite,
-                  task.site.value!.name,
-                  task.site.value!.towerType,
-                  task.site.value!.towerHeight,
-                  task.site.value!.fabricator,
-                  task.site.value!.tenants,
-                  task.site.value!.region,
-                  task.site.value!.province,
-                  task.site.value!.address,
-                  task.site.value!.longitude,
-                  task.site.value!.latitude),
-              Employee(
-                task.verifierEmployee.value!.nik,
-                task.verifierEmployee.value!.name,
-                task.verifierEmployee.value!.email,
-                task.verifierEmployee.value!.hp ?? '',
-                task.verifierEmployee.value!.isVendor,
-                task.verifierEmployee.value!.urlEsign,
-                task.verifierEmployee.value!.instansi,
-              ),
-              task.createdDate,
-              task.submitedDate,
-              task.verifiedDate,
-              task.status,
-              null,
-              null,
-              null,
-
-              //masterAsset,
-              //masterChecklist,
-              //masterReportRegTorque,
+            task.id,
+            task.type,
+            Site(
+                task.site.value!.idSite,
+                task.site.value!.name,
+                task.site.value!.towerType,
+                task.site.value!.towerHeight,
+                task.site.value!.fabricator,
+                task.site.value!.tenants,
+                task.site.value!.region,
+                task.site.value!.province,
+                task.site.value!.address,
+                task.site.value!.longitude,
+                task.site.value!.latitude),
+            Employee(
+              task.verifierEmployee.value!.nik,
+              task.verifierEmployee.value!.name,
+              task.verifierEmployee.value!.email,
+              task.verifierEmployee.value!.hp ?? '',
+              task.verifierEmployee.value!.isVendor,
+              task.verifierEmployee.value!.urlEsign,
+              task.verifierEmployee.value!.instansi,
+            ),
+            task.createdDate,
+            task.submitedDate,
+            task.verifiedDate,
+            task.status,
+            null,
+            null,
+            null,
+            task.assets
+                .map((asset) => Asset(
+                      section: asset.section,
+                      id: asset.id,
+                      category: asset.category,
+                      description: asset.description,
+                      url: asset.url,
+                      createdDate: asset.createdDate,
+                    ))
+                .toList(),
+            task.categoriesChecklist.map((category) {
+              final points = category.points
+                  .map((pointDB) => PointChecklistPreventive(
+                        id: pointDB.id,
+                        uraian: pointDB.uraian,
+                        hasil: pointDB.hasil,
+                        kriteria: pointDB.kriteria,
+                      ))
+                  .toList();
+              return CategoryChecklistPreventive(
+                id: category.id,
+                categoryName: category.categoryName,
+                points: points,
+              );
+            }).toList()
+            //masterAsset,
+            //masterChecklist,
+            //masterReportRegTorque,
             ))
         .toList();
     return tasks;
   }
 
   Future<Task> createTask(Task task) async {
+    final assets = task.masterAsset
+            ?.map(
+              (masterAsset) => AssetsDB(
+                section: masterAsset.section,
+                category: masterAsset.category,
+                description: masterAsset.description,
+                url: "-",
+                createdDate: "-",
+              ),
+            )
+            .toList() ??
+        [];
+
+    final categoryPointChecklistDB =
+        task.masterChecklist?.map((masterChecklist) {
+              final mChecklistDB = masterChecklist.mpointchecklistpreventive
+                  .map((mpoint) => PointChecklistDB(
+                        uraian: mpoint.uraian,
+                        kriteria: mpoint.kriteria,
+                        hasil: "NA",
+                      ))
+                  .toList();
+              return CategoryPointChecklistDB(
+                  categoryName: masterChecklist.categoryName)
+                ..points.addAll(mChecklistDB);
+            }).toList() ??
+            [];
+
     final siteDB = SiteDB()
       ..idSite = task.site.id
       ..name = task.site.name
@@ -81,9 +139,11 @@ class LocalDataService {
       ..createdDate = task.createdDate
       ..submitedDate = task.submitedDate
       ..verifiedDate = task.verifiedDate
-      ..status = task.status;
+      ..status = task.status
+      ..assets.addAll(assets)
+      ..categoriesChecklist.addAll(categoryPointChecklistDB);
 
-     isarDB.writeTxnSync(()  =>  isarDB.tasks.putSync(taskDB));
+    isarDB.writeTxnSync(() => isarDB.tasks.putSync(taskDB));
     return task;
   }
 

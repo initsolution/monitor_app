@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:monitor_app/constants/enum.dart';
+import 'package:monitor_app/model/category_checklist_preventive.dart';
 import 'package:monitor_app/model/master_checklist.dart';
 
 class FormChecklistScreen extends ConsumerStatefulWidget {
   static String routeName = 'checklist';
-  final List<MasterChecklist> checklist;
+  final List<CategoryChecklistPreventive> checklist;
   const FormChecklistScreen({Key? key, required this.checklist})
       : super(key: key);
 
@@ -68,12 +69,12 @@ class _FormChecklistScreenState extends ConsumerState<FormChecklistScreen> {
   ListView buildListPointsChecklist() {
     return ListView.separated(
         itemBuilder: (context, index) {
-          MasterChecklist masterChecklist = widget.checklist[index];
+          CategoryChecklistPreventive checklist = widget.checklist[index];
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                masterChecklist.categoryName.toUpperCase(),
+                checklist.categoryName.toUpperCase(),
                 style:
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
@@ -91,31 +92,25 @@ class _FormChecklistScreenState extends ConsumerState<FormChecklistScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                                masterChecklist
-                                    .mpointchecklistpreventive[index].uraian,
+                            Text(checklist.points![index].uraian,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold)),
                             const SizedBox(height: 10),
-                            Text(masterChecklist
-                                .mpointchecklistpreventive[index].kriteria),
+                            Text(checklist.points![index].kriteria ?? ""),
                             const SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 buildChecklistButton(
-                                    masterChecklist
-                                        .mpointchecklistpreventive[index].id,
+                                    checklist.points![index].id,
                                     ChecklistValue.ok,
                                     "OK"),
                                 buildChecklistButton(
-                                    masterChecklist
-                                        .mpointchecklistpreventive[index].id,
+                                    checklist.points![index].id,
                                     ChecklistValue.notok,
                                     "NOT OK"),
                                 buildChecklistButton(
-                                    masterChecklist
-                                        .mpointchecklistpreventive[index].id,
+                                    checklist.points![index].id,
                                     ChecklistValue.na,
                                     "NA"),
                               ],
@@ -125,7 +120,8 @@ class _FormChecklistScreenState extends ConsumerState<FormChecklistScreen> {
                       ),
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 10),
-                  itemCount: masterChecklist.mpointchecklistpreventive.length),
+                  itemCount:
+                      checklist.points != null ? checklist.points!.length : 0),
             ],
           );
         },

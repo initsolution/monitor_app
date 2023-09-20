@@ -107,7 +107,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
         child: ElevatedButton(
             onPressed: () {
               Navigator.of(context).pushNamed(FormChecklistScreen.routeName,
-                  arguments: widget.task.masterChecklist);
+                  arguments: widget.task.categoriesChecklist ?? []);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,
@@ -218,9 +218,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
         child: Container(
       color: const Color(0xFFEAEEF2),
       padding: const EdgeInsets.only(left: 20, right: 20, top: 8, bottom: 20),
-      child: widget.task.masterAsset != null
-          ? _buildCategoriesAsset()
-          : Container(),
+      child: widget.task.assets != null ? _buildCategoriesAsset() : Container(),
       // child: mAssetProv.when(
       //   data: (data) {
       //     // print(data);
@@ -302,13 +300,14 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
     if (tenants.length > 1) {
       isMultiTenant = true;
     }
-    var sections = groupBy(widget.task.masterAsset!, (obj) => obj.section);
+    var sections = groupBy(widget.task.assets!, (obj) => obj.section);
     List<dynamic> result = [];
     for (var element in sections.keys) {
       result.add(element);
       var categories = groupBy(sections[element]!, (obj) => obj.category);
 
       for (var cat in categories.keys) {
+        debugPrint(cat);
         if (isMultiTenant) {
           if (cat.toUpperCase() == "PANEL KWH" ||
               cat.toUpperCase() == "PANEL ACPDB" ||
@@ -341,8 +340,9 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   MaterialPageRoute(
                     builder: (context) => DetailTaskScreen(
                       title: result[index].keys.elementAt(0),
-                      masterAsset: result[index]
-                          [result[index].keys.elementAt(0)]!,
+                      // masterAsset: result[index]
+                      //     [result[index].keys.elementAt(0)]!,
+                      assets: result[index][result[index].keys.elementAt(0)]!,
                     ),
                   ),
                 );

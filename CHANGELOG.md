@@ -9,3 +9,5 @@
 - Update icon apps, name and package
 # 18/9/2023
 - implementasi isar part (1)
+# 20/9/2023
+- add asset db dan checklist db
