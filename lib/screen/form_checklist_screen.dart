@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:monitor_app/constants/enum.dart';
 import 'package:monitor_app/model/category_checklist_preventive.dart';
-import 'package:monitor_app/model/master_checklist.dart';
 
 class FormChecklistScreen extends ConsumerStatefulWidget {
   static String routeName = 'checklist';

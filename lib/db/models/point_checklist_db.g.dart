@@ -32,8 +32,13 @@ const PointChecklistDBSchema = CollectionSchema(
       name: r'kriteria',
       type: IsarType.string,
     ),
-    r'uraian': PropertySchema(
+    r'orderIndex': PropertySchema(
       id: 3,
+      name: r'orderIndex',
+      type: IsarType.long,
+    ),
+    r'uraian': PropertySchema(
+      id: 4,
       name: r'uraian',
       type: IsarType.string,
     )
@@ -84,7 +89,8 @@ void _pointChecklistDBSerialize(
   writer.writeString(offsets[0], object.hasil);
   writer.writeString(offsets[1], object.keterangan);
   writer.writeString(offsets[2], object.kriteria);
-  writer.writeString(offsets[3], object.uraian);
+  writer.writeLong(offsets[3], object.orderIndex);
+  writer.writeString(offsets[4], object.uraian);
 }
 
 PointChecklistDB _pointChecklistDBDeserialize(
@@ -97,7 +103,8 @@ PointChecklistDB _pointChecklistDBDeserialize(
     hasil: reader.readString(offsets[0]),
     keterangan: reader.readStringOrNull(offsets[1]),
     kriteria: reader.readStringOrNull(offsets[2]),
-    uraian: reader.readString(offsets[3]),
+    orderIndex: reader.readLong(offsets[3]),
+    uraian: reader.readString(offsets[4]),
   );
   object.id = id;
   return object;
@@ -117,6 +124,8 @@ P _pointChecklistDBDeserializeProp<P>(
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
+      return (reader.readLong(offset)) as P;
+    case 4:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -718,6 +727,62 @@ extension PointChecklistDBQueryFilter
   }
 
   QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterFilterCondition>
+      orderIndexEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'orderIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterFilterCondition>
+      orderIndexGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'orderIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterFilterCondition>
+      orderIndexLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'orderIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterFilterCondition>
+      orderIndexBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'orderIndex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterFilterCondition>
       uraianEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -904,6 +969,20 @@ extension PointChecklistDBQuerySortBy
   }
 
   QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterSortBy>
+      sortByOrderIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterSortBy>
+      sortByOrderIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterSortBy>
       sortByUraian() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'uraian', Sort.asc);
@@ -975,6 +1054,20 @@ extension PointChecklistDBQuerySortThenBy
   }
 
   QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterSortBy>
+      thenByOrderIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterSortBy>
+      thenByOrderIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterSortBy>
       thenByUraian() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'uraian', Sort.asc);
@@ -1012,6 +1105,13 @@ extension PointChecklistDBQueryWhereDistinct
     });
   }
 
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QDistinct>
+      distinctByOrderIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'orderIndex');
+    });
+  }
+
   QueryBuilder<PointChecklistDB, PointChecklistDB, QDistinct> distinctByUraian(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1044,6 +1144,12 @@ extension PointChecklistDBQueryProperty
   QueryBuilder<PointChecklistDB, String?, QQueryOperations> kriteriaProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'kriteria');
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, int, QQueryOperations> orderIndexProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'orderIndex');
     });
   }
 

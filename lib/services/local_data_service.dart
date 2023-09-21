@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 import 'package:isar/isar.dart';
 import 'package:monitor_app/db/config/database.dart';
 import 'package:monitor_app/db/models/assets_db.dart';
@@ -51,14 +51,15 @@ class LocalDataService {
             null,
             task.assets
                 .map((asset) => Asset(
-                      section: asset.section,
-                      id: asset.id,
-                      category: asset.category,
-                      description: asset.description,
-                      url: asset.url,
-                      createdDate: asset.createdDate,
-                    ))
-                .toList(),
+                    section: asset.section,
+                    id: asset.id,
+                    category: asset.category,
+                    description: asset.description,
+                    url: asset.url,
+                    createdDate: asset.createdDate,
+                    orderIndex: asset.orderIndex))
+                .toList()
+              ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex)),
             task.categoriesChecklist.map((category) {
               final points = category.points
                   .map((pointDB) => PointChecklistPreventive(
@@ -66,14 +67,17 @@ class LocalDataService {
                         uraian: pointDB.uraian,
                         hasil: pointDB.hasil,
                         kriteria: pointDB.kriteria,
+                        orderIndex: pointDB.orderIndex,
                       ))
-                  .toList();
+                  .toList()
+                ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
               return CategoryChecklistPreventive(
-                id: category.id,
-                categoryName: category.categoryName,
-                points: points,
-              );
+                  id: category.id,
+                  categoryName: category.categoryName,
+                  points: points,
+                  orderIndex: category.orderIndex);
             }).toList()
+              ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex))
             //masterAsset,
             //masterChecklist,
             //masterReportRegTorque,
@@ -84,30 +88,34 @@ class LocalDataService {
 
   Future<Task> createTask(Task task) async {
     final assets = task.masterAsset
-            ?.map(
-              (masterAsset) => AssetsDB(
+            ?.mapIndexed(
+              (idx, masterAsset) => AssetsDB(
                 section: masterAsset.section,
                 category: masterAsset.category,
                 description: masterAsset.description,
                 url: "-",
                 createdDate: "-",
+                orderIndex: idx,
               ),
             )
             .toList() ??
         [];
 
+    int index = 0;
     final categoryPointChecklistDB =
         task.masterChecklist?.map((masterChecklist) {
               final mChecklistDB = masterChecklist.mpointchecklistpreventive
-                  .map((mpoint) => PointChecklistDB(
+                  .mapIndexed((idx, mpoint) => PointChecklistDB(
                         uraian: mpoint.uraian,
                         kriteria: mpoint.kriteria,
                         hasil: "NA",
+                        orderIndex: idx,
                       ))
                   .toList();
               return CategoryPointChecklistDB(
-                  categoryName: masterChecklist.categoryName)
-                ..points.addAll(mChecklistDB);
+                categoryName: masterChecklist.categoryName,
+                orderIndex: index++,
+              )..points.addAll(mChecklistDB);
             }).toList() ??
             [];
 

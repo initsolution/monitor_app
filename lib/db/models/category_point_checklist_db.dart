@@ -11,6 +11,7 @@ class CategoryPointChecklistDB {
   final String categoryName;
   final String? keterangan;
   final points = IsarLinks<PointChecklistDB>();
+  final int orderIndex;
 
-  CategoryPointChecklistDB({required this.categoryName, this.keterangan});
+  CategoryPointChecklistDB({required this.categoryName, this.keterangan, required this.orderIndex});
 }

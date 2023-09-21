@@ -12,11 +12,13 @@ class PointChecklistDB {
   late String? kriteria;
   late String hasil;
   late String? keterangan;
+  late int orderIndex;
 
   PointChecklistDB({
     required this.uraian,
     this.kriteria,
     required this.hasil,
     this.keterangan,
+    required this.orderIndex,
   });
 }

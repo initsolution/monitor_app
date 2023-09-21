@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monitor_app/mstate/point_checklist_preventive_state.dart';
-import 'package:monitor_app/controller/app_provider.dart';
 
 class PointChecklistPreventiveNotifier
     extends AutoDisposeNotifier<PointChecklistPreventiveState> {

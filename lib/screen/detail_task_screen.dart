@@ -1,10 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:monitor_app/components/item_tile.dart';
 import 'package:monitor_app/components/task_item_card.dart';
 import 'package:monitor_app/model/asset.dart';
-import 'package:monitor_app/model/master_asset.dart';
-
 class DetailTaskScreen extends StatefulWidget {
   final String title;
   // final List<MasterAsset> masterAsset;

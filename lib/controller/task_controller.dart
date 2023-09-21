@@ -3,7 +3,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/mstate/task_state.dart';
-import 'package:dio/dio.dart';
 
 final taskControllerProvider =
     AutoDisposeNotifierProvider<TaskController, TaskState>(

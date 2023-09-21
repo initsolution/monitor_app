@@ -2,8 +2,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:monitor_app/model/master_checklist.dart';
 
-import 'package:monitor_app/model/master_point_checklist_preventive.dart';
-
 abstract class PointChecklistPreventiveState extends Equatable {
   @override
   List<Object?> get props => [];

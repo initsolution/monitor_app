@@ -47,13 +47,18 @@ const AssetsDBSchema = CollectionSchema(
       name: r'note',
       type: IsarType.string,
     ),
-    r'section': PropertySchema(
+    r'orderIndex': PropertySchema(
       id: 6,
+      name: r'orderIndex',
+      type: IsarType.long,
+    ),
+    r'section': PropertySchema(
+      id: 7,
       name: r'section',
       type: IsarType.string,
     ),
     r'url': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'url',
       type: IsarType.string,
     )
@@ -110,8 +115,9 @@ void _assetsDBSerialize(
   writer.writeBool(offsets[3], object.isPassed);
   writer.writeString(offsets[4], object.lastModified);
   writer.writeString(offsets[5], object.note);
-  writer.writeString(offsets[6], object.section);
-  writer.writeString(offsets[7], object.url);
+  writer.writeLong(offsets[6], object.orderIndex);
+  writer.writeString(offsets[7], object.section);
+  writer.writeString(offsets[8], object.url);
 }
 
 AssetsDB _assetsDBDeserialize(
@@ -127,8 +133,9 @@ AssetsDB _assetsDBDeserialize(
     isPassed: reader.readBoolOrNull(offsets[3]) ?? false,
     lastModified: reader.readStringOrNull(offsets[4]),
     note: reader.readStringOrNull(offsets[5]),
-    section: reader.readString(offsets[6]),
-    url: reader.readString(offsets[7]),
+    orderIndex: reader.readLong(offsets[6]),
+    section: reader.readString(offsets[7]),
+    url: reader.readString(offsets[8]),
   );
   object.id = id;
   return object;
@@ -154,8 +161,10 @@ P _assetsDBDeserializeProp<P>(
     case 5:
       return (reader.readStringOrNull(offset)) as P;
     case 6:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 7:
+      return (reader.readString(offset)) as P;
+    case 8:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1004,6 +1013,59 @@ extension AssetsDBQueryFilter
     });
   }
 
+  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> orderIndexEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'orderIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> orderIndexGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'orderIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> orderIndexLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'orderIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> orderIndexBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'orderIndex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> sectionEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1344,6 +1406,18 @@ extension AssetsDBQuerySortBy on QueryBuilder<AssetsDB, AssetsDB, QSortBy> {
     });
   }
 
+  QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> sortByOrderIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> sortByOrderIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.desc);
+    });
+  }
+
   QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> sortBySection() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'section', Sort.asc);
@@ -1455,6 +1529,18 @@ extension AssetsDBQuerySortThenBy
     });
   }
 
+  QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> thenByOrderIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> thenByOrderIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.desc);
+    });
+  }
+
   QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> thenBySection() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'section', Sort.asc);
@@ -1523,6 +1609,12 @@ extension AssetsDBQueryWhereDistinct
     });
   }
 
+  QueryBuilder<AssetsDB, AssetsDB, QDistinct> distinctByOrderIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'orderIndex');
+    });
+  }
+
   QueryBuilder<AssetsDB, AssetsDB, QDistinct> distinctBySection(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1579,6 +1671,12 @@ extension AssetsDBQueryProperty
   QueryBuilder<AssetsDB, String?, QQueryOperations> noteProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'note');
+    });
+  }
+
+  QueryBuilder<AssetsDB, int, QQueryOperations> orderIndexProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'orderIndex');
     });
   }
 

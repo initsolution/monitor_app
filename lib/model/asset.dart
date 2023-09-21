@@ -13,6 +13,7 @@ class Asset {
   late String? lastModified;
   late bool isPassed;
   late String? note;
+  late int orderIndex;
 
   Asset({
     required this.id,
@@ -24,6 +25,7 @@ class Asset {
     this.lastModified,
     this.isPassed = false,
     this.note,
+    required this.orderIndex,
   });
 
   Map<String, dynamic> toJson() => _$AssetToJson(this);

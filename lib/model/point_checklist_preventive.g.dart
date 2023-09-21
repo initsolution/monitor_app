@@ -14,6 +14,7 @@ PointChecklistPreventive _$PointChecklistPreventiveFromJson(
       kriteria: json['kriteria'] as String?,
       hasil: json['hasil'] as String,
       keterangan: json['keterangan'] as String?,
+      orderIndex: json['orderIndex'] as int,
     );
 
 Map<String, dynamic> _$PointChecklistPreventiveToJson(
@@ -24,4 +25,5 @@ Map<String, dynamic> _$PointChecklistPreventiveToJson(
       'kriteria': instance.kriteria,
       'hasil': instance.hasil,
       'keterangan': instance.keterangan,
+      'orderIndex': instance.orderIndex,
     };

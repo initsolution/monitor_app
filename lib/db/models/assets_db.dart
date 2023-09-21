@@ -14,6 +14,7 @@ class AssetsDB {
   late String? lastModified;
   late bool isPassed;
   late String? note;
+  late int orderIndex;
 
   AssetsDB({
     required this.section,
@@ -24,5 +25,6 @@ class AssetsDB {
     this.lastModified,
     this.isPassed = false,
     this.note,
+    required this.orderIndex,
   });
 }

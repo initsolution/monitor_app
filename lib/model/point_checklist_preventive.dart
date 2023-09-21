@@ -12,6 +12,7 @@ class PointChecklistPreventive {
   final String? kriteria;
   final String hasil;
   final String? keterangan;
+  final int orderIndex;
 
   PointChecklistPreventive({
     required this.id,
@@ -19,6 +20,7 @@ class PointChecklistPreventive {
     this.kriteria,
     required this.hasil,
     this.keterangan,
+    required this.orderIndex,
   });
   
   Map<String, dynamic> toJson() => _$PointChecklistPreventiveToJson(this);

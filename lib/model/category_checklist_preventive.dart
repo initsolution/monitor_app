@@ -13,12 +13,14 @@ class CategoryChecklistPreventive {
   final String categoryName;
   final String? keterangan;
   final List<PointChecklistPreventive>? points;
+  final int orderIndex;
 
   CategoryChecklistPreventive({
     required this.id,
     required this.categoryName,
     this.keterangan,
     this.points,
+    required this.orderIndex,
   });
 
   Map<String, dynamic> toJson() => _$CategoryChecklistPreventiveToJson(this);

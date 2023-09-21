@@ -16,6 +16,7 @@ Asset _$AssetFromJson(Map<String, dynamic> json) => Asset(
       lastModified: json['lastModified'] as String?,
       isPassed: json['isPassed'] as bool? ?? false,
       note: json['note'] as String?,
+      orderIndex: json['orderIndex'] as int,
     );
 
 Map<String, dynamic> _$AssetToJson(Asset instance) => <String, dynamic>{
@@ -28,4 +29,5 @@ Map<String, dynamic> _$AssetToJson(Asset instance) => <String, dynamic>{
       'lastModified': instance.lastModified,
       'isPassed': instance.isPassed,
       'note': instance.note,
+      'orderIndex': instance.orderIndex,
     };

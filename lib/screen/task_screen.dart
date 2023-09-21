@@ -3,11 +3,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:monitor_app/model/master_asset.dart';
-import 'package:monitor_app/model/param.dart';
 
 import 'package:monitor_app/model/task.dart';
-import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/screen/detail_task_screen.dart';
 import 'package:monitor_app/screen/form_checklist_screen.dart';
 import 'package:monitor_app/screen/form_report_torque.dart';

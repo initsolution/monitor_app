@@ -27,6 +27,11 @@ const CategoryPointChecklistDBSchema = CollectionSchema(
       id: 1,
       name: r'keterangan',
       type: IsarType.string,
+    ),
+    r'orderIndex': PropertySchema(
+      id: 2,
+      name: r'orderIndex',
+      type: IsarType.long,
     )
   },
   estimateSize: _categoryPointChecklistDBEstimateSize,
@@ -74,6 +79,7 @@ void _categoryPointChecklistDBSerialize(
 ) {
   writer.writeString(offsets[0], object.categoryName);
   writer.writeString(offsets[1], object.keterangan);
+  writer.writeLong(offsets[2], object.orderIndex);
 }
 
 CategoryPointChecklistDB _categoryPointChecklistDBDeserialize(
@@ -85,6 +91,7 @@ CategoryPointChecklistDB _categoryPointChecklistDBDeserialize(
   final object = CategoryPointChecklistDB(
     categoryName: reader.readString(offsets[0]),
     keterangan: reader.readStringOrNull(offsets[1]),
+    orderIndex: reader.readLong(offsets[2]),
   );
   object.id = id;
   return object;
@@ -101,6 +108,8 @@ P _categoryPointChecklistDBDeserializeProp<P>(
       return (reader.readString(offset)) as P;
     case 1:
       return (reader.readStringOrNull(offset)) as P;
+    case 2:
+      return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -554,6 +563,62 @@ extension CategoryPointChecklistDBQueryFilter on QueryBuilder<
       ));
     });
   }
+
+  QueryBuilder<CategoryPointChecklistDB, CategoryPointChecklistDB,
+      QAfterFilterCondition> orderIndexEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'orderIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryPointChecklistDB, CategoryPointChecklistDB,
+      QAfterFilterCondition> orderIndexGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'orderIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryPointChecklistDB, CategoryPointChecklistDB,
+      QAfterFilterCondition> orderIndexLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'orderIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryPointChecklistDB, CategoryPointChecklistDB,
+      QAfterFilterCondition> orderIndexBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'orderIndex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension CategoryPointChecklistDBQueryObject on QueryBuilder<
@@ -652,6 +717,20 @@ extension CategoryPointChecklistDBQuerySortBy on QueryBuilder<
       return query.addSortBy(r'keterangan', Sort.desc);
     });
   }
+
+  QueryBuilder<CategoryPointChecklistDB, CategoryPointChecklistDB, QAfterSortBy>
+      sortByOrderIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<CategoryPointChecklistDB, CategoryPointChecklistDB, QAfterSortBy>
+      sortByOrderIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.desc);
+    });
+  }
 }
 
 extension CategoryPointChecklistDBQuerySortThenBy on QueryBuilder<
@@ -697,6 +776,20 @@ extension CategoryPointChecklistDBQuerySortThenBy on QueryBuilder<
       return query.addSortBy(r'keterangan', Sort.desc);
     });
   }
+
+  QueryBuilder<CategoryPointChecklistDB, CategoryPointChecklistDB, QAfterSortBy>
+      thenByOrderIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<CategoryPointChecklistDB, CategoryPointChecklistDB, QAfterSortBy>
+      thenByOrderIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.desc);
+    });
+  }
 }
 
 extension CategoryPointChecklistDBQueryWhereDistinct on QueryBuilder<
@@ -712,6 +805,13 @@ extension CategoryPointChecklistDBQueryWhereDistinct on QueryBuilder<
       distinctByKeterangan({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'keterangan', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<CategoryPointChecklistDB, CategoryPointChecklistDB, QDistinct>
+      distinctByOrderIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'orderIndex');
     });
   }
 }
@@ -735,6 +835,13 @@ extension CategoryPointChecklistDBQueryProperty on QueryBuilder<
       keteranganProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'keterangan');
+    });
+  }
+
+  QueryBuilder<CategoryPointChecklistDB, int, QQueryOperations>
+      orderIndexProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'orderIndex');
     });
   }
 }

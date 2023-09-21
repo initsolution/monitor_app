@@ -1,9 +1,7 @@
-import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:monitor_app/model/category_checklist_preventive.dart';
-import 'package:monitor_app/model/master_checklist.dart';
 import 'package:monitor_app/model/task.dart';
 import 'package:monitor_app/screen/camera_screen.dart';
 import 'package:monitor_app/screen/album_screen.dart';
