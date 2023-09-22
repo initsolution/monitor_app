@@ -15,3 +15,4 @@
 - add params indexOrder untuk sorting db
 # 22/9/2023
 - experiment Provider saveImage to LocalDB
+- add report torque db

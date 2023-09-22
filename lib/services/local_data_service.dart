@@ -5,12 +5,14 @@ import 'package:monitor_app/db/models/assets_db.dart';
 import 'package:monitor_app/db/models/category_point_checklist_db.dart';
 import 'package:monitor_app/db/models/employee_db.dart';
 import 'package:monitor_app/db/models/point_checklist_db.dart';
+import 'package:monitor_app/db/models/report_reg_torque_db.dart';
 import 'package:monitor_app/db/models/site_db.dart';
 import 'package:monitor_app/db/models/task_db.dart';
 import 'package:monitor_app/model/asset.dart';
 import 'package:monitor_app/model/category_checklist_preventive.dart';
 import 'package:monitor_app/model/employee.dart';
 import 'package:monitor_app/model/point_checklist_preventive.dart';
+import 'package:monitor_app/model/report_reg_torque.dart';
 import 'package:monitor_app/model/site.dart';
 import 'package:monitor_app/model/task.dart';
 
@@ -77,7 +79,18 @@ class LocalDataService {
                   points: points,
                   orderIndex: category.orderIndex);
             }).toList()
-              ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex))
+              ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex)),
+            task.reportTorque
+                .map(
+                  (torque) => ReportRegTorque(
+                      id: torque.id,
+                      towerSegment: torque.towerSegment,
+                      elevasi: torque.elevasi,
+                      boltSize: torque.boltSize,
+                      minimumTorque: torque.minimumTorque,
+                      qtyBolt: torque.qtyBolt),
+                )
+                .toList()
             //masterAsset,
             //masterChecklist,
             //masterReportRegTorque,
@@ -119,6 +132,19 @@ class LocalDataService {
             }).toList() ??
             [];
 
+    final reportRegTorqueDB = task.masterReportRegTorque
+            ?.map(
+              (torque) => ReportRegTorqueDB(
+                towerSegment: torque.towerSegment,
+                elevasi: torque.elevasi,
+                boltSize: torque.boltSize,
+                minimumTorque: torque.minimumTorque,
+                qtyBolt: torque.qtyBolt,
+              ),
+            )
+            .toList() ??
+        [];
+
     final siteDB = SiteDB()
       ..idSite = task.site.id
       ..name = task.site.name
@@ -149,7 +175,8 @@ class LocalDataService {
       ..verifiedDate = task.verifiedDate
       ..status = task.status
       ..assets.addAll(assets)
-      ..categoriesChecklist.addAll(categoryPointChecklistDB);
+      ..categoriesChecklist.addAll(categoryPointChecklistDB)
+      ..reportTorque.addAll(reportRegTorqueDB);
 
     isarDB.writeTxnSync(() => isarDB.tasks.putSync(taskDB));
     return task;
