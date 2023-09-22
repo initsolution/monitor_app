@@ -3,8 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'package:monitor_app/screen/album_screen.dart';
-
 class PreviewScreen extends StatefulWidget {
   static String routeName = 'preview';
   final File imageFile;
@@ -59,7 +57,11 @@ class _PreviewScreenState extends State<PreviewScreen> {
             IconButton(
               // onPressed: () => Navigator.popUntil(
               //     context, ModalRoute.withName('detail_task')),
-              onPressed: () => Navigator.pop(context, true),
+              onPressed: () async {
+                // debugPrint('widget File : ${widget.imageFile.path}');
+                var selectedImage = widget.imageFile.path;
+                Navigator.pop(context, selectedImage);
+              },
               icon: const Icon(Icons.check),
             ),
           IconButton(

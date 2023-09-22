@@ -102,9 +102,8 @@ class _AlbumScreenState extends State<AlbumScreen> {
                         )
                             .then((value) {
                           if (value != null) {
-                            if (value) {
-                              Navigator.of(context).pop();
-                            }
+                            debugPrint('value  : $value');
+                            Navigator.pop(context, value);
                           }
                         });
                         refreshAlreadyCapturedImages();

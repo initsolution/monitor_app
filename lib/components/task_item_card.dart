@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/model/asset.dart';
 
-class TaskItemCard extends StatefulWidget {
+import '../controller/taskdb_controller.dart';
+
+class TaskItemCard extends ConsumerStatefulWidget {
   final Asset asset;
   const TaskItemCard({
     Key? key,
@@ -9,10 +13,10 @@ class TaskItemCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<TaskItemCard> createState() => _TaskItemCardState();
+  ConsumerState<TaskItemCard> createState() => _TaskItemCardState();
 }
 
-class _TaskItemCardState extends State<TaskItemCard> {
+class _TaskItemCardState extends ConsumerState<TaskItemCard> {
   final TextEditingController textController = TextEditingController();
   late String description;
 
@@ -25,11 +29,23 @@ class _TaskItemCardState extends State<TaskItemCard> {
 
   @override
   Widget build(BuildContext context) {
+    // var value = ref.watch(localdataServiceProvider.select((value) => value.toString()));
+    // debugPrint('valueee : $value');
     return Column(
       children: [
         InkWell(
-          onTap: () =>
-              Navigator.of(context).pushNamed('album', arguments: true),
+          onTap: () async {
+            var result =
+                await Navigator.of(context).pushNamed('album', arguments: true);
+            debugPrint('result pick image : $result');
+            var asset = widget.asset;
+            await ref
+                .read(localdataServiceProvider)
+                .updateAsset(asset, result.toString());
+            final localTasks =
+                await ref.read(localdataServiceProvider).getAllTasks();
+            ref.read(taskDbProvider.notifier).state = localTasks;
+          },
           child: Container(
             height: 300,
             color: Colors.grey,
