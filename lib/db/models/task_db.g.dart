@@ -92,6 +92,12 @@ const TaskDBSchema = CollectionSchema(
       name: r'categoriesChecklist',
       target: r'category_point_checklist',
       single: false,
+    ),
+    r'reportTorque': LinkSchema(
+      id: -226213918904000751,
+      name: r'reportTorque',
+      target: r'report_torque',
+      single: false,
     )
   },
   embeddedSchemas: {},
@@ -189,7 +195,8 @@ List<IsarLinkBase<dynamic>> _taskDBGetLinks(TaskDB object) {
     object.site,
     object.verifierEmployee,
     object.assets,
-    object.categoriesChecklist
+    object.categoriesChecklist,
+    object.reportTorque
   ];
 }
 
@@ -204,6 +211,8 @@ void _taskDBAttach(IsarCollection<dynamic> col, Id id, TaskDB object) {
       col.isar.collection<CategoryPointChecklistDB>(),
       r'categoriesChecklist',
       id);
+  object.reportTorque.attach(
+      col, col.isar.collection<ReportRegTorqueDB>(), r'reportTorque', id);
 }
 
 extension TaskDBByIndex on IsarCollection<TaskDB> {
@@ -1363,6 +1372,64 @@ extension TaskDBQueryLinks on QueryBuilder<TaskDB, TaskDB, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(
           r'categoriesChecklist', lower, includeLower, upper, includeUpper);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> reportTorque(
+      FilterQuery<ReportRegTorqueDB> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'reportTorque');
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> reportTorqueLengthEqualTo(
+      int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'reportTorque', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> reportTorqueIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'reportTorque', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> reportTorqueIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'reportTorque', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition>
+      reportTorqueLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'reportTorque', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition>
+      reportTorqueLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'reportTorque', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> reportTorqueLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(
+          r'reportTorque', lower, includeLower, upper, includeUpper);
     });
   }
 }

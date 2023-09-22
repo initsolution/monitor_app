@@ -13,3 +13,5 @@
 - add asset db dan checklist db
 # 21/9/2023
 - add params indexOrder untuk sorting db
+# 22/9/2023
+- add report torque db

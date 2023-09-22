@@ -9,6 +9,7 @@ import 'package:monitor_app/model/employee.dart';
 import 'package:monitor_app/model/master_asset.dart';
 import 'package:monitor_app/model/master_checklist.dart';
 import 'package:monitor_app/model/master_report_reg_torque.dart';
+import 'package:monitor_app/model/report_reg_torque.dart';
 import 'package:monitor_app/model/site.dart';
 
 part 'task.g.dart';
@@ -28,6 +29,7 @@ class Task {
   final List<MasterReportRegTorque>? masterReportRegTorque;
   final List<Asset>? assets;
   final List<CategoryChecklistPreventive>? categoriesChecklist;
+  final List<ReportRegTorque>? reportRegTorque;
 
   Task(
     this.id,
@@ -43,6 +45,7 @@ class Task {
     this.masterReportRegTorque,
     this.assets,
     this.categoriesChecklist,
+    this.reportRegTorque,
   );
 
   Map<String, dynamic> toJson() => _$TaskToJson(this);

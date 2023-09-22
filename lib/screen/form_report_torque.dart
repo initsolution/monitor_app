@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:monitor_app/model/master_report_reg_torque.dart';
+import 'package:monitor_app/model/report_reg_torque.dart';
 import 'package:monitor_app/model/task.dart';
 
 class FormReportTorque extends ConsumerStatefulWidget {
@@ -34,8 +34,8 @@ class _FormReportTorqueState extends ConsumerState<FormReportTorque> {
       body: Container(
         padding: const EdgeInsets.all(10),
         color: const Color(0xFFEAEEF2),
-        child: widget.task.masterReportRegTorque != null
-            ? _buildListReportTorque(widget.task.masterReportRegTorque!)
+        child: widget.task.reportRegTorque != null
+            ? _buildListReportTorque(widget.task.reportRegTorque!)
             : Container(),
         // child: Consumer(
         //   builder: (context, ref, child) {
@@ -52,7 +52,7 @@ class _FormReportTorqueState extends ConsumerState<FormReportTorque> {
     );
   }
 
-  ListView _buildListReportTorque(List<MasterReportRegTorque> report) {
+  ListView _buildListReportTorque(List<ReportRegTorque> report) {
     return ListView.separated(
         itemBuilder: (context, index) {
           controllers.add(TextEditingController());

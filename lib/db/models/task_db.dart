@@ -2,6 +2,7 @@ import 'package:isar/isar.dart';
 import 'package:monitor_app/db/models/assets_db.dart';
 import 'package:monitor_app/db/models/category_point_checklist_db.dart';
 import 'package:monitor_app/db/models/employee_db.dart';
+import 'package:monitor_app/db/models/report_reg_torque_db.dart';
 import 'package:monitor_app/db/models/site_db.dart';
 
 part 'task_db.g.dart';
@@ -25,4 +26,5 @@ class TaskDB {
 
   final assets = IsarLinks<AssetsDB>();
   final categoriesChecklist = IsarLinks<CategoryPointChecklistDB>();
+  final reportTorque = IsarLinks<ReportRegTorqueDB>();
 }
