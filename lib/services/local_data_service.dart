@@ -83,6 +83,21 @@ class LocalDataService {
     return task;
   }
 
+  Future<void> updateAsset(Asset asset, String url) async {
+    final assetDB = AssetsDB(
+      section: asset.section,
+      category: asset.category,
+      description: asset.description,
+      url: url,
+      createdDate: asset.createdDate,
+      lastModified: asset.lastModified,
+      isPassed: asset.isPassed,
+      note: asset.note,
+      orderIndex: asset.orderIndex,
+    );
+    isarDB.writeTxnSync(() => isarDB.assets.putSync(assetDB));
+  }
+
   Future<List<Task>> createTasks(List<Task> tasks) async {
     // ignore: avoid_function_literals_in_foreach_calls
     tasks.forEach((task) async => await createTask(task));
