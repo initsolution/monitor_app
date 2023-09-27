@@ -70,8 +70,8 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
           settings.arguments as List<CameraDescription>;
       return PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            CameraExampleHome(cameras: camera),
-        settings: RouteSettings(name: CameraExampleHome.routeName),
+            CameraScreen(cameras: camera),
+        settings: RouteSettings(name: CameraScreen.routeName),
       );
     case 'album':
       // Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;

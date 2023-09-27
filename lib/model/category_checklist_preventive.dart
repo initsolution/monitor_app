@@ -2,6 +2,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:monitor_app/db/models/category_point_checklist_db.dart';
 
 import 'package:monitor_app/model/point_checklist_preventive.dart';
 
@@ -26,4 +27,18 @@ class CategoryChecklistPreventive {
   Map<String, dynamic> toJson() => _$CategoryChecklistPreventiveToJson(this);
   factory CategoryChecklistPreventive.fromJson(Map<String, dynamic> json) =>
       _$CategoryChecklistPreventiveFromJson(json);
+
+  factory CategoryChecklistPreventive.fromCategoryPointChecklistDB(
+      CategoryPointChecklistDB categoryDB) {
+    final points = categoryDB.points
+        .map(
+            (pointDB) => PointChecklistPreventive.fromPointChecklistDB(pointDB))
+        .toList()
+      ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
+    return CategoryChecklistPreventive(
+        id: categoryDB.id,
+        categoryName: categoryDB.categoryName,
+        points: points,
+        orderIndex: categoryDB.orderIndex);
+  }
 }

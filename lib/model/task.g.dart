@@ -7,32 +7,33 @@ part of 'task.dart';
 // **************************************************************************
 
 Task _$TaskFromJson(Map<String, dynamic> json) => Task(
-      json['id'] as int,
-      json['type'] as String,
-      Site.fromJson(json['site'] as Map<String, dynamic>),
-      Employee.fromJson(json['verifierEmployee'] as Map<String, dynamic>),
-      json['createdDate'] as String,
-      json['submitedDate'] as String?,
-      json['verifiedDate'] as String?,
-      json['status'] as String,
-      (json['masterAsset'] as List<dynamic>?)
+      id: json['id'] as int,
+      type: json['type'] as String,
+      site: Site.fromJson(json['site'] as Map<String, dynamic>),
+      verifierEmployee:
+          Employee.fromJson(json['verifierEmployee'] as Map<String, dynamic>),
+      createdDate: json['createdDate'] as String,
+      submitedDate: json['submitedDate'] as String?,
+      verifiedDate: json['verifiedDate'] as String?,
+      status: json['status'] as String,
+      masterAsset: (json['masterAsset'] as List<dynamic>?)
           ?.map((e) => MasterAsset.fromJson(e as Map<String, dynamic>))
           .toList(),
-      (json['masterChecklist'] as List<dynamic>?)
+      masterChecklist: (json['masterChecklist'] as List<dynamic>?)
           ?.map((e) => MasterChecklist.fromJson(e as Map<String, dynamic>))
           .toList(),
-      (json['masterReportRegTorque'] as List<dynamic>?)
+      masterReportRegTorque: (json['masterReportRegTorque'] as List<dynamic>?)
           ?.map(
               (e) => MasterReportRegTorque.fromJson(e as Map<String, dynamic>))
           .toList(),
-      (json['assets'] as List<dynamic>?)
+      assets: (json['assets'] as List<dynamic>?)
           ?.map((e) => Asset.fromJson(e as Map<String, dynamic>))
           .toList(),
-      (json['categoriesChecklist'] as List<dynamic>?)
+      categoriesChecklist: (json['categoriesChecklist'] as List<dynamic>?)
           ?.map((e) =>
               CategoryChecklistPreventive.fromJson(e as Map<String, dynamic>))
           .toList(),
-      (json['reportRegTorue'] as List<dynamic>?)
+      reportRegTorque: (json['reportRegTorque'] as List<dynamic>?)
           ?.map((e) => ReportRegTorque.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -51,5 +52,5 @@ Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'masterReportRegTorque': instance.masterReportRegTorque,
       'assets': instance.assets,
       'categoriesChecklist': instance.categoriesChecklist,
-      'reportRegTorue': instance.reportRegTorque,
+      'reportRegTorque': instance.reportRegTorque,
     };

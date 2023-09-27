@@ -3,6 +3,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monitor_app/model/master_asset.dart';
 import 'package:monitor_app/model/param.dart';
+import 'package:monitor_app/model/task.dart';
 import 'package:monitor_app/mstate/point_checklist_preventive_state.dart';
 import 'package:monitor_app/mstate/report_reg_torque_state.dart';
 import 'package:monitor_app/controller/point_checklist_preventive_provider.dart';
@@ -18,6 +19,8 @@ final repositoryProvider = Provider((ref) => TestRepoImpl());
 final authRepoProvider = Provider((ref) => AuthRepository(Dio()));
 final restServiceProvider = Provider((ref) => RestService(Dio()));
 final localdataServiceProvider = Provider((ref) => LocalDataService());
+
+final taskProvider = StateProvider<Task?>((ref) => null);
 
 final masterAssetProvider =
     FutureProvider.family<List<MasterAsset>, Param>((ref, params) async {

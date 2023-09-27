@@ -2,10 +2,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:monitor_app/screen/album_screen.dart';
-
-class PreviewScreen extends StatefulWidget {
+class PreviewScreen extends ConsumerWidget {
   static String routeName = 'preview';
   final File imageFile;
   // final int currentIndex;
@@ -18,28 +17,9 @@ class PreviewScreen extends StatefulWidget {
     required this.isPickable,
   }) : super(key: key);
 
-  @override
-  State<PreviewScreen> createState() => _PreviewScreenState();
-}
-
-class _PreviewScreenState extends State<PreviewScreen> {
   // late File currentImageFile;
-  // late int currentIndex;
-  // late List<File> allImages;
-  // late int nextImage;
-  // late File prevImage;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  // currentIndex = widget.currentIndex;
-  // allImages = widget.fileList;
-  // allImages.
-  // setState(() {});
-  // }
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -55,16 +35,16 @@ class _PreviewScreenState extends State<PreviewScreen> {
           //         arguments: false),
           //     icon: const Icon(Icons.image_rounded),
           //   ),
-          if (widget.isPickable)
+          if (isPickable)
             IconButton(
               // onPressed: () => Navigator.popUntil(
               //     context, ModalRoute.withName('detail_task')),
-              onPressed: () => Navigator.pop(context, true),
+              onPressed: () => Navigator.pop(context, imageFile.path),
               icon: const Icon(Icons.check),
             ),
           IconButton(
             onPressed: () async {
-              await widget.imageFile
+              await imageFile
                   .delete()
                   .then((value) => Navigator.of(context).pop());
 
@@ -104,7 +84,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Image.file(widget.imageFile),
+            child: Image.file(imageFile),
           ),
         ],
       ),

@@ -3,8 +3,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monitor_app/controller/app_provider.dart';
 
 import 'package:monitor_app/model/task.dart';
+import 'package:monitor_app/screen/camera_screen.dart';
 import 'package:monitor_app/screen/detail_task_screen.dart';
 import 'package:monitor_app/screen/form_checklist_screen.dart';
 import 'package:monitor_app/screen/form_report_torque.dart';
@@ -27,6 +29,11 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
   List<dynamic> items = [];
   int current = 0;
   final CarouselController _controller = CarouselController();
+  @override
+  void initState() {
+    Future(() => ref.read(taskProvider.notifier).state = widget.task);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +51,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
               onPressed: () async =>
                   // context.push('/task/camera', extra: await availableCameras()),
                   Navigator.of(context)
-                      .pushNamed('camera', arguments: await availableCameras()),
+                      .pushNamed(CameraScreen.routeName, arguments: await availableCameras()),
               icon: const Icon(Icons.camera)),
           IconButton(onPressed: () {}, icon: const Icon(Icons.upload)),
         ],
@@ -336,7 +343,8 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => DetailTaskScreen(
-                      title: result[index].keys.elementAt(0),
+                      title:
+                          '${result[index].keys.elementAt(0)} (${(result[index][result[index].keys.elementAt(0)] as List).length})',
                       // masterAsset: result[index]
                       //     [result[index].keys.elementAt(0)]!,
                       assets: result[index][result[index].keys.elementAt(0)]!,

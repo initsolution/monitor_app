@@ -9,19 +9,19 @@ import 'package:monitor_app/screen/album_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class CameraExampleHome extends StatefulWidget {
+class CameraScreen extends StatefulWidget {
   static String routeName = 'camera';
   final List<CameraDescription> cameras;
 
-  const CameraExampleHome({super.key, required this.cameras});
+  const CameraScreen({super.key, required this.cameras});
 
   @override
-  State<CameraExampleHome> createState() {
-    return _CameraExampleHomeState();
+  State<CameraScreen> createState() {
+    return _CameraScreenState();
   }
 }
 
-class _CameraExampleHomeState extends State<CameraExampleHome>
+class _CameraScreenState extends State<CameraScreen>
     with WidgetsBindingObserver, TickerProviderStateMixin {
   CameraController? controller;
   File? _imageFile;

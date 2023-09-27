@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:monitor_app/components/task_card.dart';
+import 'package:monitor_app/screen/components/task_card.dart';
 import 'package:monitor_app/constants/strings.dart';
 import 'package:monitor_app/mstate/task_state.dart';
 import 'package:monitor_app/controller/task_controller.dart';

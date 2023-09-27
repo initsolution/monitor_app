@@ -58,21 +58,7 @@ const EmployeeDBSchema = CollectionSchema(
   deserialize: _employeeDBDeserialize,
   deserializeProp: _employeeDBDeserializeProp,
   idName: r'id',
-  indexes: {
-    r'nik': IndexSchema(
-      id: -2798383488431574380,
-      name: r'nik',
-      unique: true,
-      replace: true,
-      properties: [
-        IndexPropertySchema(
-          name: r'nik',
-          type: IndexType.hash,
-          caseSensitive: true,
-        )
-      ],
-    )
-  },
+  indexes: {},
   links: {},
   embeddedSchemas: {},
   getId: _employeeDBGetId,
@@ -182,60 +168,6 @@ void _employeeDBAttach(IsarCollection<dynamic> col, Id id, EmployeeDB object) {
   object.id = id;
 }
 
-extension EmployeeDBByIndex on IsarCollection<EmployeeDB> {
-  Future<EmployeeDB?> getByNik(String nik) {
-    return getByIndex(r'nik', [nik]);
-  }
-
-  EmployeeDB? getByNikSync(String nik) {
-    return getByIndexSync(r'nik', [nik]);
-  }
-
-  Future<bool> deleteByNik(String nik) {
-    return deleteByIndex(r'nik', [nik]);
-  }
-
-  bool deleteByNikSync(String nik) {
-    return deleteByIndexSync(r'nik', [nik]);
-  }
-
-  Future<List<EmployeeDB?>> getAllByNik(List<String> nikValues) {
-    final values = nikValues.map((e) => [e]).toList();
-    return getAllByIndex(r'nik', values);
-  }
-
-  List<EmployeeDB?> getAllByNikSync(List<String> nikValues) {
-    final values = nikValues.map((e) => [e]).toList();
-    return getAllByIndexSync(r'nik', values);
-  }
-
-  Future<int> deleteAllByNik(List<String> nikValues) {
-    final values = nikValues.map((e) => [e]).toList();
-    return deleteAllByIndex(r'nik', values);
-  }
-
-  int deleteAllByNikSync(List<String> nikValues) {
-    final values = nikValues.map((e) => [e]).toList();
-    return deleteAllByIndexSync(r'nik', values);
-  }
-
-  Future<Id> putByNik(EmployeeDB object) {
-    return putByIndex(r'nik', object);
-  }
-
-  Id putByNikSync(EmployeeDB object, {bool saveLinks = true}) {
-    return putByIndexSync(r'nik', object, saveLinks: saveLinks);
-  }
-
-  Future<List<Id>> putAllByNik(List<EmployeeDB> objects) {
-    return putAllByIndex(r'nik', objects);
-  }
-
-  List<Id> putAllByNikSync(List<EmployeeDB> objects, {bool saveLinks = true}) {
-    return putAllByIndexSync(r'nik', objects, saveLinks: saveLinks);
-  }
-}
-
 extension EmployeeDBQueryWhereSort
     on QueryBuilder<EmployeeDB, EmployeeDB, QWhere> {
   QueryBuilder<EmployeeDB, EmployeeDB, QAfterWhere> anyId() {
@@ -309,51 +241,6 @@ extension EmployeeDBQueryWhere
         upper: upperId,
         includeUpper: includeUpper,
       ));
-    });
-  }
-
-  QueryBuilder<EmployeeDB, EmployeeDB, QAfterWhereClause> nikEqualTo(
-      String nik) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'nik',
-        value: [nik],
-      ));
-    });
-  }
-
-  QueryBuilder<EmployeeDB, EmployeeDB, QAfterWhereClause> nikNotEqualTo(
-      String nik) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'nik',
-              lower: [],
-              upper: [nik],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'nik',
-              lower: [nik],
-              includeLower: false,
-              upper: [],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'nik',
-              lower: [nik],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'nik',
-              lower: [],
-              upper: [nik],
-              includeUpper: false,
-            ));
-      }
     });
   }
 }

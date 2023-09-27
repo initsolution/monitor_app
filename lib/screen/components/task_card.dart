@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:monitor_app/components/icon_task_status.dart';
+import 'package:monitor_app/screen/components/icon_task_status.dart';
 import 'package:monitor_app/model/task.dart';
 import 'package:monitor_app/constants/images.dart';
+import 'package:monitor_app/screen/task_screen.dart';
 
 class TaskCard extends StatelessWidget {
   final Task task;
@@ -16,7 +17,7 @@ class TaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // debugPrint('status : ${task.status}');
     return InkWell(
-      onTap: () => Navigator.of(context).pushNamed('task',
+      onTap: () => Navigator.of(context).pushNamed(TaskScreen.routeName,
           arguments: task), //context.goNamed('task', extra: task),
       child: Container(
         padding: const EdgeInsets.all(20),

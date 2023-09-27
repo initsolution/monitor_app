@@ -2,6 +2,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:monitor_app/db/models/report_reg_torque_db.dart';
 
 part 'report_reg_torque.g.dart';
 
@@ -26,5 +27,14 @@ class ReportRegTorque {
   });
 
   Map<String, dynamic> toJson() => _$ReportRegTorqueToJson(this);
-  factory ReportRegTorque.fromJson(Map<String, dynamic> json) => _$ReportRegTorqueFromJson(json);
+  factory ReportRegTorque.fromJson(Map<String, dynamic> json) =>
+      _$ReportRegTorqueFromJson(json);
+  factory ReportRegTorque.fromReportRegTorqueDB(ReportRegTorqueDB torque) =>
+      ReportRegTorque(
+          id: torque.id,
+          towerSegment: torque.towerSegment,
+          elevasi: torque.elevasi,
+          boltSize: torque.boltSize,
+          minimumTorque: torque.minimumTorque,
+          qtyBolt: torque.qtyBolt);
 }

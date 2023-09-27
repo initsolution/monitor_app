@@ -6,7 +6,6 @@ part 'employee_db.g.dart';
 @Name("employees")
 class EmployeeDB {
   Id? id;
-  @Index(unique: true, replace: true)
   late String nik;
   late String name;
   late String email;

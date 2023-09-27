@@ -12,6 +12,9 @@
 # 20/9/2023
 - add asset db dan checklist db
 # 21/9/2023
-- add params indexOrder untuk sorting db
+- add params indexOrder untuk preventive db
 # 22/9/2023
 - add report torque db
+# 27/9/2023
+- pick from album and save to local asset db
+- compare local db and rest when open apps after login, when rest add new task, local insert new one. but when rest delete task, local delete too
