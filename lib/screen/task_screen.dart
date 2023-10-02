@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monitor_app/controller/app_provider.dart';
+import 'package:monitor_app/controller/asset_controller.dart';
 
 import 'package:monitor_app/model/task.dart';
 import 'package:monitor_app/screen/camera_screen.dart';
@@ -50,10 +51,21 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
           IconButton(
               onPressed: () async =>
                   // context.push('/task/camera', extra: await availableCameras()),
-                  Navigator.of(context)
-                      .pushNamed(CameraScreen.routeName, arguments: await availableCameras()),
+                  Navigator.of(context).pushNamed(CameraScreen.routeName,
+                      arguments: await availableCameras()),
               icon: const Icon(Icons.camera)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.upload)),
+          IconButton(
+              onPressed: () async {
+                var task = ref.read(taskProvider.notifier).state;
+                var taskId = task!.id;
+                for (var asset in task.assets!) {
+                  // debugPrint('element : ${element.description} , ${element.url}');
+                  await ref
+                      .read(assetControllerProvider.notifier)
+                      .createAsset(taskId, asset);
+                }
+              },
+              icon: const Icon(Icons.upload)),
         ],
       ),
       body: Column(

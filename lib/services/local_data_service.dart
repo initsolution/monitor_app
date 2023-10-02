@@ -104,21 +104,6 @@ class LocalDataService {
     return tasks;
   }
 
-  Future<void> updateAsset(Asset asset, String url) async {
-    final assetDB = AssetsDB(
-      section: asset.section,
-      category: asset.category,
-      description: asset.description,
-      url: url,
-      createdDate: asset.createdDate,
-      lastModified: asset.lastModified,
-      isPassed: asset.isPassed,
-      note: asset.note,
-      orderIndex: asset.orderIndex,
-    );
-    isarDB.writeTxnSync(() => isarDB.assets.putSync(assetDB));
-  }
-
   Future<void> deleteTask(int taskId) async {
     await isarDB
         .writeTxn(() async => await isarDB.tasks.deleteByIdTask(taskId));
