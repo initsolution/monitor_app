@@ -50,8 +50,8 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
           IconButton(
               onPressed: () async =>
                   // context.push('/task/camera', extra: await availableCameras()),
-                  Navigator.of(context)
-                      .pushNamed(CameraScreen.routeName, arguments: await availableCameras()),
+                  Navigator.of(context).pushNamed(CameraScreen.routeName,
+                      arguments: await availableCameras()),
               icon: const Icon(Icons.camera)),
           IconButton(onPressed: () {}, icon: const Icon(Icons.upload)),
         ],
@@ -63,7 +63,38 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
               ? _buildChecklistButton()
               : _buildReportTorqueAndVerticality(),
           _buildAllRequirement(),
+          // Container(
+          //   color: const Color(0xFFEAEEF2),
+          //   width: double.infinity,
+          //   padding:
+          //       const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
+          //   child: Container(
+          //     padding: const EdgeInsets.all(20),
+          //     decoration: BoxDecoration(
+          //       color: Colors.blueAccent,
+          //       borderRadius: BorderRadius.circular(10),
+          //     ),
+          //     child: const Text('TEMUAN'),
+          //   ),
+          // ),
         ],
+      ),
+      floatingActionButton: ElevatedButton.icon(
+        onPressed: () {
+          debugPrint("You pressed Icon Elevated Button");
+        },
+        style: ElevatedButton.styleFrom(
+          elevation: 2,
+          backgroundColor: Colors.blue,
+        ),
+        icon: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ), //icon data for elevated button
+        label: const Text(
+          "Temuan",
+          style: TextStyle(color: Colors.white),
+        ), //label text
       ),
     );
   }
@@ -219,81 +250,13 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
   List<String> listSection = [];
   Widget _buildAllRequirement() {
     return Expanded(
-        child: Container(
-      color: const Color(0xFFEAEEF2),
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 8, bottom: 20),
-      child: widget.task.assets != null ? _buildCategoriesAsset() : Container(),
-      // child: mAssetProv.when(
-      //   data: (data) {
-      //     // print(data);
-      //     bool isMultiTenant = false;
-      //     List<String> tenants = widget.task.site.tenants!.split(',');
-      //     if (tenants.length > 1) {
-      //       isMultiTenant = true;
-      //     }
-      //     var sections = groupBy(data, (obj) => obj.section);
-      //     List<dynamic> result = [];
-      //     for (var element in sections.keys) {
-      //       result.add(element);
-      //       var categories = groupBy(sections[element]!, (obj) => obj.category);
-
-      //       for (var cat in categories.keys) {
-      //         if (isMultiTenant) {
-      //           if (cat.toUpperCase() == "PANEL KWH" ||
-      //               cat.toUpperCase() == "PANEL ACPDB" ||
-      //               cat.toUpperCase() == "GROUNDING & LIGHTNING PROTECTION") {
-      //             for (int i = 0; i < tenants.length; i++) {
-      //               var newCat = '$cat (${tenants[i]})';
-      //               result.add({newCat: categories[cat]!});
-      //             }
-      //           } else {
-      //             result.add({cat: categories[cat]!});
-      //           }
-      //         } else {
-      //           result.add({cat: categories[cat]!});
-      //         }
-      //       }
-      //     }
-
-      //     return ListView.separated(
-      //         itemBuilder: (context, index) {
-      //           if (result[index] is String) {
-      //             return Text(result[index].toString().toUpperCase());
-      //           } else {
-      //             return GestureDetector(
-      //               onTap: () {
-      //                 // for (var element
-      //                 //     in result[result.keys.elementAt(index)]!) {
-      //                 //   print(element.description);
-      //                 // }
-      //                 Navigator.of(context).push(
-      //                   MaterialPageRoute(
-      //                     builder: (context) => DetailTaskScreen(
-      //                       title: result[index].keys.elementAt(0),
-      //                       masterAsset: result[index]
-      //                           [result[index].keys.elementAt(0)]!,
-      //                     ),
-      //                   ),
-      //                 );
-      //               },
-      //               child: Container(
-      //                 padding: const EdgeInsets.all(20),
-      //                 decoration: BoxDecoration(
-      //                   color: Colors.white,
-      //                   borderRadius: BorderRadius.circular(10),
-      //                 ),
-      //                 child: Text(result[index].keys.elementAt(0)),
-      //               ),
-      //             );
-      //           }
-      //         },
-      //         separatorBuilder: (context, index) => const SizedBox(height: 10),
-      //         itemCount: result.length);
-      //   },
-      //   error: (error, stackTrace) => Text(error.toString()),
-      //   loading: () => const Center(child: CircularProgressIndicator()),
-      // ),
-    ));
+      child: Container(
+        color: const Color(0xFFEAEEF2),
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
+        child:
+            widget.task.assets != null ? _buildCategoriesAsset() : Container(),
+      ),
+    );
   }
 
   Widget _buildCategoriesAsset() {
@@ -332,7 +295,9 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
     return ListView.separated(
         itemBuilder: (context, index) {
           if (result[index] is String) {
-            return Text(result[index].toString().toUpperCase());
+            return result[index].toString().toUpperCase() != 'SECTION'
+                ? Text(result[index].toString().toUpperCase())
+                : Container();
           } else {
             return GestureDetector(
               onTap: () {

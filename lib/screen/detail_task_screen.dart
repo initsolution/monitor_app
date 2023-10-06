@@ -26,6 +26,9 @@ class _DetailTaskScreenState extends ConsumerState<DetailTaskScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+        ],
       ),
       body: _buildBody(),
     );
@@ -33,37 +36,73 @@ class _DetailTaskScreenState extends ConsumerState<DetailTaskScreen> {
 
   Widget _buildBody() {
     final state = ref.watch(taskProvider);
-    return Column(
-      children: [
-        Expanded(
-          child: Container(
-            color: const Color(0xFFEAEEF2),
-            padding: const EdgeInsets.all(10),
-            child: Consumer(
-              builder: (context, ref, child) {
-                if (state != null) {
-                  return GridView.builder(
-                    itemCount: widget.assets.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
-                      childAspectRatio: 0.46,
-                    ),
-                    itemBuilder: (context, index) {
-                      return TaskItemCard(
-                          asset: widget.assets[index], task: state);
-                    },
-                  );
-                } else {
-                  return Container();
-                }
-              },
-            ),
-          ),
+    return CustomScrollView(
+      slivers: [
+        Consumer(
+          builder: (context, ref, child) {
+            if (state != null) {
+              return SliverList.builder(
+                itemCount: widget.assets.length,
+                itemBuilder: (context, index) {
+                  return TaskItemCard(
+                      asset: widget.assets[index], task: state);
+                },
+              );
+              // return GridView.builder(
+              //   itemCount: widget.assets.length,
+              //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              //     crossAxisCount: 2,
+              //     crossAxisSpacing: 8,
+              //     mainAxisSpacing: 8,
+              //     childAspectRatio: 0.46,
+              //   ),
+              //   itemBuilder: (context, index) {
+              //     return TaskItemCard(
+              //         asset: widget.assets[index], task: state);
+              //   },
+              // );
+            } else {
+              return Container();
+            }
+          },
         ),
       ],
     );
   }
+
+  // Widget _buildBody() {
+  //   final state = ref.watch(taskProvider);
+  //   return Column(
+  //     children: [
+  //       Expanded(
+  //         child: Container(
+  //           color: const Color(0xFFEAEEF2),
+  //           padding: const EdgeInsets.all(10),
+  //           child: Consumer(
+  //             builder: (context, ref, child) {
+  //               if (state != null) {
+  //                 return GridView.builder(
+  //                   itemCount: widget.assets.length,
+  //                   gridDelegate:
+  //                       const SliverGridDelegateWithFixedCrossAxisCount(
+  //                     crossAxisCount: 2,
+  //                     crossAxisSpacing: 8,
+  //                     mainAxisSpacing: 8,
+  //                     childAspectRatio: 0.46,
+  //                   ),
+  //                   itemBuilder: (context, index) {
+  //                     return TaskItemCard(
+  //                         asset: widget.assets[index], task: state);
+  //                   },
+  //                 );
+  //               } else {
+  //                 return Container();
+  //               }
+  //             },
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 }
