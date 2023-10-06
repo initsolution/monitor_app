@@ -130,6 +130,7 @@ AssetsDB _assetsDBDeserialize(
     category: reader.readString(offsets[0]),
     createdDate: reader.readString(offsets[1]),
     description: reader.readString(offsets[2]),
+    id: id,
     isPassed: reader.readBoolOrNull(offsets[3]) ?? false,
     lastModified: reader.readStringOrNull(offsets[4]),
     note: reader.readStringOrNull(offsets[5]),
@@ -137,7 +138,6 @@ AssetsDB _assetsDBDeserialize(
     section: reader.readString(offsets[7]),
     url: reader.readString(offsets[8]),
   );
-  object.id = id;
   return object;
 }
 

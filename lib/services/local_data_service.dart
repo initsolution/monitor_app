@@ -31,6 +31,7 @@ class LocalDataService {
   Future<Task> createTask(Task task) async {
     final assetsDB = task.masterAsset?.mapIndexed((idx, masterAsset) {
           return AssetsDB(
+            id: 0,
             section: masterAsset.section,
             category: masterAsset.category,
             description: masterAsset.description,
@@ -85,6 +86,7 @@ class LocalDataService {
 
   Future<void> updateAsset(Asset asset, String url) async {
     final assetDB = AssetsDB(
+      id : asset.id,
       section: asset.section,
       category: asset.category,
       description: asset.description,

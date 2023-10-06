@@ -17,6 +17,7 @@ class AssetsDB {
   late int orderIndex;
 
   AssetsDB({
+    required this.id,
     required this.section,
     required this.category,
     required this.description,

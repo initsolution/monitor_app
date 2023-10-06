@@ -21,6 +21,7 @@ final restServiceProvider = Provider((ref) => RestService(Dio()));
 final localdataServiceProvider = Provider((ref) => LocalDataService());
 
 final taskProvider = StateProvider<Task?>((ref) => null);
+final assetUrlProvider = StateProvider((ref) => '');
 
 final masterAssetProvider =
     FutureProvider.family<List<MasterAsset>, Param>((ref, params) async {

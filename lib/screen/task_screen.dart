@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:collection/collection.dart';
@@ -58,12 +60,19 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
               onPressed: () async {
                 var task = ref.read(taskProvider.notifier).state;
                 var taskId = task!.id;
+
+                progressDialogue();
                 for (var asset in task.assets!) {
                   // debugPrint('element : ${element.description} , ${element.url}');
+                  var file = File(asset.url);
+                  ref.read(assetUrlProvider.notifier).state =
+                      file.path.split("/").last;
                   await ref
                       .read(assetControllerProvider.notifier)
                       .createAsset(taskId, asset);
                 }
+                Navigator.pop(context);
+                debugPrint('done');
               },
               icon: const Icon(Icons.upload)),
         ],
@@ -377,5 +386,37 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
         },
         separatorBuilder: (context, index) => const SizedBox(height: 10),
         itemCount: result.length);
+  }
+
+  progressDialogue() {
+    AlertDialog alert = AlertDialog(
+      elevation: 0,
+      content: Consumer(builder: (context, ref, child) {
+        var path = ref.watch(assetUrlProvider);
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // The loading indicator
+            const CircularProgressIndicator(),
+            const SizedBox(
+              height: 15,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text('Uploading file : \n${path}'),
+            )
+          ],
+        );
+      }),
+    );
+    showDialog(
+      //prevent outside touch
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        //prevent Back button press
+        return WillPopScope(onWillPop: () async => false, child: alert);
+      },
+    );
   }
 }
