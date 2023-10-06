@@ -21,3 +21,5 @@
 # 06/10/2023
 - update detail task screen -> custom scroll view with sliver
 - add temuan button
+- Uploading File to Server
+- Update local database by ID
