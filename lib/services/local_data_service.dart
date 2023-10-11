@@ -31,7 +31,6 @@ class LocalDataService {
   Future<Task> createTask(Task task) async {
     final assetsDB = task.masterAsset?.mapIndexed((idx, masterAsset) {
           return AssetsDB(
-            id: 0,
             section: masterAsset.section,
             category: masterAsset.category,
             description: masterAsset.description,
@@ -41,7 +40,6 @@ class LocalDataService {
           );
         }).toList() ??
         [];
-
     int index = 0;
     final categoryPointChecklistDB =
         task.masterChecklist?.map((masterChecklist) {
@@ -84,13 +82,13 @@ class LocalDataService {
     return task;
   }
 
-  Future<void> updateAsset(Asset asset, String url) async {
+  Future<void> updateAsset(Asset asset) async {
     final assetDB = AssetsDB(
-      id : asset.id,
+      id: asset.id,
       section: asset.section,
       category: asset.category,
       description: asset.description,
-      url: url,
+      url: asset.url,
       createdDate: asset.createdDate,
       lastModified: asset.lastModified,
       isPassed: asset.isPassed,
@@ -98,6 +96,27 @@ class LocalDataService {
       orderIndex: asset.orderIndex,
     );
     isarDB.writeTxnSync(() => isarDB.assets.putSync(assetDB));
+  }
+
+  Future<void> updateAssets(List<Asset> assets) async {
+    List<AssetsDB> assetsDB = [];
+    for (var element in assets) {
+      final assetDB = AssetsDB(
+        id: element.id,
+        section: element.section,
+        category: element.category,
+        description: element.description,
+        url: element.url,
+        createdDate: element.createdDate,
+        lastModified: element.lastModified,
+        isPassed: element.isPassed,
+        note: element.note,
+        orderIndex: element.orderIndex,
+      );
+
+      assetsDB.add(assetDB);
+    }
+    isarDB.writeTxnSync(() => isarDB.assets.putAllSync(assetsDB));
   }
 
   Future<List<Task>> createTasks(List<Task> tasks) async {

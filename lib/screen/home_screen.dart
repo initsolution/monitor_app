@@ -6,6 +6,7 @@ import 'package:monitor_app/screen/components/task_card.dart';
 import 'package:monitor_app/constants/strings.dart';
 import 'package:monitor_app/mstate/task_state.dart';
 import 'package:monitor_app/controller/task_controller.dart';
+import 'package:monitor_app/screen/task_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   static String routeName = 'home';
@@ -40,6 +41,14 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
+  // @override
+  // void didChangeDependencies() {
+  //   debugPrint('didChangeDependencies');
+  //   Future(() =>
+  //       ref.read(taskControllerProvider.notifier).getAllTasks(widget.email));
+  //   super.didChangeDependencies();
+  // }
+
   Widget _getBody() {
     final state = ref.watch(taskControllerProvider);
     return Column(
@@ -52,13 +61,24 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
             color: const Color(0xFFEAEEF2),
             child: Consumer(
               builder: (context, ref, child) {
-                if (state is TaskLoaded) {
+                debugPrint(state.toString());
+                if (state is TasksLoaded) {
                   if (state.tasks.isEmpty) {
                     return const Center(child: Text('No Task'));
                   } else {
                     return ListView.separated(
                       itemBuilder: (context, index) {
-                        return TaskCard(task: state.tasks[index]);
+                        return TaskCard(
+                          task: state.tasks[index],
+                          onSelectTask: () async {
+                            await Navigator.of(context)
+                                .pushNamed(TaskScreen.routeName,
+                                    arguments: state.tasks[index].id)
+                                .then((_) => Future(() => ref
+                                    .read(taskControllerProvider.notifier)
+                                    .getAllTasks(widget.email)));
+                          },
+                        );
                       },
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 10),

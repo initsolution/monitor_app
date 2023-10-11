@@ -7,18 +7,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/controller/asset_controller.dart';
+import 'package:monitor_app/controller/task_controller.dart';
 
 import 'package:monitor_app/model/task.dart';
+import 'package:monitor_app/mstate/task_state.dart';
 import 'package:monitor_app/screen/camera_screen.dart';
 import 'package:monitor_app/screen/detail_task_screen.dart';
 import 'package:monitor_app/screen/form_checklist_screen.dart';
 import 'package:monitor_app/screen/form_report_torque.dart';
 import 'package:monitor_app/screen/form_report_verticality.dart';
+import 'package:monitor_app/screen/temuan_screen.dart';
 
 class TaskScreen extends ConsumerStatefulWidget {
   static String routeName = 'task';
-  final Task task;
-  const TaskScreen({Key? key, required this.task}) : super(key: key);
+  // final Task task;
+  final int taskId;
+  const TaskScreen({Key? key, required this.taskId}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _TaskScreenState();
@@ -32,20 +36,18 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
   List<dynamic> items = [];
   int current = 0;
   final CarouselController _controller = CarouselController();
+  late Task task;
+
   @override
   void initState() {
-    Future(() => ref.read(taskProvider.notifier).state = widget.task);
     super.initState();
+    Future(() =>
+        ref.read(taskControllerProvider.notifier).getTaskById(widget.taskId));
   }
 
   @override
   Widget build(BuildContext context) {
-    // mAssetProv = ref.watch(masterAssetProvider(Param(
-    //   type: widget.task.type,
-    //   fabricator: widget.task.site.fabricator,
-    //   towerHeight: widget.task.site.towerHeight,
-    // )));
-
+    var state = ref.watch(taskControllerProvider);
     return Scaffold(
       appBar: AppBar(
         // title: Text(widget.task.site.name),
@@ -58,8 +60,8 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
               icon: const Icon(Icons.camera)),
           IconButton(
               onPressed: () async {
-                var task = ref.read(taskProvider.notifier).state;
-                var taskId = task!.id;
+                // var task = ref.read(taskProvider.notifier).state;
+                var taskId = task.id;
 
                 progressDialogue();
                 for (var asset in task.assets!) {
@@ -71,38 +73,35 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                       .read(assetControllerProvider.notifier)
                       .createAsset(taskId, asset);
                 }
+                // ignore: use_build_context_synchronously
                 Navigator.pop(context);
                 debugPrint('done');
               },
               icon: const Icon(Icons.upload)),
         ],
       ),
-      body: Column(
-        children: [
-          _getSiteInfo(),
-          widget.task.type.toLowerCase() == "preventive"
-              ? _buildChecklistButton()
-              : _buildReportTorqueAndVerticality(),
-          _buildAllRequirement(),
-          // Container(
-          //   color: const Color(0xFFEAEEF2),
-          //   width: double.infinity,
-          //   padding:
-          //       const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
-          //   child: Container(
-          //     padding: const EdgeInsets.all(20),
-          //     decoration: BoxDecoration(
-          //       color: Colors.blueAccent,
-          //       borderRadius: BorderRadius.circular(10),
-          //     ),
-          //     child: const Text('TEMUAN'),
-          //   ),
-          // ),
-        ],
-      ),
+      body: Consumer(builder: (context, ref, child) {
+        debugPrint('reload task screen $state');
+        if (state is TasksLoaded) {
+          task = state.tasks[0];
+          return Column(
+            children: [
+              _getSiteInfo(),
+              task.type.toLowerCase() == "preventive"
+                  ? _buildChecklistButton()
+                  : _buildReportTorqueAndVerticality(),
+              _buildAllRequirement(),
+            ],
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      }),
       floatingActionButton: ElevatedButton.icon(
         onPressed: () {
-          debugPrint("You pressed Icon Elevated Button");
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const TemuanScreen(),
+          ));
         },
         style: ElevatedButton.styleFrom(
           elevation: 2,
@@ -128,8 +127,8 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
         children: [
           ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(FormReportTorque.routeName,
-                    arguments: widget.task);
+                Navigator.of(context)
+                    .pushNamed(FormReportTorque.routeName, arguments: task);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
@@ -142,7 +141,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
           ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(FormReportVerticality.routeName,
-                    arguments: widget.task);
+                    arguments: task);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.pink,
@@ -163,7 +162,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
         child: ElevatedButton(
             onPressed: () {
               Navigator.of(context).pushNamed(FormChecklistScreen.routeName,
-                  arguments: widget.task.categoriesChecklist ?? []);
+                  arguments: task.categoriesChecklist ?? []);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,
@@ -232,12 +231,12 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            widget.task.site.name.toUpperCase(),
+            task.site.name.toUpperCase(),
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-          Text(widget.task.site.id),
-          Text(widget.task.site.address ?? ''),
-          Text('${widget.task.site.region}, ${widget.task.site.province}'),
+          Text(task.site.id),
+          Text(task.site.address ?? ''),
+          Text('${task.site.region}, ${task.site.province}'),
         ],
       ),
     );
@@ -256,11 +255,11 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Height : ${widget.task.site.towerHeight.toString()}'),
-              Text('Type : ${widget.task.site.towerType}'),
-              Text('Fabricator : ${widget.task.site.fabricator}'),
-              Text('Tenant : ${widget.task.site.tenants}'),
-              Text('Created Date : ${widget.task.createdDate}'),
+              Text('Height : ${task.site.towerHeight.toString()}'),
+              Text('Type : ${task.site.towerType}'),
+              Text('Fabricator : ${task.site.fabricator}'),
+              Text('Tenant : ${task.site.tenants}'),
+              Text('Created Date : ${task.createdDate}'),
             ],
           ),
         ],
@@ -272,23 +271,34 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
   Widget _buildAllRequirement() {
     return Expanded(
       child: Container(
-        color: const Color(0xFFEAEEF2),
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
-        child:
-            widget.task.assets != null ? _buildCategoriesAsset() : Container(),
-      ),
+          color: const Color(0xFFEAEEF2),
+          padding:
+              const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
+          child: task.assets != null ? _buildCategoriesAsset() : Container()
+
+          // Consumer(
+          //   builder: (context, ref, child) {
+          //     if (state is TaskLoaded) {
+          //       return state.task.assets != null
+          //           ? _buildCategoriesAsset()
+          //           : Container();
+          //     } else {
+          //       return const Center(child: CircularProgressIndicator());
+          //     }
+          //   },
+          // ),
+          ),
     );
   }
 
   Widget _buildCategoriesAsset() {
     bool isMultiTenant = false;
-    List<String> tenants = widget.task.site.tenants != null
-        ? widget.task.site.tenants!.split(';')
-        : [];
+    List<String> tenants =
+        task.site.tenants != null ? task.site.tenants!.split(';') : [];
     if (tenants.length > 1) {
       isMultiTenant = true;
     }
-    var sections = groupBy(widget.task.assets!, (obj) => obj.section);
+    var sections = groupBy(task.assets!, (obj) => obj.section);
     List<dynamic> result = [];
     for (var element in sections.keys) {
       result.add(element);
@@ -321,22 +331,27 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                 : Container();
           } else {
             return GestureDetector(
-              onTap: () {
+              onTap: () async {
                 // for (var element
                 //     in result[result.keys.elementAt(index)]!) {
                 //   print(element.description);
                 // }
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => DetailTaskScreen(
-                      title:
-                          '${result[index].keys.elementAt(0)} (${(result[index][result[index].keys.elementAt(0)] as List).length})',
-                      // masterAsset: result[index]
-                      //     [result[index].keys.elementAt(0)]!,
-                      assets: result[index][result[index].keys.elementAt(0)]!,
-                    ),
-                  ),
-                );
+                await Navigator.of(context)
+                    .push(
+                      MaterialPageRoute(
+                        builder: (context) => DetailTaskScreen(
+                          title:
+                              '${result[index].keys.elementAt(0)} (${(result[index][result[index].keys.elementAt(0)] as List).length})',
+                          // masterAsset: result[index]
+                          //     [result[index].keys.elementAt(0)]!,
+                          assets: result[index]
+                              [result[index].keys.elementAt(0)]!,
+                        ),
+                      ),
+                    )
+                    .then((_) async => await ref
+                        .read(taskControllerProvider.notifier)
+                        .getTaskById(widget.taskId));
               },
               child: Container(
                 padding: const EdgeInsets.all(20),

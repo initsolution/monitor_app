@@ -172,7 +172,7 @@ P _assetsDBDeserializeProp<P>(
 }
 
 Id _assetsDBGetId(AssetsDB object) {
-  return object.id;
+  return object.id ?? Isar.autoIncrement;
 }
 
 List<IsarLinkBase<dynamic>> _assetsDBGetLinks(AssetsDB object) {
@@ -654,7 +654,23 @@ extension AssetsDBQueryFilter
     });
   }
 
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> idEqualTo(Id value) {
+  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> idIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> idIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> idEqualTo(Id? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -664,7 +680,7 @@ extension AssetsDBQueryFilter
   }
 
   QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> idGreaterThan(
-    Id value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -677,7 +693,7 @@ extension AssetsDBQueryFilter
   }
 
   QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> idLessThan(
-    Id value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -690,8 +706,8 @@ extension AssetsDBQueryFilter
   }
 
   QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> idBetween(
-    Id lower,
-    Id upper, {
+    Id? lower,
+    Id? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {

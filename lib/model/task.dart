@@ -2,8 +2,8 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:monitor_app/db/models/task_db.dart';
 
+import 'package:monitor_app/db/models/task_db.dart';
 import 'package:monitor_app/model/asset.dart';
 import 'package:monitor_app/model/category_checklist_preventive.dart';
 import 'package:monitor_app/model/employee.dart';

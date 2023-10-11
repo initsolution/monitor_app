@@ -2,18 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/model/asset.dart';
-import 'package:monitor_app/model/task.dart';
 import 'package:monitor_app/screen/album_screen.dart';
 
 class TaskItemCard extends ConsumerStatefulWidget {
   final Asset asset;
-  final Task task;
+  final Function(String url) onPickImage;
+  final Function(String description) onUpdateDescription;
+
   const TaskItemCard({
     Key? key,
     required this.asset,
-    required this.task,
+    required this.onPickImage,
+    required this.onUpdateDescription,
   }) : super(key: key);
 
   @override
@@ -23,31 +24,15 @@ class TaskItemCard extends ConsumerStatefulWidget {
 class _TaskItemCardState extends ConsumerState<TaskItemCard> {
   final TextEditingController textController = TextEditingController();
   late String description;
+  late String url;
 
   @override
   void initState() {
     super.initState();
     description = widget.asset.description;
     textController.text = description;
-  }
 
-  copyWith(Task task) {
-    return Task(
-      id: task.id,
-      type: task.type,
-      site: task.site,
-      verifierEmployee: task.verifierEmployee,
-      createdDate: task.createdDate,
-      submitedDate: task.submitedDate,
-      verifiedDate: task.verifiedDate,
-      status: task.status,
-      masterAsset: task.masterAsset,
-      masterChecklist: task.masterChecklist,
-      masterReportRegTorque: task.masterReportRegTorque,
-      assets: task.assets,
-      categoriesChecklist: task.categoriesChecklist,
-      reportRegTorque: task.reportRegTorque,
-    );
+    url = widget.asset.url;
   }
 
   @override
@@ -62,28 +47,59 @@ class _TaskItemCardState extends ConsumerState<TaskItemCard> {
             // debugPrint('id : ${task.assets![index].description}');
             // task.assets![index].url = '-----';
             // ref.read(taskProvider.notifier).state = task;
-            Navigator.of(context).pushNamed(AlbumScreen.routeName, arguments: true).then(
-              (path) async {
+            Navigator.of(context)
+                .pushNamed(AlbumScreen.routeName, arguments: true)
+                .then((path) async {
+              if (path != null) {
+                widget.onPickImage(path as String);
+                setState(() {
+                  url = path;
+                });
+              }
+            }
 
-                // UPDATE LOCAL DB
-                ref
-                    .read(localdataServiceProvider)
-                    .updateAsset(widget.asset, path as String);
+                    // (path) async {
+                    //   ref
+                    //       .read(taskControllerProvider.notifier)
+                    //       .updateAssetLocalTask(Asset(
+                    //         id: widget.asset.id,
+                    //         section: widget.asset.section,
+                    //         category: widget.asset.category,
+                    //         description: widget.asset.description,
+                    //         url: path as String,
+                    //         createdDate: widget.asset.createdDate,
+                    //         orderIndex: widget.asset.orderIndex,
+                    //       ));
 
-                // UPDATE TASK PROVIDER
-                Task task = copyWith(widget.task);
-                int index = task.assets!
-                    .indexWhere((element) => element.id == widget.asset.id);
-                task.assets![index].url = path;
-                ref.read(taskProvider.notifier).state = task;
-              },
-            );
+                    // UPDATE LOCAL DB
+                    // ref.read(localdataServiceProvider).updateAsset(
+                    //       Asset(
+                    //         id: widget.asset.id,
+                    //         section: widget.asset.section,
+                    //         category: widget.asset.category,
+                    //         description: widget.asset.description,
+                    //         url: path as String,
+                    //         createdDate: widget.asset.createdDate,
+                    //         orderIndex: widget.asset.orderIndex,
+                    //       ),
+                    //     );
+
+                    // UPDATE TASK PROVIDER
+                    // Task task = ref.read(taskProvider.notifier).state!;
+
+                    // Task newTask = copyWith(task);
+                    // int index = newTask.assets!
+                    //     .indexWhere((element) => element.id == widget.asset.id);
+                    // newTask.assets![index].url = path;
+                    // ref.read(taskProvider.notifier).state = newTask;
+                    // },
+                    );
           },
           child: Container(
             height: 300,
             color: Colors.grey,
             child: Center(
-                child: widget.asset.url != '-'
+                child: url != '-'
                     ? Image.file(File(widget.asset.url))
                     : const Icon(Icons.image)),
           ),
@@ -129,6 +145,7 @@ class _TaskItemCardState extends ConsumerState<TaskItemCard> {
                 onPressed: () {
                   setState(() {
                     description = textController.text;
+                    widget.onUpdateDescription(description);
                     Navigator.pop(context, textController.text);
                   });
                 },

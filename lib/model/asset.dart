@@ -10,7 +10,7 @@ class Asset {
   final int id;
   final String section;
   final String category;
-  final String description;
+  late String description;
   late String url;
   final String createdDate;
   late String? lastModified;
@@ -36,7 +36,7 @@ class Asset {
 
   factory Asset.fromAssetDB(AssetsDB assetDB) => Asset(
       section: assetDB.section,
-      id: assetDB.id,
+      id: assetDB.id!,
       category: assetDB.category,
       description: assetDB.description,
       url: assetDB.url,

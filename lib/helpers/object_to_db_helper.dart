@@ -2,9 +2,7 @@ import 'package:monitor_app/db/models/employee_db.dart';
 import 'package:monitor_app/db/models/report_reg_torque_db.dart';
 import 'package:monitor_app/db/models/site_db.dart';
 import 'package:monitor_app/model/employee.dart';
-import 'package:monitor_app/model/master_point_checklist_preventive.dart';
 import 'package:monitor_app/model/master_report_reg_torque.dart';
-import 'package:monitor_app/model/report_reg_torque.dart';
 import 'package:monitor_app/model/site.dart';
 
 SiteDB getSiteDBFromSite(Site site) => SiteDB()

@@ -23,3 +23,5 @@
 - add temuan button
 - Uploading File to Server
 - Update local database by ID
+# 11/10/2023
+- update taskcontrollerprovider untuk mengakomodir set url pada asset menu

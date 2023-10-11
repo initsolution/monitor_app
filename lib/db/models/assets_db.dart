@@ -5,7 +5,7 @@ part 'assets_db.g.dart';
 @Collection(accessor: "assets")
 @Name("assets")
 class AssetsDB {
-  Id id = Isar.autoIncrement; // you can also use id = null to auto increment
+  Id? id = Isar.autoIncrement; // you can also use id = null to auto increment
   late String section;
   late String category;
   late String description;
@@ -17,7 +17,7 @@ class AssetsDB {
   late int orderIndex;
 
   AssetsDB({
-    required this.id,
+    this.id,
     required this.section,
     required this.category,
     required this.description,

@@ -1,24 +1,28 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:monitor_app/screen/components/icon_task_status.dart';
-import 'package:monitor_app/model/task.dart';
 import 'package:monitor_app/constants/images.dart';
+import 'package:monitor_app/controller/task_controller.dart';
+import 'package:monitor_app/model/task.dart';
+import 'package:monitor_app/screen/components/icon_task_status.dart';
 import 'package:monitor_app/screen/task_screen.dart';
 
-class TaskCard extends StatelessWidget {
+class TaskCard extends ConsumerWidget {
   final Task task;
+  final Function() onSelectTask;
   const TaskCard({
     Key? key,
     required this.task,
+    required this.onSelectTask,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    // debugPrint('status : ${task.status}');
+  Widget build(BuildContext context, WidgetRef ref) {
+    debugPrint("rebuild TaskCard");
     return InkWell(
-      onTap: () => Navigator.of(context).pushNamed(TaskScreen.routeName,
-          arguments: task), //context.goNamed('task', extra: task),
+      onTap: onSelectTask,
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
