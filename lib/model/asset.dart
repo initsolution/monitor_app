@@ -7,7 +7,7 @@ part 'asset.g.dart';
 
 @JsonSerializable()
 class Asset {
-  final int id;
+  final int? id;
   final String section;
   final String category;
   late String description;
@@ -19,7 +19,7 @@ class Asset {
   late int orderIndex;
 
   Asset({
-    required this.id,
+    this.id,
     required this.section,
     required this.category,
     required this.description,

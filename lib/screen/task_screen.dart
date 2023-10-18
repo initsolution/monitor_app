@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/controller/asset_controller.dart';
 import 'package:monitor_app/controller/task_controller.dart';
+import 'package:monitor_app/model/asset.dart';
 
 import 'package:monitor_app/model/task.dart';
 import 'package:monitor_app/mstate/task_state.dart';
@@ -71,7 +72,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                       file.path.split("/").last;
                   await ref
                       .read(assetControllerProvider.notifier)
-                      .createAsset(taskId, asset);
+                      .uploadAsset(taskId, asset);
                 }
                 // ignore: use_build_context_synchronously
                 Navigator.pop(context);
@@ -97,25 +98,27 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
           return const Center(child: CircularProgressIndicator());
         }
       }),
-      floatingActionButton: ElevatedButton.icon(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const TemuanScreen(),
-          ));
-        },
-        style: ElevatedButton.styleFrom(
-          elevation: 2,
-          backgroundColor: Colors.blue,
-        ),
-        icon: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ), //icon data for elevated button
-        label: const Text(
-          "Temuan",
-          style: TextStyle(color: Colors.white),
-        ), //label text
-      ),
+      // floatingActionButton: ElevatedButton.icon(
+      //   onPressed: () {
+      //     Navigator.of(context).push(MaterialPageRoute(
+      //       builder: (context) => const TemuanScreen(
+      //         section: '',
+      //       ),
+      //     ));
+      //   },
+      //   style: ElevatedButton.styleFrom(
+      //     elevation: 2,
+      //     backgroundColor: Colors.blue,
+      //   ),
+      //   icon: const Icon(
+      //     Icons.add,
+      //     color: Colors.white,
+      //   ), //icon data for elevated button
+      //   label: const Text(
+      //     "Temuan",
+      //     style: TextStyle(color: Colors.white),
+      //   ), //label text
+      // ),
     );
   }
 
@@ -299,73 +302,71 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
       isMultiTenant = true;
     }
     var sections = groupBy(task.assets!, (obj) => obj.section);
-    List<dynamic> result = [];
-    for (var element in sections.keys) {
-      result.add(element);
-      var categories = groupBy(sections[element]!, (obj) => obj.category);
-
-      for (var cat in categories.keys) {
-        debugPrint(cat);
-        if (isMultiTenant) {
-          if (cat.toUpperCase() == "PANEL KWH" ||
-              cat.toUpperCase() == "PANEL ACPDB" ||
-              cat.toUpperCase() == "GROUNDING & LIGHTNING PROTECTION") {
-            for (int i = 0; i < tenants.length; i++) {
-              var newCat = '$cat (${tenants[i]})';
-              result.add({newCat: categories[cat]!});
-            }
-          } else {
-            result.add({cat: categories[cat]!});
-          }
-        } else {
-          result.add({cat: categories[cat]!});
-        }
-      }
+    Map<String, Map<String, List<Asset>>> result = {};
+    for (var key in sections.keys) {
+      var categories = groupBy(sections[key]!, (obj) => obj.category);
+      result.addAll({key: categories});
     }
+    debugPrint('result ${result.length}');
+    return SingleChildScrollView(
+      child: Column(
+        children: result.entries.map((e) {
+          return buildListView(e.key, e.value);
+        }).toList(),
+      ),
+    );
+    // return Column(children: result.entries.map((e) {return }).toList());
 
-    return ListView.separated(
-        itemBuilder: (context, index) {
-          if (result[index] is String) {
-            return result[index].toString().toUpperCase() != 'SECTION'
-                ? Text(result[index].toString().toUpperCase())
-                : Container();
-          } else {
-            return GestureDetector(
-              onTap: () async {
-                // for (var element
-                //     in result[result.keys.elementAt(index)]!) {
-                //   print(element.description);
-                // }
-                await Navigator.of(context)
-                    .push(
-                      MaterialPageRoute(
-                        builder: (context) => DetailTaskScreen(
-                          title:
-                              '${result[index].keys.elementAt(0)} (${(result[index][result[index].keys.elementAt(0)] as List).length})',
-                          // masterAsset: result[index]
-                          //     [result[index].keys.elementAt(0)]!,
-                          assets: result[index]
-                              [result[index].keys.elementAt(0)]!,
-                        ),
-                      ),
-                    )
-                    .then((_) async => await ref
-                        .read(taskControllerProvider.notifier)
-                        .getTaskById(widget.taskId));
-              },
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(result[index].keys.elementAt(0)),
-              ),
-            );
-          }
-        },
-        separatorBuilder: (context, index) => const SizedBox(height: 10),
-        itemCount: result.length);
+    // return ListView.separated(
+    //     itemBuilder: (context, index) {
+    //       if (result[index] is String) {
+    //         return result[index].toString().toUpperCase() != 'SECTION'
+    //             ? Text(result[index].toString().toUpperCase())
+    //             : Container();
+    //       } else {
+    //         return GestureDetector(
+    //           onTap: () async {
+    //             // for (var element
+    //             //     in result[result.keys.elementAt(index)]!) {
+    //             //   print(element.description);
+    //             // }
+    //             await Navigator.of(context)
+    //                 .push(
+    //                   MaterialPageRoute(
+    //                     builder: (context) => DetailTaskScreen(
+    //                       title:
+    //                           '${result[index].keys.elementAt(0)} (${(result[index][result[index].keys.elementAt(0)] as List).length})',
+    //                       // masterAsset: result[index]
+    //                       //     [result[index].keys.elementAt(0)]!,
+    //                       assets: result[index]
+    //                           [result[index].keys.elementAt(0)]!,
+    //                     ),
+    //                   ),
+    //                 )
+    //                 .then((_) async => await ref
+    //                     .read(taskControllerProvider.notifier)
+    //                     .getTaskById(widget.taskId));
+    //           },
+    //           child: Container(
+    //             padding: const EdgeInsets.all(20),
+    //             decoration: BoxDecoration(
+    //               color: result[index]
+    //                           .keys
+    //                           .elementAt(0)
+    //                           .toString()
+    //                           .toUpperCase() ==
+    //                       'TEMUAN'
+    //                   ? Colors.amber
+    //                   : Colors.white,
+    //               borderRadius: BorderRadius.circular(10),
+    //             ),
+    //             child: Text(result[index].keys.elementAt(0)),
+    //           ),
+    //         );
+    //       }
+    //     },
+    //     separatorBuilder: (context, index) => const SizedBox(height: 10),
+    //     itemCount: result.length);
   }
 
   progressDialogue() {
@@ -383,7 +384,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
             ),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text('Uploading file : \n${path}'),
+              child: Text('Uploading file : \n$path'),
             )
           ],
         );
@@ -397,6 +398,80 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
         //prevent Back button press
         return WillPopScope(onWillPop: () async => false, child: alert);
       },
+    );
+  }
+
+  Widget buildListView(String key, Map<String, List<Asset>> categories) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        key.toUpperCase() != 'SECTION'
+            ? Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  key.toUpperCase(),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              )
+            : Container(),
+        ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            // debugPrint(categories.keys.elementAt(index));
+            // debugPrint(categories.values.elementAt(index).length.toString());
+            return GestureDetector(
+              onTap: () async {
+                if (categories.keys.elementAt(index).toUpperCase() ==
+                    "TEMUAN") {
+                  return await Navigator.of(context)
+                      .push(
+                        MaterialPageRoute(
+                          builder: (context) => TemuanScreen(
+                            taskId: task.id,
+                            asset: categories.values.elementAt(index),
+                            section: key,
+                          ),
+                        ),
+                      )
+                      .then((_) async => await ref
+                          .read(taskControllerProvider.notifier)
+                          .getTaskById(widget.taskId));
+                } else {
+                  return await Navigator.of(context)
+                      .push(
+                        MaterialPageRoute(
+                          builder: (context) => DetailTaskScreen(
+                            title:
+                                '${categories.keys.elementAt(index)} (${categories.values.elementAt(index).length})',
+                            // masterAsset: result[index]
+                            //     [result[index].keys.elementAt(0)]!,
+                            assets: categories.values.elementAt(index),
+                          ),
+                        ),
+                      )
+                      .then((_) async => await ref
+                          .read(taskControllerProvider.notifier)
+                          .getTaskById(widget.taskId));
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color:
+                      categories.keys.elementAt(index).toUpperCase() == 'TEMUAN'
+                          ? Colors.amber
+                          : Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(categories.keys.elementAt(index)),
+              ),
+            );
+          },
+          separatorBuilder: (context, index) => const SizedBox(height: 10),
+          itemCount: categories.length,
+        ),
+      ],
     );
   }
 }

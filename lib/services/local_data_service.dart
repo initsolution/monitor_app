@@ -21,7 +21,6 @@ class LocalDataService {
     final result = await isarDB.tasks.where().findAll();
     debugPrint(result.toString());
     if (result.isNotEmpty) {
-      debugPrint("pass");
       final tasks = result.map((task) => Task.fromTaskDB(task)).toList();
       return tasks;
     }
@@ -119,6 +118,27 @@ class LocalDataService {
     isarDB.writeTxnSync(() => isarDB.assets.putAllSync(assetsDB));
   }
 
+  Future<bool> createAssetTemuan(Asset asset) async {
+    try {
+      final assetDB = AssetsDB(
+        section: asset.section,
+        category: asset.category,
+        description: asset.description,
+        url: asset.url,
+        createdDate: asset.createdDate,
+        lastModified: asset.lastModified,
+        isPassed: asset.isPassed,
+        note: asset.note,
+        orderIndex: asset.orderIndex,
+      );
+      isarDB.writeTxnSync(() => isarDB.assets.putSync(assetDB));
+      return true;
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
   Future<List<Task>> createTasks(List<Task> tasks) async {
     // ignore: avoid_function_literals_in_foreach_calls
     tasks.forEach((task) async => await createTask(task));
@@ -128,5 +148,45 @@ class LocalDataService {
   Future<void> deleteTask(int taskId) async {
     await isarDB
         .writeTxn(() async => await isarDB.tasks.deleteByIdTask(taskId));
+  }
+
+  Future<bool> addAssetToTask(int taskId, Asset temuan) async {
+    final taskDB =
+        await isarDB.tasks.filter().idTaskEqualTo(taskId).findFirst();
+    if (taskDB != null) {
+      final assetDB = AssetsDB(
+          section: temuan.section,
+          category: temuan.category,
+          description: temuan.description,
+          url: temuan.url,
+          createdDate: temuan.createdDate,
+          orderIndex: temuan.orderIndex);
+
+      await isarDB.writeTxn(() async {
+        await isarDB.assets.put(assetDB);
+        taskDB.assets.add(assetDB);
+        await taskDB.assets.save();
+        // await isarDB.assets.put(AssetsDB(
+        //     section: temuan.section,
+        //     category: temuan.category,
+        //     description: temuan.description,
+        //     url: temuan.url,
+        //     createdDate: temuan.createdDate,
+        //     orderIndex: temuan.orderIndex));
+      });
+      return true;
+    }
+    return false;
+  }
+
+  Future<List<Asset>> getAllTemuanByTaskId(int taskId) async {
+    final taskDB =
+        await isarDB.tasks.filter().idTaskEqualTo(taskId).findFirst();
+    List<AssetsDB>? result = await taskDB?.assets
+        .filter()
+        .categoryEqualTo("TEMUAN", caseSensitive: false)
+        .findAll();
+
+    return result!.map((assetDB) => Asset.fromAssetDB(assetDB)).toList();
   }
 }

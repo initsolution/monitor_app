@@ -7,7 +7,7 @@ part of 'asset.dart';
 // **************************************************************************
 
 Asset _$AssetFromJson(Map<String, dynamic> json) => Asset(
-      id: json['id'] as int,
+      id: json['id'] as int?,
       section: json['section'] as String,
       category: json['category'] as String,
       description: json['description'] as String,

@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:monitor_app/db/models/task_db.dart';
 
 part 'assets_db.g.dart';
 
@@ -15,6 +16,7 @@ class AssetsDB {
   late bool isPassed;
   late String? note;
   late int orderIndex;
+  final task = IsarLink<TaskDB>();
 
   AssetsDB({
     this.id,

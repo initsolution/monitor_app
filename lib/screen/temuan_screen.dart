@@ -1,10 +1,23 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:monitor_app/controller/app_provider.dart';
+import 'package:intl/intl.dart';
+import 'package:monitor_app/controller/asset_controller.dart';
+import 'package:monitor_app/controller/task_controller.dart';
+
+import 'package:monitor_app/model/asset.dart';
+import 'package:monitor_app/mstate/asset_state.dart';
+import 'package:monitor_app/mstate/task_state.dart';
 import 'package:monitor_app/screen/temuan_item_card.dart';
 
 class TemuanScreen extends ConsumerStatefulWidget {
-  const TemuanScreen({super.key});
+  final List<Asset>? asset;
+  final String section;
+  final int taskId;
+
+  const TemuanScreen(
+      {Key? key, this.asset, required this.section, required this.taskId})
+      : super(key: key);
 
   @override
   ConsumerState<TemuanScreen> createState() => _TemuanScreenState();
@@ -12,6 +25,15 @@ class TemuanScreen extends ConsumerStatefulWidget {
 
 class _TemuanScreenState extends ConsumerState<TemuanScreen> {
   int counter = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    Future(() => ref
+        .read(assetControllerProvider.notifier)
+        .getAllTemuanByTaskId(widget.taskId));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,10 +41,22 @@ class _TemuanScreenState extends ConsumerState<TemuanScreen> {
         title: const Text('Temuan'),
         actions: [
           IconButton(
-              onPressed: () {
-                setState(() {
-                  counter += 1;
-                });
+              onPressed: () async {
+                Asset temuan = Asset(
+                  section: widget.section,
+                  category: 'TEMUAN',
+                  description: 'Deskripsi Temuan',
+                  url: '-',
+                  createdDate: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+                  orderIndex: widget.asset!.length + 1,
+                );
+                // setState(() {
+                //   assets.add(temuan);
+                // });
+                await ref
+                    .read(assetControllerProvider.notifier)
+                    .addAssetToTask(widget.taskId, temuan);
+                // await ref.read(taskControllerProvider.notifier).ad
               },
               icon: const Icon(Icons.add)),
         ],
@@ -32,20 +66,72 @@ class _TemuanScreenState extends ConsumerState<TemuanScreen> {
   }
 
   Widget _buildBody() {
-    final state = ref.watch(taskProvider);
-    return CustomScrollView(
-      slivers: [
-        Consumer(builder: (context, ref, child) {
-          if (state != null) {
-            return SliverList.builder(
-              itemCount: counter,
-              itemBuilder: (context, index) => TemuanItemCard(task: state),
-            );
-          } else {
-            return Container();
-          }
-        }),
-      ],
-    );
+    var state = ref.watch(assetControllerProvider);
+    if (state is AssetLoaded) {
+      return CustomScrollView(
+        slivers: [
+          Consumer(
+            builder: (context, ref, child) {
+              debugPrint('state : $state');
+
+              // if (state is AssetLoaded) {
+              return SliverList.builder(
+                itemCount: state.assets.length,
+                itemBuilder: (context, index) => TemuanItemCard(
+                  asset: state.assets[index],
+                  onPickImage: (String url) async {
+                    state.assets[index].url = url;
+                    await ref
+                        .read(taskControllerProvider.notifier)
+                        .updateAssetLocalTask(state.assets[index]);
+                  },
+                  onUpdateDescription: (String description) async {
+                    state.assets[index].description = description;
+                    await ref
+                        .read(taskControllerProvider.notifier)
+                        .updateAssetLocalTask(state.assets[index]);
+                  },
+                ),
+              );
+              // } else {
+              //   return const Center(child: CircularProgressIndicator());
+              // }
+            },
+          )
+        ],
+      );
+    } else {
+      return const Center(child: CircularProgressIndicator());
+    }
+    // return assets.isNotEmpty
+    //     ? CustomScrollView(
+    //         slivers: [
+    //           Consumer(builder: (context, ref, child) {
+    //             if (state is AssetLoaded) {
+    //               return SliverList.builder(
+    //                 itemCount: state.assets.length,
+    //                 itemBuilder: (context, index) => TemuanItemCard(
+    //                   asset: assets[index],
+    //                   onPickImage: (String url) async {
+    //                     assets[index].url = url;
+    //                     await ref
+    //                         .read(taskControllerProvider.notifier)
+    //                         .updateAssetLocalTask(assets[index]);
+    //                   },
+    //                   onUpdateDescription: (String description) async {
+    //                     assets[index].description = description;
+    //                     await ref
+    //                         .read(taskControllerProvider.notifier)
+    //                         .updateAssetLocalTask(assets[index]);
+    //                   },
+    //                 ),
+    //               );
+    //             } else {
+    //               return const Center(child: CircularProgressIndicator());
+    //             }
+    //           })
+    //         ],
+    //       )
+    //     : const Center(child: Text('Belum ada Temuan'));
   }
 }

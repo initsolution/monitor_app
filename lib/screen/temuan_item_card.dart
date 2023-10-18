@@ -1,15 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:monitor_app/model/asset.dart';
 import 'package:monitor_app/screen/album_screen.dart';
 
-import '../model/task.dart';
-
 class TemuanItemCard extends ConsumerStatefulWidget {
-  final Task task;
+  final Asset asset;
+  final Function(String url) onPickImage;
+  final Function(String description) onUpdateDescription;
   const TemuanItemCard({
     Key? key,
-    required this.task,
+    required this.asset,
+    required this.onPickImage,
+    required this.onUpdateDescription,
   }) : super(key: key);
 
   @override
@@ -19,30 +25,14 @@ class TemuanItemCard extends ConsumerStatefulWidget {
 class _TemuanItemCardState extends ConsumerState<TemuanItemCard> {
   final TextEditingController textController = TextEditingController();
   late String description;
+  late String url;
 
   @override
   void initState() {
     super.initState();
     description = 'Deskripsi';
-  }
-
-  Task copyWith(Task task) {
-    return Task(
-      id: task.id,
-      type: task.type,
-      site: task.site,
-      verifierEmployee: task.verifierEmployee,
-      createdDate: task.createdDate,
-      submitedDate: task.submitedDate,
-      verifiedDate: task.verifiedDate,
-      status: task.status,
-      masterAsset: task.masterAsset,
-      masterChecklist: task.masterChecklist,
-      masterReportRegTorque: task.masterReportRegTorque,
-      assets: task.assets,
-      categoriesChecklist: task.categoriesChecklist,
-      reportRegTorque: task.reportRegTorque,
-    );
+    description = widget.asset.description;
+    url = widget.asset.url;
   }
 
   @override
@@ -51,35 +41,26 @@ class _TemuanItemCardState extends ConsumerState<TemuanItemCard> {
       children: [
         InkWell(
           onTap: () async {
-            // Task task = copyWith(widget.task);
-            // int index = task.assets!
-            //     .indexWhere((element) => element.id == widget.asset.id);
-            // debugPrint('id : ${task.assets![index].description}');
-            // task.assets![index].url = '-----';
-            // ref.read(taskProvider.notifier).state = task;
             Navigator.of(context)
                 .pushNamed(AlbumScreen.routeName, arguments: true)
                 .then(
               (path) async {
-                // UPDATE LOCAL DB
-                // ref
-                //     .read(localdataServiceProvider)
-                //     .updateAsset(widget.asset, path as String);
-
-                // UPDATE TASK PROVIDER
-                // Task task = copyWith(widget.task);
-                // int index = task.assets!
-                //     .indexWhere((element) => element.id == widget.asset.id);
-                // task.assets![index].url = path as String;
-                // ref.read(taskProvider.notifier).state = task;
+                if (path != null) {
+                  widget.onPickImage(path as String);
+                  setState(() {
+                    url = path;
+                  });
+                }
               },
             );
           },
           child: Container(
             height: 300,
             color: Colors.grey,
-            child: const Center(
-              child: Icon(Icons.image),
+            child: Center(
+              child: url != '-'
+                  ? Image.file(File(widget.asset.url))
+                  : const Icon(Icons.image),
             ),
           ),
         ),
@@ -124,6 +105,7 @@ class _TemuanItemCardState extends ConsumerState<TemuanItemCard> {
                 onPressed: () {
                   setState(() {
                     description = textController.text;
+                    widget.onUpdateDescription(description);
                     Navigator.pop(context, textController.text);
                   });
                 },

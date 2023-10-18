@@ -25,7 +25,7 @@ class AssetController extends AutoDisposeNotifier<AssetState> {
     return AssetInitial();
   }
 
-  createAsset(int idTask, Asset asset) async {
+  uploadAsset(int idTask, Asset asset) async {
     state = AssetLoading();
     String token = ref.read(preferencesControllerProvider).token; //diisi token
     // print('token $token');
@@ -47,5 +47,17 @@ class AssetController extends AutoDisposeNotifier<AssetState> {
     // if (response.response.statusCode == 201) {
     //   state = AssetDataChangeSuccess();
     // }
+  }
+
+  getAllTemuanByTaskId(int taskId) async {
+    state = AssetLoading();
+    var temuan =
+        await ref.read(localdataServiceProvider).getAllTemuanByTaskId(taskId);
+    state = AssetLoaded(assets: temuan);
+  }
+
+  addAssetToTask(int taskId, Asset temuan) async {
+    await ref.read(localdataServiceProvider).addAssetToTask(taskId, temuan);
+    getAllTemuanByTaskId(taskId);
   }
 }

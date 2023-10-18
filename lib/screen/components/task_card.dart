@@ -4,10 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:monitor_app/constants/images.dart';
-import 'package:monitor_app/controller/task_controller.dart';
 import 'package:monitor_app/model/task.dart';
 import 'package:monitor_app/screen/components/icon_task_status.dart';
-import 'package:monitor_app/screen/task_screen.dart';
 
 class TaskCard extends ConsumerWidget {
   final Task task;

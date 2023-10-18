@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/model/asset.dart';
+import 'package:monitor_app/model/task.dart';
 import 'package:monitor_app/mstate/task_state.dart';
 
 final taskControllerProvider =
@@ -86,6 +87,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
 
   updateAssetLocalTask(Asset asset) async {
     state = TaskLoading();
+    debugPrint('asset : ${asset.toString()}');
     await ref.read(localdataServiceProvider).updateAsset(asset);
     var localTasks = await ref.read(localdataServiceProvider).getAllTasks();
     state = TasksLoaded(tasks: localTasks!);
@@ -103,4 +105,18 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     var task = await ref.read(localdataServiceProvider).getTaskById(taskId);
     state = TasksLoaded(tasks: [task!]);
   }
+
+
+
+//taruh di asset controller
+  // getAllTemuanByTaskId(int taskId) async{
+  //   var task = await ref.read(localdataServiceProvider).getAllTemuanByTaskId(taskId);
+  // }
+  // updateTaskById(Task task) async {
+  //   state = TaskLoading();
+  //   var isSuccess = await ref.read(localdataServiceProvider).updateTaskbyId(task);
+  //   if(isSuccess){
+  //     state = TaskLoaded(task: task)
+  //   }
+  // }
 }

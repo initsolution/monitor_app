@@ -25,3 +25,5 @@
 - Update local database by ID
 # 11/10/2023
 - update taskcontrollerprovider untuk mengakomodir set url pada asset menu
+# 18/10/2023
+- update add temuan dynamically (done)
