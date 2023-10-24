@@ -1,13 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:monitor_app/controller/asset_controller.dart';
 import 'package:monitor_app/controller/task_controller.dart';
 
 import 'package:monitor_app/model/asset.dart';
 import 'package:monitor_app/mstate/asset_state.dart';
-import 'package:monitor_app/mstate/task_state.dart';
 import 'package:monitor_app/screen/temuan_item_card.dart';
 
 class TemuanScreen extends ConsumerStatefulWidget {
@@ -47,7 +45,6 @@ class _TemuanScreenState extends ConsumerState<TemuanScreen> {
                   category: 'TEMUAN',
                   description: 'Deskripsi Temuan',
                   url: '-',
-                  createdDate: DateFormat('yyyy-MM-dd').format(DateTime.now()),
                   orderIndex: widget.asset!.length + 1,
                 );
                 // setState(() {

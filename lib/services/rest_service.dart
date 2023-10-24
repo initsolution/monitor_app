@@ -15,6 +15,10 @@ abstract class RestService {
   @GET('/task')
   Future<List<Task>> getAllTaskByNIK(@Queries() Map<String, dynamic> queries);
 
+  @PATCH('/task/{id}')
+  Future<HttpResponse> updateTaskByTaskId(
+      @Path() int id, @Body() Task task);
+
   @POST('/asset')
   @MultiPart()
   Future<HttpResponse> createAsset(

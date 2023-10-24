@@ -27,3 +27,5 @@
 - update taskcontrollerprovider untuk mengakomodir set url pada asset menu
 # 18/10/2023
 - update add temuan dynamically (done)
+# 24/10/2023
+- upload asset, upload/update task, reload task from REST API

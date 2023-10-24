@@ -6,10 +6,12 @@ import 'package:monitor_app/screen/components/task_item_card.dart';
 import 'package:monitor_app/model/asset.dart';
 
 class DetailTaskScreen extends ConsumerStatefulWidget {
+  final String statusTask;
   final String title;
   final List<Asset> assets;
   const DetailTaskScreen({
     Key? key,
+    required this.statusTask,
     required this.title,
     required this.assets,
   }) : super(key: key);
@@ -46,6 +48,7 @@ class _DetailTaskScreenState extends ConsumerState<DetailTaskScreen> {
             // return TaskItemCard(
             //     asset: widget.assets[index], task: state);
             return TaskItemCard(
+              statusTask : widget.statusTask,
               asset: _assets[index],
               onPickImage: (String url) async {
                 _assets[index].url = url;

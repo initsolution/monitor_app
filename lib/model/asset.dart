@@ -12,8 +12,6 @@ class Asset {
   final String category;
   late String description;
   late String url;
-  final String createdDate;
-  late String? lastModified;
   late bool isPassed;
   late String? note;
   late int orderIndex;
@@ -24,8 +22,6 @@ class Asset {
     required this.category,
     required this.description,
     required this.url,
-    required this.createdDate,
-    this.lastModified,
     this.isPassed = false,
     this.note,
     required this.orderIndex,
@@ -40,6 +36,5 @@ class Asset {
       category: assetDB.category,
       description: assetDB.description,
       url: assetDB.url,
-      createdDate: assetDB.createdDate,
       orderIndex: assetDB.orderIndex);
 }

@@ -46,11 +46,11 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
         settings: RouteSettings(name: HomeScreen.routeName),
       );
     case 'task':
-      // Task task = settings.arguments as Task;
-      int taskId = settings.arguments as int;
+      Task task = settings.arguments as Task;
+      // int taskId = settings.arguments as int;
       return PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            TaskScreen(taskId: taskId),
+            TaskScreen(task: task),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           const begin = Offset(1.0, 0.0);
           const end = Offset.zero;

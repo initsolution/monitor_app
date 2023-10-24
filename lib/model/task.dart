@@ -22,13 +22,13 @@ class Task {
   final Site site;
   final Employee verifierEmployee;
   final String createdDate;
-  final String? submitedDate;
+  late String? submitedDate;
   final String? verifiedDate;
-  final String status;
+  late String status;
   final List<MasterAsset>? masterAsset;
   final List<MasterChecklist>? masterChecklist;
   final List<MasterReportRegTorque>? masterReportRegTorque;
-  late List<Asset>? assets;
+  late List<Asset>? asset;
   late List<CategoryChecklistPreventive>? categoriesChecklist;
   late List<ReportRegTorque>? reportRegTorque;
 
@@ -44,7 +44,7 @@ class Task {
     this.masterAsset,
     this.masterChecklist,
     this.masterReportRegTorque,
-    this.assets,
+    this.asset,
     this.categoriesChecklist,
     this.reportRegTorque,
   });
@@ -83,7 +83,7 @@ class Task {
         masterAsset: null,
         masterChecklist: null,
         masterReportRegTorque: null,
-        assets: taskDB.assets.map((asset) => Asset.fromAssetDB(asset)).toList()
+        asset: taskDB.assets.map((asset) => Asset.fromAssetDB(asset)).toList()
           ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex)),
         categoriesChecklist: taskDB.categoriesChecklist
             .map((category) =>

@@ -73,7 +73,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                           onSelectTask: () async {
                             await Navigator.of(context)
                                 .pushNamed(TaskScreen.routeName,
-                                    arguments: state.tasks[index].id)
+                                    arguments: state.tasks[index])
                                 .then((_) => Future(() => ref
                                     .read(taskControllerProvider.notifier)
                                     .getAllTasks(widget.email)));

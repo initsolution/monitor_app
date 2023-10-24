@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monitor_app/controller/app_provider.dart';
-import 'package:monitor_app/controller/preferences_controller.dart';
 
 import '../model/asset.dart';
 import '../mstate/asset_state.dart';
@@ -25,9 +24,8 @@ class AssetController extends AutoDisposeNotifier<AssetState> {
     return AssetInitial();
   }
 
-  uploadAsset(int idTask, Asset asset) async {
+  uploadAsset(int idTask, Asset asset, String token) async {
     state = AssetLoading();
-    String token = ref.read(preferencesControllerProvider).token; //diisi token
     // print('token $token');
     File file = File(asset.url);
     List<int> imageBytes = file.readAsBytesSync();
@@ -39,7 +37,7 @@ class AssetController extends AutoDisposeNotifier<AssetState> {
         asset.orderIndex,
         idTask,
         imageBytes,
-        'token');
+        token);
 
     print('res : $response');
     // final response =

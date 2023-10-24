@@ -33,3 +33,5 @@ class TaskLoadedWithError extends TaskState {
   @override
   List<Object?> get props => [message];
 }
+
+class TaskDataChangeSuccess extends TaskState {}

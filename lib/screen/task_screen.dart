@@ -1,12 +1,10 @@
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monitor_app/constants/constants.dart';
 import 'package:monitor_app/controller/app_provider.dart';
-import 'package:monitor_app/controller/asset_controller.dart';
 import 'package:monitor_app/controller/task_controller.dart';
 import 'package:monitor_app/model/asset.dart';
 
@@ -19,11 +17,14 @@ import 'package:monitor_app/screen/form_report_torque.dart';
 import 'package:monitor_app/screen/form_report_verticality.dart';
 import 'package:monitor_app/screen/temuan_screen.dart';
 
+import '../controller/auth_controller.dart';
+import '../mstate/auth_state.dart';
+
 class TaskScreen extends ConsumerStatefulWidget {
   static String routeName = 'task';
-  // final Task task;
-  final int taskId;
-  const TaskScreen({Key? key, required this.taskId}) : super(key: key);
+  final Task task;
+  // final int taskId;
+  const TaskScreen({Key? key, required this.task}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _TaskScreenState();
@@ -38,88 +39,152 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
   int current = 0;
   final CarouselController _controller = CarouselController();
   late Task task;
+  String? token;
 
   @override
   void initState() {
     super.initState();
-    Future(() =>
-        ref.read(taskControllerProvider.notifier).getTaskById(widget.taskId));
+    if (widget.task.status == STATUS_TODO) {
+      Future(() => ref
+          .read(taskControllerProvider.notifier)
+          .getTaskById(widget.task.id));
+    } else {
+      task = widget.task;
+    }
+    Future(() => ref.read(authControllerProvider.notifier).appStarted());
   }
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<AuthState>(
+      authControllerProvider,
+      (previous, next) {
+        if (next is AuthAuthorized) {
+          // _onLoginSuccess(context);
+          token = next.userdata.token;
+        } else if (next is AuthFailedWithError) {
+          // _onLoginError(context, next.message);
+        }
+      },
+    );
+    ref.listen<TaskState>(
+      taskControllerProvider,
+      (previous, next) {
+        if (next is TaskDataChangeSuccess) {
+          dismissDialog();
+          exitScreen();
+        }
+      },
+    );
     var state = ref.watch(taskControllerProvider);
     return Scaffold(
-      appBar: AppBar(
-        // title: Text(widget.task.site.name),
-        actions: [
-          IconButton(
-              onPressed: () async =>
-                  // context.push('/task/camera', extra: await availableCameras()),
-                  Navigator.of(context).pushNamed(CameraScreen.routeName,
-                      arguments: await availableCameras()),
-              icon: const Icon(Icons.camera)),
-          IconButton(
+        appBar: AppBar(
+          // title: Text(widget.task.site.name),
+          actions: [
+            IconButton(
+                onPressed: () async =>
+                    // context.push('/task/camera', extra: await availableCameras()),
+                    Navigator.of(context).pushNamed(CameraScreen.routeName,
+                        arguments: await availableCameras()),
+                icon: const Icon(Icons.camera)),
+            widget.task.status == STATUS_TODO
+                ? IconButton(
+                    onPressed: () async {
+                      // var task = ref.read(taskProvider.notifier).state;
+                      if (token != null) {
+                        ref
+                            .read(taskControllerProvider.notifier)
+                            .uploadTaskByTaskId(widget.task.id, token);
+                        progressDialogue();
+                        // for (var asset in task.assets!) {
+                        //   // debugPrint('element : ${element.description} , ${element.url}');
+                        //   var file = File(asset.url);
+                        //   ref.read(assetUrlProvider.notifier).state =
+                        //       file.path.split("/").last;
+                        //   await ref
+                        //       .read(assetControllerProvider.notifier)
+                        //       .uploadAsset(widget.taskId, asset, token);
+                        // }
+                        // dismissDialog();
+                        // debugPrint('done');
+                      }
+                    },
+                    icon: const Icon(Icons.upload))
+                : const SizedBox(
+                    width: 0,
+                  ),
+            IconButton(
               onPressed: () async {
-                // var task = ref.read(taskProvider.notifier).state;
-                var taskId = task.id;
-
-                progressDialogue();
-                for (var asset in task.assets!) {
-                  // debugPrint('element : ${element.description} , ${element.url}');
-                  var file = File(asset.url);
-                  ref.read(assetUrlProvider.notifier).state =
-                      file.path.split("/").last;
+                // progressDialogue();
+                var assets = task.asset;
+                int idx = 0;
+                for (var asset in assets!) {
+                  if (idx % 2 == 0) {
+                    asset.url =
+                        "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1697706247629.jpg";
+                  } else {
+                    asset.url =
+                        "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1697706252760.jpg";
+                  }
+                  idx++;
                   await ref
-                      .read(assetControllerProvider.notifier)
-                      .uploadAsset(taskId, asset);
+                      .read(taskControllerProvider.notifier)
+                      .updateAssetLocalTask(asset);
                 }
-                // ignore: use_build_context_synchronously
-                Navigator.pop(context);
-                debugPrint('done');
               },
-              icon: const Icon(Icons.upload)),
-        ],
-      ),
-      body: Consumer(builder: (context, ref, child) {
-        debugPrint('reload task screen $state');
-        if (state is TasksLoaded) {
-          task = state.tasks[0];
-          return Column(
-            children: [
-              _getSiteInfo(),
-              task.type.toLowerCase() == "preventive"
-                  ? _buildChecklistButton()
-                  : _buildReportTorqueAndVerticality(),
-              _buildAllRequirement(),
-            ],
-          );
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
-      }),
-      // floatingActionButton: ElevatedButton.icon(
-      //   onPressed: () {
-      //     Navigator.of(context).push(MaterialPageRoute(
-      //       builder: (context) => const TemuanScreen(
-      //         section: '',
-      //       ),
-      //     ));
-      //   },
-      //   style: ElevatedButton.styleFrom(
-      //     elevation: 2,
-      //     backgroundColor: Colors.blue,
-      //   ),
-      //   icon: const Icon(
-      //     Icons.add,
-      //     color: Colors.white,
-      //   ), //icon data for elevated button
-      //   label: const Text(
-      //     "Temuan",
-      //     style: TextStyle(color: Colors.white),
-      //   ), //label text
-      // ),
-    );
+              icon: const Icon(Icons.update),
+            )
+          ],
+        ),
+        body: widget.task.status == STATUS_TODO
+            ? Consumer(builder: (context, ref, child) {
+                debugPrint('reload task screen $state');
+                if (state is TasksLoaded) {
+                  task = state.tasks[0];
+                  return Column(
+                    children: [
+                      _getSiteInfo(),
+                      task.type.toLowerCase() == "preventive"
+                          ? _buildChecklistButton()
+                          : _buildReportTorqueAndVerticality(),
+                      _buildAllRequirement(),
+                    ],
+                  );
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              })
+            : Column(
+                children: [
+                  _getSiteInfo(),
+                  task.type.toLowerCase() == "preventive"
+                      ? _buildChecklistButton()
+                      : _buildReportTorqueAndVerticality(),
+                  _buildAllRequirement(),
+                ],
+              )
+        // floatingActionButton: ElevatedButton.icon(
+        //   onPressed: () {
+        //     Navigator.of(context).push(MaterialPageRoute(
+        //       builder: (context) => const TemuanScreen(
+        //         section: '',
+        //       ),
+        //     ));
+        //   },
+        //   style: ElevatedButton.styleFrom(
+        //     elevation: 2,
+        //     backgroundColor: Colors.blue,
+        //   ),
+        //   icon: const Icon(
+        //     Icons.add,
+        //     color: Colors.white,
+        //   ), //icon data for elevated button
+        //   label: const Text(
+        //     "Temuan",
+        //     style: TextStyle(color: Colors.white),
+        //   ), //label text
+        // ),
+        );
   }
 
   Widget _buildReportTorqueAndVerticality() {
@@ -277,7 +342,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
           color: const Color(0xFFEAEEF2),
           padding:
               const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
-          child: task.assets != null ? _buildCategoriesAsset() : Container()
+          child: task.asset != null ? _buildCategoriesAsset() : Container()
 
           // Consumer(
           //   builder: (context, ref, child) {
@@ -301,7 +366,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
     if (tenants.length > 1) {
       isMultiTenant = true;
     }
-    var sections = groupBy(task.assets!, (obj) => obj.section);
+    var sections = groupBy(task.asset!, (obj) => obj.section);
     Map<String, Map<String, List<Asset>>> result = {};
     for (var key in sections.keys) {
       var categories = groupBy(sections[key]!, (obj) => obj.category);
@@ -374,19 +439,21 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
       elevation: 0,
       content: Consumer(builder: (context, ref, child) {
         var path = ref.watch(assetUrlProvider);
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // The loading indicator
-            const CircularProgressIndicator(),
-            const SizedBox(
-              height: 15,
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text('Uploading file : \n$path'),
-            )
-          ],
+        return SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: 75,
+          child: Row(
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(
+                width: 15,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text('Uploading file : \n$path'),
+              )
+            ],
+          ),
         );
       }),
     );
@@ -399,6 +466,14 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
         return WillPopScope(onWillPop: () async => false, child: alert);
       },
     );
+  }
+
+  dismissDialog() {
+    Navigator.pop(context);
+  }
+
+  exitScreen() {
+    Navigator.pop(context);
   }
 
   Widget buildListView(String key, Map<String, List<Asset>> categories) {
@@ -436,23 +511,28 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                       )
                       .then((_) async => await ref
                           .read(taskControllerProvider.notifier)
-                          .getTaskById(widget.taskId));
+                          .getTaskById(widget.task.id));
                 } else {
                   return await Navigator.of(context)
                       .push(
-                        MaterialPageRoute(
-                          builder: (context) => DetailTaskScreen(
-                            title:
-                                '${categories.keys.elementAt(index)} (${categories.values.elementAt(index).length})',
-                            // masterAsset: result[index]
-                            //     [result[index].keys.elementAt(0)]!,
-                            assets: categories.values.elementAt(index),
-                          ),
-                        ),
-                      )
-                      .then((_) async => await ref
+                    MaterialPageRoute(
+                      builder: (context) => DetailTaskScreen(
+                        statusTask: task.status,
+                        title:
+                            '${categories.keys.elementAt(index)} (${categories.values.elementAt(index).length})',
+                        // masterAsset: result[index]
+                        //     [result[index].keys.elementAt(0)]!,
+                        assets: categories.values.elementAt(index),
+                      ),
+                    ),
+                  )
+                      .then((_) async {
+                    if (widget.task.status == STATUS_TODO) {
+                      await ref
                           .read(taskControllerProvider.notifier)
-                          .getTaskById(widget.taskId));
+                          .getTaskById(widget.task.id);
+                    }
+                  });
                 }
               },
               child: Container(

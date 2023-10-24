@@ -2,16 +2,21 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monitor_app/constants/constants.dart';
 import 'package:monitor_app/model/asset.dart';
 import 'package:monitor_app/screen/album_screen.dart';
 
+import '../../constants/config.dart';
+
 class TaskItemCard extends ConsumerStatefulWidget {
+  final String statusTask;
   final Asset asset;
   final Function(String url) onPickImage;
   final Function(String description) onUpdateDescription;
 
   const TaskItemCard({
     Key? key,
+    required this.statusTask,
     required this.asset,
     required this.onPickImage,
     required this.onUpdateDescription,
@@ -47,61 +52,67 @@ class _TaskItemCardState extends ConsumerState<TaskItemCard> {
             // debugPrint('id : ${task.assets![index].description}');
             // task.assets![index].url = '-----';
             // ref.read(taskProvider.notifier).state = task;
-            Navigator.of(context)
-                .pushNamed(AlbumScreen.routeName, arguments: true)
-                .then((path) async {
-              if (path != null) {
-                widget.onPickImage(path as String);
-                setState(() {
-                  url = path;
-                });
-              }
+            if (widget.statusTask == STATUS_TODO) {
+              Navigator.of(context)
+                  .pushNamed(AlbumScreen.routeName, arguments: true)
+                  .then((path) async {
+                if (path != null) {
+                  widget.onPickImage(path as String);
+                  setState(() {
+                    url = path;
+                  });
+                }
+              });
             }
 
-                    // (path) async {
-                    //   ref
-                    //       .read(taskControllerProvider.notifier)
-                    //       .updateAssetLocalTask(Asset(
-                    //         id: widget.asset.id,
-                    //         section: widget.asset.section,
-                    //         category: widget.asset.category,
-                    //         description: widget.asset.description,
-                    //         url: path as String,
-                    //         createdDate: widget.asset.createdDate,
-                    //         orderIndex: widget.asset.orderIndex,
-                    //       ));
+            // (path) async {
+            //   ref
+            //       .read(taskControllerProvider.notifier)
+            //       .updateAssetLocalTask(Asset(
+            //         id: widget.asset.id,
+            //         section: widget.asset.section,
+            //         category: widget.asset.category,
+            //         description: widget.asset.description,
+            //         url: path as String,
+            //         createdDate: widget.asset.createdDate,
+            //         orderIndex: widget.asset.orderIndex,
+            //       ));
 
-                    // UPDATE LOCAL DB
-                    // ref.read(localdataServiceProvider).updateAsset(
-                    //       Asset(
-                    //         id: widget.asset.id,
-                    //         section: widget.asset.section,
-                    //         category: widget.asset.category,
-                    //         description: widget.asset.description,
-                    //         url: path as String,
-                    //         createdDate: widget.asset.createdDate,
-                    //         orderIndex: widget.asset.orderIndex,
-                    //       ),
-                    //     );
+            // UPDATE LOCAL DB
+            // ref.read(localdataServiceProvider).updateAsset(
+            //       Asset(
+            //         id: widget.asset.id,
+            //         section: widget.asset.section,
+            //         category: widget.asset.category,
+            //         description: widget.asset.description,
+            //         url: path as String,
+            //         createdDate: widget.asset.createdDate,
+            //         orderIndex: widget.asset.orderIndex,
+            //       ),
+            //     );
 
-                    // UPDATE TASK PROVIDER
-                    // Task task = ref.read(taskProvider.notifier).state!;
+            // UPDATE TASK PROVIDER
+            // Task task = ref.read(taskProvider.notifier).state!;
 
-                    // Task newTask = copyWith(task);
-                    // int index = newTask.assets!
-                    //     .indexWhere((element) => element.id == widget.asset.id);
-                    // newTask.assets![index].url = path;
-                    // ref.read(taskProvider.notifier).state = newTask;
-                    // },
-                    );
+            // Task newTask = copyWith(task);
+            // int index = newTask.assets!
+            //     .indexWhere((element) => element.id == widget.asset.id);
+            // newTask.assets![index].url = path;
+            // ref.read(taskProvider.notifier).state = newTask;
+            // },
+            // );
           },
           child: Container(
             height: 300,
             color: Colors.grey,
-            child: Center(
-                child: url != '-'
-                    ? Image.file(File(widget.asset.url))
-                    : const Icon(Icons.image)),
+            child: widget.statusTask == STATUS_TODO
+                ? Center(
+                    child: url != '-'
+                        ? Image.file(File(widget.asset.url))
+                        : const Icon(Icons.image))
+                : Center(
+                    child: Image.network(
+                        '${urlRepo}/asset/getImage/${widget.asset.id}')),
           ),
         ),
         Container(
@@ -110,7 +121,11 @@ class _TaskItemCardState extends ConsumerState<TaskItemCard> {
           width: double.infinity,
           padding: const EdgeInsets.all(8),
           child: InkWell(
-            onTap: () => _displayTextInputDialog(context),
+            onTap: () {
+              if (widget.statusTask == STATUS_TODO) {
+                _displayTextInputDialog(context);
+              }
+            },
             child: Text(
               description,
               style: const TextStyle(fontSize: 14),

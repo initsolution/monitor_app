@@ -22,43 +22,33 @@ const AssetsDBSchema = CollectionSchema(
       name: r'category',
       type: IsarType.string,
     ),
-    r'createdDate': PropertySchema(
-      id: 1,
-      name: r'createdDate',
-      type: IsarType.string,
-    ),
     r'description': PropertySchema(
-      id: 2,
+      id: 1,
       name: r'description',
       type: IsarType.string,
     ),
     r'isPassed': PropertySchema(
-      id: 3,
+      id: 2,
       name: r'isPassed',
       type: IsarType.bool,
     ),
-    r'lastModified': PropertySchema(
-      id: 4,
-      name: r'lastModified',
-      type: IsarType.string,
-    ),
     r'note': PropertySchema(
-      id: 5,
+      id: 3,
       name: r'note',
       type: IsarType.string,
     ),
     r'orderIndex': PropertySchema(
-      id: 6,
+      id: 4,
       name: r'orderIndex',
       type: IsarType.long,
     ),
     r'section': PropertySchema(
-      id: 7,
+      id: 5,
       name: r'section',
       type: IsarType.string,
     ),
     r'url': PropertySchema(
-      id: 8,
+      id: 6,
       name: r'url',
       type: IsarType.string,
     )
@@ -69,7 +59,14 @@ const AssetsDBSchema = CollectionSchema(
   deserializeProp: _assetsDBDeserializeProp,
   idName: r'id',
   indexes: {},
-  links: {},
+  links: {
+    r'task': LinkSchema(
+      id: -8706450405940521659,
+      name: r'task',
+      target: r'tasks',
+      single: true,
+    )
+  },
   embeddedSchemas: {},
   getId: _assetsDBGetId,
   getLinks: _assetsDBGetLinks,
@@ -84,14 +81,7 @@ int _assetsDBEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.category.length * 3;
-  bytesCount += 3 + object.createdDate.length * 3;
   bytesCount += 3 + object.description.length * 3;
-  {
-    final value = object.lastModified;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
   {
     final value = object.note;
     if (value != null) {
@@ -110,14 +100,12 @@ void _assetsDBSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.category);
-  writer.writeString(offsets[1], object.createdDate);
-  writer.writeString(offsets[2], object.description);
-  writer.writeBool(offsets[3], object.isPassed);
-  writer.writeString(offsets[4], object.lastModified);
-  writer.writeString(offsets[5], object.note);
-  writer.writeLong(offsets[6], object.orderIndex);
-  writer.writeString(offsets[7], object.section);
-  writer.writeString(offsets[8], object.url);
+  writer.writeString(offsets[1], object.description);
+  writer.writeBool(offsets[2], object.isPassed);
+  writer.writeString(offsets[3], object.note);
+  writer.writeLong(offsets[4], object.orderIndex);
+  writer.writeString(offsets[5], object.section);
+  writer.writeString(offsets[6], object.url);
 }
 
 AssetsDB _assetsDBDeserialize(
@@ -128,15 +116,13 @@ AssetsDB _assetsDBDeserialize(
 ) {
   final object = AssetsDB(
     category: reader.readString(offsets[0]),
-    createdDate: reader.readString(offsets[1]),
-    description: reader.readString(offsets[2]),
+    description: reader.readString(offsets[1]),
     id: id,
-    isPassed: reader.readBoolOrNull(offsets[3]) ?? false,
-    lastModified: reader.readStringOrNull(offsets[4]),
-    note: reader.readStringOrNull(offsets[5]),
-    orderIndex: reader.readLong(offsets[6]),
-    section: reader.readString(offsets[7]),
-    url: reader.readString(offsets[8]),
+    isPassed: reader.readBoolOrNull(offsets[2]) ?? false,
+    note: reader.readStringOrNull(offsets[3]),
+    orderIndex: reader.readLong(offsets[4]),
+    section: reader.readString(offsets[5]),
+    url: reader.readString(offsets[6]),
   );
   return object;
 }
@@ -153,18 +139,14 @@ P _assetsDBDeserializeProp<P>(
     case 1:
       return (reader.readString(offset)) as P;
     case 2:
-      return (reader.readString(offset)) as P;
-    case 3:
       return (reader.readBoolOrNull(offset) ?? false) as P;
+    case 3:
+      return (reader.readStringOrNull(offset)) as P;
     case 4:
-      return (reader.readStringOrNull(offset)) as P;
-    case 5:
-      return (reader.readStringOrNull(offset)) as P;
-    case 6:
       return (reader.readLong(offset)) as P;
-    case 7:
+    case 5:
       return (reader.readString(offset)) as P;
-    case 8:
+    case 6:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -176,11 +158,12 @@ Id _assetsDBGetId(AssetsDB object) {
 }
 
 List<IsarLinkBase<dynamic>> _assetsDBGetLinks(AssetsDB object) {
-  return [];
+  return [object.task];
 }
 
 void _assetsDBAttach(IsarCollection<dynamic> col, Id id, AssetsDB object) {
   object.id = id;
+  object.task.attach(col, col.isar.collection<TaskDB>(), r'task', id);
 }
 
 extension AssetsDBQueryWhereSort on QueryBuilder<AssetsDB, AssetsDB, QWhere> {
@@ -385,138 +368,6 @@ extension AssetsDBQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'category',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> createdDateEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'createdDate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition>
-      createdDateGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'createdDate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> createdDateLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'createdDate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> createdDateBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'createdDate',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> createdDateStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'createdDate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> createdDateEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'createdDate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> createdDateContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'createdDate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> createdDateMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'createdDate',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> createdDateIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'createdDate',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition>
-      createdDateIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'createdDate',
         value: '',
       ));
     });
@@ -728,157 +579,6 @@ extension AssetsDBQueryFilter
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isPassed',
         value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> lastModifiedIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'lastModified',
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition>
-      lastModifiedIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'lastModified',
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> lastModifiedEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'lastModified',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition>
-      lastModifiedGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'lastModified',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> lastModifiedLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'lastModified',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> lastModifiedBetween(
-    String? lower,
-    String? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'lastModified',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition>
-      lastModifiedStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'lastModified',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> lastModifiedEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'lastModified',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> lastModifiedContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'lastModified',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> lastModifiedMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'lastModified',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition>
-      lastModifiedIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'lastModified',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition>
-      lastModifiedIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'lastModified',
-        value: '',
       ));
     });
   }
@@ -1347,7 +1047,20 @@ extension AssetsDBQueryObject
     on QueryBuilder<AssetsDB, AssetsDB, QFilterCondition> {}
 
 extension AssetsDBQueryLinks
-    on QueryBuilder<AssetsDB, AssetsDB, QFilterCondition> {}
+    on QueryBuilder<AssetsDB, AssetsDB, QFilterCondition> {
+  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> task(
+      FilterQuery<TaskDB> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'task');
+    });
+  }
+
+  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> taskIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'task', 0, true, 0, true);
+    });
+  }
+}
 
 extension AssetsDBQuerySortBy on QueryBuilder<AssetsDB, AssetsDB, QSortBy> {
   QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> sortByCategory() {
@@ -1359,18 +1072,6 @@ extension AssetsDBQuerySortBy on QueryBuilder<AssetsDB, AssetsDB, QSortBy> {
   QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> sortByCategoryDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'category', Sort.desc);
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> sortByCreatedDate() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'createdDate', Sort.asc);
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> sortByCreatedDateDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'createdDate', Sort.desc);
     });
   }
 
@@ -1395,18 +1096,6 @@ extension AssetsDBQuerySortBy on QueryBuilder<AssetsDB, AssetsDB, QSortBy> {
   QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> sortByIsPassedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isPassed', Sort.desc);
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> sortByLastModified() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'lastModified', Sort.asc);
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> sortByLastModifiedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'lastModified', Sort.desc);
     });
   }
 
@@ -1473,18 +1162,6 @@ extension AssetsDBQuerySortThenBy
     });
   }
 
-  QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> thenByCreatedDate() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'createdDate', Sort.asc);
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> thenByCreatedDateDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'createdDate', Sort.desc);
-    });
-  }
-
   QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> thenByDescription() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'description', Sort.asc);
@@ -1518,18 +1195,6 @@ extension AssetsDBQuerySortThenBy
   QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> thenByIsPassedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isPassed', Sort.desc);
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> thenByLastModified() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'lastModified', Sort.asc);
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> thenByLastModifiedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'lastModified', Sort.desc);
     });
   }
 
@@ -1591,13 +1256,6 @@ extension AssetsDBQueryWhereDistinct
     });
   }
 
-  QueryBuilder<AssetsDB, AssetsDB, QDistinct> distinctByCreatedDate(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'createdDate', caseSensitive: caseSensitive);
-    });
-  }
-
   QueryBuilder<AssetsDB, AssetsDB, QDistinct> distinctByDescription(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1608,13 +1266,6 @@ extension AssetsDBQueryWhereDistinct
   QueryBuilder<AssetsDB, AssetsDB, QDistinct> distinctByIsPassed() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isPassed');
-    });
-  }
-
-  QueryBuilder<AssetsDB, AssetsDB, QDistinct> distinctByLastModified(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'lastModified', caseSensitive: caseSensitive);
     });
   }
 
@@ -1660,12 +1311,6 @@ extension AssetsDBQueryProperty
     });
   }
 
-  QueryBuilder<AssetsDB, String, QQueryOperations> createdDateProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'createdDate');
-    });
-  }
-
   QueryBuilder<AssetsDB, String, QQueryOperations> descriptionProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'description');
@@ -1675,12 +1320,6 @@ extension AssetsDBQueryProperty
   QueryBuilder<AssetsDB, bool, QQueryOperations> isPassedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isPassed');
-    });
-  }
-
-  QueryBuilder<AssetsDB, String?, QQueryOperations> lastModifiedProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'lastModified');
     });
   }
 

@@ -34,11 +34,35 @@ class LocalDataService {
             category: masterAsset.category,
             description: masterAsset.description,
             url: "-",
-            createdDate: "-",
             orderIndex: idx,
           );
         }).toList() ??
         [];
+    // var assetsDB;
+    // if (task.status == STATUS_TODO) {
+    //   assetsDB = task.masterAsset?.mapIndexed((idx, masterAsset) {
+    //         return AssetsDB(
+    //           section: masterAsset.section,
+    //           category: masterAsset.category,
+    //           description: masterAsset.description,
+    //           url: "-",
+    //           orderIndex: idx,
+    //         );
+    //       }).toList() ??
+    //       [];
+    // } else {
+    //   assetsDB = task.asset?.mapIndexed((idx, assets) {
+    //     print('assets id : ${assets.id}');
+    //         return AssetsDB(
+    //           section: assets.section,
+    //           category: assets.category,
+    //           description: assets.description,
+    //           url: assets.url,
+    //           orderIndex: idx,
+    //         );
+    //       }).toList() ??
+    //       [];
+    // }
     int index = 0;
     final categoryPointChecklistDB =
         task.masterChecklist?.map((masterChecklist) {
@@ -88,8 +112,6 @@ class LocalDataService {
       category: asset.category,
       description: asset.description,
       url: asset.url,
-      createdDate: asset.createdDate,
-      lastModified: asset.lastModified,
       isPassed: asset.isPassed,
       note: asset.note,
       orderIndex: asset.orderIndex,
@@ -106,8 +128,6 @@ class LocalDataService {
         category: element.category,
         description: element.description,
         url: element.url,
-        createdDate: element.createdDate,
-        lastModified: element.lastModified,
         isPassed: element.isPassed,
         note: element.note,
         orderIndex: element.orderIndex,
@@ -125,8 +145,6 @@ class LocalDataService {
         category: asset.category,
         description: asset.description,
         url: asset.url,
-        createdDate: asset.createdDate,
-        lastModified: asset.lastModified,
         isPassed: asset.isPassed,
         note: asset.note,
         orderIndex: asset.orderIndex,
@@ -159,7 +177,6 @@ class LocalDataService {
           category: temuan.category,
           description: temuan.description,
           url: temuan.url,
-          createdDate: temuan.createdDate,
           orderIndex: temuan.orderIndex);
 
       await isarDB.writeTxn(() async {
