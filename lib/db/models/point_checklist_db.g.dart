@@ -101,12 +101,12 @@ PointChecklistDB _pointChecklistDBDeserialize(
 ) {
   final object = PointChecklistDB(
     hasil: reader.readString(offsets[0]),
+    id: id,
     keterangan: reader.readStringOrNull(offsets[1]),
     kriteria: reader.readStringOrNull(offsets[2]),
     orderIndex: reader.readLong(offsets[3]),
     uraian: reader.readString(offsets[4]),
   );
-  object.id = id;
   return object;
 }
 
@@ -133,7 +133,7 @@ P _pointChecklistDBDeserializeProp<P>(
 }
 
 Id _pointChecklistDBGetId(PointChecklistDB object) {
-  return object.id;
+  return object.id ?? Isar.autoIncrement;
 }
 
 List<IsarLinkBase<dynamic>> _pointChecklistDBGetLinks(PointChecklistDB object) {
@@ -363,7 +363,25 @@ extension PointChecklistDBQueryFilter
   }
 
   QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterFilterCondition>
-      idEqualTo(Id value) {
+      idIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterFilterCondition>
+      idIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterFilterCondition>
+      idEqualTo(Id? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -374,7 +392,7 @@ extension PointChecklistDBQueryFilter
 
   QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterFilterCondition>
       idGreaterThan(
-    Id value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -388,7 +406,7 @@ extension PointChecklistDBQueryFilter
 
   QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterFilterCondition>
       idLessThan(
-    Id value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -402,8 +420,8 @@ extension PointChecklistDBQueryFilter
 
   QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterFilterCondition>
       idBetween(
-    Id lower,
-    Id upper, {
+    Id? lower,
+    Id? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {

@@ -1,8 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monitor_app/controller/task_controller.dart';
+import 'package:monitor_app/model/report_reg_verticality.dart';
 import 'package:monitor_app/model/task.dart';
+import 'package:monitor_app/model/value_verticality.dart';
 
-class FormReportVerticality extends StatefulWidget {
+class FormReportVerticality extends ConsumerStatefulWidget {
   static String routeName = 'report_verticality';
 
   final Task task;
@@ -12,10 +16,11 @@ class FormReportVerticality extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<FormReportVerticality> createState() => _FormReportVerticalityState();
+  ConsumerState<FormReportVerticality> createState() =>
+      _FormReportVerticalityState();
 }
 
-class _FormReportVerticalityState extends State<FormReportVerticality> {
+class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
   TextEditingController horCon1 = TextEditingController();
   TextEditingController horCon2 = TextEditingController();
   TextEditingController horCon3 = TextEditingController();
@@ -26,6 +31,8 @@ class _FormReportVerticalityState extends State<FormReportVerticality> {
 
   List<TextEditingController> valueT1Con = [];
   List<TextEditingController> valueT2Con = [];
+  // ignore: non_constant_identifier_names
+  final int MAX_SECTION_NUMBER = 10;
 
   List<String> theodoliteItems = [
     'A-B',
@@ -40,22 +47,92 @@ class _FormReportVerticalityState extends State<FormReportVerticality> {
   List<String> miringKe2 = [];
   late List<String> miringKeItem;
   late List<String> miringKeItem2;
-  double toleransiKetegakanMenara = 0;
+  String toleransiKetegakanMenara = '0';
 
   List<int> selectedIndexTheodolite = [];
+
   @override
   void initState() {
     super.initState();
-    theodoliteValue = theodoliteItems[0];
-    theodoliteValue2 = theodoliteItems[0];
-    miringKeItem = theodoliteItems[0].split('-');
-    miringKeItem2 = theodoliteItems[0].split('-');
-    for (int i = 0; i < 4; i++) {
-      miringKe.add(miringKeItem[0]);
-      miringKe2.add(miringKeItem2[0]);
-      valueT1Con.add(TextEditingController());
-      valueT2Con.add(TextEditingController());
+    if (widget.task.reportRegVerticality == null) {
+      theodoliteValue = theodoliteItems[0];
+      theodoliteValue2 = theodoliteItems[0];
+      miringKeItem = theodoliteItems[0].split('-');
+      miringKeItem2 = theodoliteItems[0].split('-');
+      for (int i = 0; i < MAX_SECTION_NUMBER; i++) {
+        miringKe.add(miringKeItem[0]);
+        miringKe2.add(miringKeItem2[0]);
+        valueT1Con.add(TextEditingController());
+        valueT2Con.add(TextEditingController());
+      }
+    } else {
+      theodoliteValue = widget.task.reportRegVerticality!.theodolite1;
+      theodoliteValue2 = widget.task.reportRegVerticality!.theodolite2;
+      setSelectedIndexTheodolite(theodoliteValue);
+      setSelectedIndexTheodolite(theodoliteValue2);
+      miringKeItem = theodoliteValue.split('-');
+      miringKeItem2 = theodoliteValue2.split('-');
+      for (int i = 0; i < MAX_SECTION_NUMBER; i++) {
+        miringKe.add(
+            widget.task.reportRegVerticality!.valueVerticality![i].miringKe);
+        miringKe2.add(widget.task.reportRegVerticality!
+            .valueVerticality![MAX_SECTION_NUMBER + i].miringKe);
+        valueT1Con.add(TextEditingController());
+        valueT2Con.add(TextEditingController());
+
+        valueT1Con[i].text = widget
+            .task.reportRegVerticality!.valueVerticality![i].value
+            .toString();
+        valueT2Con[i].text = widget.task.reportRegVerticality!
+            .valueVerticality![MAX_SECTION_NUMBER + i].value
+            .toString();
+      }
+      horCon1.text =
+          widget.task.reportRegVerticality!.horizontalityAb.toString();
+      horCon2.text =
+          widget.task.reportRegVerticality!.horizontalityBc.toString();
+      horCon3.text =
+          widget.task.reportRegVerticality!.horizontalityCd.toString();
+      horCon4.text =
+          widget.task.reportRegVerticality!.horizontalityDa.toString();
+      debugPrint(
+          'toleransi ketegakan menara : ${widget.task.reportRegVerticality!.toleransiKetegakan}');
+      toleransiKetegakanMenara =
+          widget.task.reportRegVerticality!.toleransiKetegakan;
+      toleransiKetegakanCon.text = toleransiKetegakanMenara;
+      alatUkurCon.text = widget.task.reportRegVerticality!.alatUkur;
     }
+  }
+
+  void setSelectedIndexTheodolite(String theodoliteValue) {
+    switch (theodoliteValue) {
+      case 'A-B':
+        selectedIndexTheodolite.add(1);
+        break;
+      case 'B-C':
+        selectedIndexTheodolite.add(2);
+        break;
+      case 'C-D':
+        selectedIndexTheodolite.add(3);
+        break;
+      case 'D-A':
+        selectedIndexTheodolite.add(4);
+        break;
+      default:
+    }
+  }
+
+  @override
+  void dispose() {
+    horCon1.dispose();
+    horCon2.dispose();
+    horCon3.dispose();
+    horCon4.dispose();
+    alatUkurCon.dispose();
+    toleransiKetegakanCon.dispose();
+    valueT1Con.clear();
+    valueT2Con.clear();
+    super.dispose();
   }
 
   @override
@@ -64,6 +141,108 @@ class _FormReportVerticalityState extends State<FormReportVerticality> {
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: const Text('Report Verticality'),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                if (widget.task.reportRegVerticality != null) {
+                  List<ValueVerticality> valueVerticalities = [];
+                  //theo 1
+                  for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                    ValueVerticality valueVerticality = ValueVerticality(
+                        id: widget
+                            .task.reportRegVerticality!.valueVerticality![i].id,
+                        theodoliteIndex: 1,
+                        section: i + 1,
+                        miringKe: miringKe[i],
+                        value: valueT1Con[i].text != ''
+                            ? int.parse(valueT1Con[i].text)
+                            : 0);
+                    valueVerticalities.add(valueVerticality);
+                  }
+                  //theo 2
+                  for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                    ValueVerticality valueVerticality = ValueVerticality(
+                        id: widget.task.reportRegVerticality!
+                            .valueVerticality![MAX_SECTION_NUMBER + i].id,
+                        theodoliteIndex: 2,
+                        section: i + 1,
+                        miringKe: miringKe2[i],
+                        value: valueT2Con[i].text != ''
+                            ? int.parse(valueT2Con[i].text)
+                            : 0);
+                    valueVerticalities.add(valueVerticality);
+                  }
+                  ReportRegVerticality report = ReportRegVerticality(
+                      id: widget.task.reportRegVerticality!.id,
+                      horizontalityAb:
+                          horCon1.text != '' ? int.parse(horCon1.text) : 0,
+                      horizontalityBc:
+                          horCon2.text != '' ? int.parse(horCon2.text) : 0,
+                      horizontalityCd:
+                          horCon3.text != '' ? int.parse(horCon3.text) : 0,
+                      horizontalityDa:
+                          horCon4.text != '' ? int.parse(horCon4.text) : 0,
+                      theodolite1: theodoliteValue,
+                      theodolite2: theodoliteValue2,
+                      alatUkur: alatUkurCon.text,
+                      toleransiKetegakan: toleransiKetegakanMenara,
+                      valueVerticality: valueVerticalities);
+                  ref
+                      .read(taskControllerProvider.notifier)
+                      .saveReportVerticality(widget.task.id, report);
+                } else {
+                  List<ValueVerticality> valueVerticalities = [];
+                  for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                    ValueVerticality valueVerticality = ValueVerticality(
+                        theodoliteIndex: 1,
+                        section: i + 1,
+                        miringKe: miringKe[i],
+                        value: valueT1Con[i].text != ''
+                            ? int.parse(valueT1Con[i].text)
+                            : 0);
+                    valueVerticalities.add(valueVerticality);
+                  }
+                  for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                    ValueVerticality valueVerticality = ValueVerticality(
+                        theodoliteIndex: 2,
+                        section: i + 1,
+                        miringKe: miringKe2[i],
+                        value: valueT2Con[i].text != ''
+                            ? int.parse(valueT2Con[i].text)
+                            : 0);
+                    valueVerticalities.add(valueVerticality);
+                  }
+                  ReportRegVerticality report = ReportRegVerticality(
+                      horizontalityAb:
+                          horCon1.text != '' ? int.parse(horCon1.text) : 0,
+                      horizontalityBc:
+                          horCon2.text != '' ? int.parse(horCon2.text) : 0,
+                      horizontalityCd:
+                          horCon3.text != '' ? int.parse(horCon3.text) : 0,
+                      horizontalityDa:
+                          horCon4.text != '' ? int.parse(horCon4.text) : 0,
+                      theodolite1: theodoliteValue,
+                      theodolite2: theodoliteValue2,
+                      alatUkur: alatUkurCon.text,
+                      toleransiKetegakan: toleransiKetegakanMenara,
+                      valueVerticality: valueVerticalities);
+                  ref
+                      .read(taskControllerProvider.notifier)
+                      .saveReportVerticality(widget.task.id, report);
+                }
+              },
+              // onPressed: () async {
+              //   if (reports != null) {
+              //     for (int i = 0; i < reports!.length; i++) {
+              //       reports![i].remark = controllers[i].text;
+              //     }
+              //     ref
+              //         .read(taskControllerProvider.notifier)
+              //         .updateReportTorque(reports!);
+              //   }
+              // },
+              icon: const Icon(Icons.save)),
+        ],
       ),
       body: LayoutBuilder(
         builder: (context, constraints) => SingleChildScrollView(
@@ -113,21 +292,21 @@ class _FormReportVerticalityState extends State<FormReportVerticality> {
                 hintText: "Please type value"),
           ),
           TextField(
-            controller: horCon1,
+            controller: horCon2,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
                 label: Text('Terhadap titik level Pondasi BC (mm)'),
                 hintText: "Please type value"),
           ),
           TextField(
-            controller: horCon1,
+            controller: horCon3,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
                 label: Text('Terhadap titik level Pondasi CD (mm)'),
                 hintText: "Please type value"),
           ),
           TextField(
-            controller: horCon1,
+            controller: horCon4,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
                 label: Text('Terhadap titik level Pondasi DA (mm)'),
@@ -165,11 +344,13 @@ class _FormReportVerticalityState extends State<FormReportVerticality> {
                         theodoliteValue =
                             theodoliteItems[selectedIndexTheodolite[0] - 1];
                         miringKeItem = theodoliteValue.split('-');
-                        miringKe[0] = miringKeItem[0];
-                        miringKe[1] = miringKeItem[0];
-                        miringKe[1] = miringKeItem[0];
-                        miringKe[2] = miringKeItem[0];
-                        miringKe[3] = miringKeItem[0];
+                        for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                          miringKe[i] = miringKeItem[0];
+                        }
+                        // miringKe[0] = miringKeItem[0];
+                        // miringKe[1] = miringKeItem[0];
+                        // miringKe[2] = miringKeItem[0];
+                        // miringKe[3] = miringKeItem[0];
                       }
                     } else {
                       if (selectedIndexTheodolite.length < 2 &&
@@ -178,19 +359,23 @@ class _FormReportVerticalityState extends State<FormReportVerticality> {
                         if (selectedIndexTheodolite.indexOf(1) == 0) {
                           theodoliteValue = theodoliteItems[0];
                           miringKeItem = theodoliteValue.split('-');
-                          miringKe[0] = miringKeItem[0];
-                          miringKe[1] = miringKeItem[0];
-                          miringKe[1] = miringKeItem[0];
-                          miringKe[2] = miringKeItem[0];
-                          miringKe[3] = miringKeItem[0];
+                          for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                            miringKe[i] = miringKeItem[0];
+                          }
+                          // miringKe[0] = miringKeItem[0];
+                          // miringKe[1] = miringKeItem[0];
+                          // miringKe[2] = miringKeItem[0];
+                          // miringKe[3] = miringKeItem[0];
                         } else {
                           theodoliteValue2 = theodoliteItems[0];
                           miringKeItem2 = theodoliteValue2.split('-');
-                          miringKe2[0] = miringKeItem2[0];
-                          miringKe2[1] = miringKeItem2[0];
-                          miringKe2[1] = miringKeItem2[0];
-                          miringKe2[2] = miringKeItem2[0];
-                          miringKe2[3] = miringKeItem2[0];
+                          for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                            miringKe2[i] = miringKeItem2[0];
+                          }
+                          // miringKe2[0] = miringKeItem2[0];
+                          // miringKe2[1] = miringKeItem2[0];
+                          // miringKe2[2] = miringKeItem2[0];
+                          // miringKe2[3] = miringKeItem2[0];
                         }
                       }
                     }
@@ -220,11 +405,13 @@ class _FormReportVerticalityState extends State<FormReportVerticality> {
                             theodoliteValue =
                                 theodoliteItems[selectedIndexTheodolite[0] - 1];
                             miringKeItem = theodoliteValue.split('-');
-                            miringKe[0] = miringKeItem[0];
-                            miringKe[1] = miringKeItem[0];
-                            miringKe[1] = miringKeItem[0];
-                            miringKe[2] = miringKeItem[0];
-                            miringKe[3] = miringKeItem[0];
+                            for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                              miringKe[i] = miringKeItem[0];
+                            }
+                            // miringKe[0] = miringKeItem[0];
+                            // miringKe[1] = miringKeItem[0];
+                            // miringKe[2] = miringKeItem[0];
+                            // miringKe[3] = miringKeItem[0];
                           }
                         } else {
                           if (selectedIndexTheodolite.length < 2 &&
@@ -233,19 +420,23 @@ class _FormReportVerticalityState extends State<FormReportVerticality> {
                             if (selectedIndexTheodolite.indexOf(4) == 0) {
                               theodoliteValue = theodoliteItems[3];
                               miringKeItem = theodoliteValue.split('-');
-                              miringKe[0] = miringKeItem[0];
-                              miringKe[1] = miringKeItem[0];
-                              miringKe[1] = miringKeItem[0];
-                              miringKe[2] = miringKeItem[0];
-                              miringKe[3] = miringKeItem[0];
+                              for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                                miringKe[i] = miringKeItem[0];
+                              }
+                              // miringKe[0] = miringKeItem[0];
+                              // miringKe[1] = miringKeItem[0];
+                              // miringKe[2] = miringKeItem[0];
+                              // miringKe[3] = miringKeItem[0];
                             } else {
                               theodoliteValue2 = theodoliteItems[3];
                               miringKeItem2 = theodoliteValue2.split('-');
-                              miringKe2[0] = miringKeItem2[0];
-                              miringKe2[1] = miringKeItem2[0];
-                              miringKe2[1] = miringKeItem2[0];
-                              miringKe2[2] = miringKeItem2[0];
-                              miringKe2[3] = miringKeItem2[0];
+                              for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                                miringKe2[i] = miringKeItem2[0];
+                              }
+                              // miringKe2[0] = miringKeItem2[0];
+                              // miringKe2[1] = miringKeItem2[0];
+                              // miringKe2[2] = miringKeItem2[0];
+                              // miringKe2[3] = miringKeItem2[0];
                             }
                           }
                         }
@@ -276,11 +467,13 @@ class _FormReportVerticalityState extends State<FormReportVerticality> {
                             theodoliteValue =
                                 theodoliteItems[selectedIndexTheodolite[0] - 1];
                             miringKeItem = theodoliteValue.split('-');
-                            miringKe[0] = miringKeItem[0];
-                            miringKe[1] = miringKeItem[0];
-                            miringKe[1] = miringKeItem[0];
-                            miringKe[2] = miringKeItem[0];
-                            miringKe[3] = miringKeItem[0];
+                            for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                              miringKe[i] = miringKeItem[0];
+                            }
+                            // miringKe[0] = miringKeItem[0];
+                            // miringKe[1] = miringKeItem[0];
+                            // miringKe[2] = miringKeItem[0];
+                            // miringKe[3] = miringKeItem[0];
                           }
                         } else {
                           if (selectedIndexTheodolite.length < 2 &&
@@ -289,19 +482,23 @@ class _FormReportVerticalityState extends State<FormReportVerticality> {
                             if (selectedIndexTheodolite.indexOf(2) == 0) {
                               theodoliteValue = theodoliteItems[1];
                               miringKeItem = theodoliteValue.split('-');
-                              miringKe[0] = miringKeItem[0];
-                              miringKe[1] = miringKeItem[0];
-                              miringKe[1] = miringKeItem[0];
-                              miringKe[2] = miringKeItem[0];
-                              miringKe[3] = miringKeItem[0];
+                              for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                                miringKe[i] = miringKeItem[0];
+                              }
+                              // miringKe[0] = miringKeItem[0];
+                              // miringKe[1] = miringKeItem[0];
+                              // miringKe[2] = miringKeItem[0];
+                              // miringKe[3] = miringKeItem[0];
                             } else {
                               theodoliteValue2 = theodoliteItems[1];
                               miringKeItem2 = theodoliteValue2.split('-');
-                              miringKe2[0] = miringKeItem2[0];
-                              miringKe2[1] = miringKeItem2[0];
-                              miringKe2[1] = miringKeItem2[0];
-                              miringKe2[2] = miringKeItem2[0];
-                              miringKe2[3] = miringKeItem2[0];
+                              for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                                miringKe2[i] = miringKeItem2[0];
+                              }
+                              // miringKe2[0] = miringKeItem2[0];
+                              // miringKe2[1] = miringKeItem2[0];
+                              // miringKe2[2] = miringKeItem2[0];
+                              // miringKe2[3] = miringKeItem2[0];
                             }
                           }
                         }
@@ -329,11 +526,13 @@ class _FormReportVerticalityState extends State<FormReportVerticality> {
                         theodoliteValue =
                             theodoliteItems[selectedIndexTheodolite[0] - 1];
                         miringKeItem = theodoliteValue.split('-');
-                        miringKe[0] = miringKeItem[0];
-                        miringKe[1] = miringKeItem[0];
-                        miringKe[1] = miringKeItem[0];
-                        miringKe[2] = miringKeItem[0];
-                        miringKe[3] = miringKeItem[0];
+                        for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                          miringKe[i] = miringKeItem[0];
+                        }
+                        // miringKe[0] = miringKeItem[0];
+                        // miringKe[1] = miringKeItem[0];
+                        // miringKe[2] = miringKeItem[0];
+                        // miringKe[3] = miringKeItem[0];
                       }
                     } else {
                       if (selectedIndexTheodolite.length < 2 &&
@@ -342,19 +541,23 @@ class _FormReportVerticalityState extends State<FormReportVerticality> {
                         if (selectedIndexTheodolite.indexOf(3) == 0) {
                           theodoliteValue = theodoliteItems[2];
                           miringKeItem = theodoliteValue.split('-');
-                          miringKe[0] = miringKeItem[0];
-                          miringKe[1] = miringKeItem[0];
-                          miringKe[1] = miringKeItem[0];
-                          miringKe[2] = miringKeItem[0];
-                          miringKe[3] = miringKeItem[0];
+                          for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                            miringKe[i] = miringKeItem[0];
+                          }
+                          // miringKe[0] = miringKeItem[0];
+                          // miringKe[1] = miringKeItem[0];
+                          // miringKe[2] = miringKeItem[0];
+                          // miringKe[3] = miringKeItem[0];
                         } else {
                           theodoliteValue2 = theodoliteItems[2];
                           miringKeItem2 = theodoliteValue2.split('-');
-                          miringKe2[0] = miringKeItem2[0];
-                          miringKe2[1] = miringKeItem2[0];
-                          miringKe2[1] = miringKeItem2[0];
-                          miringKe2[2] = miringKeItem2[0];
-                          miringKe2[3] = miringKeItem2[0];
+                          for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                            miringKe2[i] = miringKeItem2[0];
+                          }
+                          // miringKe2[0] = miringKeItem2[0];
+                          // miringKe2[1] = miringKeItem2[0];
+                          // miringKe2[2] = miringKeItem2[0];
+                          // miringKe2[3] = miringKeItem2[0];
                         }
                       }
                     }
@@ -433,11 +636,11 @@ class _FormReportVerticalityState extends State<FormReportVerticality> {
             color: Colors.grey,
             height: 1,
           ),
-          for (int i = 0; i < 4; i++)
+          for (int i = 0; i < MAX_SECTION_NUMBER; i++)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(width: 50, child: Text('${i + 1}')),
+                SizedBox(width: 50, child: Text('    ${i + 1}')),
                 SizedBox(
                   width: 60,
                   child: DropdownButton(
@@ -529,11 +732,11 @@ class _FormReportVerticalityState extends State<FormReportVerticality> {
             color: Colors.grey,
             height: 1,
           ),
-          for (int j = 0; j < 4; j++)
+          for (int j = 0; j < MAX_SECTION_NUMBER; j++)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(width: 50, child: Text('${j + 1}')),
+                SizedBox(width: 50, child: Text('    ${j + 1}')),
                 SizedBox(
                   width: 60,
                   child: DropdownButton(
@@ -618,13 +821,14 @@ class _FormReportVerticalityState extends State<FormReportVerticality> {
                   controller: toleransiKetegakanCon,
                   keyboardType: TextInputType.number,
                   onChanged: (value) {
-                    toleransiKetegakanMenara = int.parse(value) * (1 / 1000);
+                    toleransiKetegakanMenara = value;
                     setState(() {});
                   },
                 ),
               ),
               const Text('x (1/1000) ='),
-              Text('$toleransiKetegakanMenara mm'),
+              Text('${int.parse(toleransiKetegakanMenara) * (1 / 1000)} mm'),
+              // Text('$toleransiKetegakanMenara mm'),
             ],
           ),
         ],

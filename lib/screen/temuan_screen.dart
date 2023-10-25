@@ -7,8 +7,7 @@ import 'package:monitor_app/controller/task_controller.dart';
 
 import 'package:monitor_app/model/asset.dart';
 import 'package:monitor_app/mstate/asset_state.dart';
-import 'package:monitor_app/mstate/task_state.dart';
-import 'package:monitor_app/screen/temuan_item_card.dart';
+import 'package:monitor_app/screen/components/temuan_item_card.dart';
 
 class TemuanScreen extends ConsumerStatefulWidget {
   final List<Asset>? asset;
@@ -29,9 +28,10 @@ class _TemuanScreenState extends ConsumerState<TemuanScreen> {
   @override
   void initState() {
     super.initState();
+    debugPrint('widget section : ${widget.section}');
     Future(() => ref
         .read(assetControllerProvider.notifier)
-        .getAllTemuanByTaskId(widget.taskId));
+        .getAllTemuanByTaskId(widget.taskId, widget.section));
   }
 
   @override
@@ -68,30 +68,34 @@ class _TemuanScreenState extends ConsumerState<TemuanScreen> {
   Widget _buildBody() {
     var state = ref.watch(assetControllerProvider);
     if (state is AssetLoaded) {
+      // debugPrint('jumlah temuan card : ${state.assets.length.toString()}');
       return CustomScrollView(
         slivers: [
           Consumer(
             builder: (context, ref, child) {
-              debugPrint('state : $state');
+              // debugPrint('state : $state');
 
               // if (state is AssetLoaded) {
               return SliverList.builder(
                 itemCount: state.assets.length,
-                itemBuilder: (context, index) => TemuanItemCard(
-                  asset: state.assets[index],
-                  onPickImage: (String url) async {
-                    state.assets[index].url = url;
-                    await ref
-                        .read(taskControllerProvider.notifier)
-                        .updateAssetLocalTask(state.assets[index]);
-                  },
-                  onUpdateDescription: (String description) async {
-                    state.assets[index].description = description;
-                    await ref
-                        .read(taskControllerProvider.notifier)
-                        .updateAssetLocalTask(state.assets[index]);
-                  },
-                ),
+                itemBuilder: (context, index) {
+                  debugPrint('id temuan : ${state.assets[index].id} section: ${state.assets[index].section}');
+                  return TemuanItemCard(
+                    asset: state.assets[index],
+                    onPickImage: (String url) async {
+                      state.assets[index].url = url;
+                      await ref
+                          .read(taskControllerProvider.notifier)
+                          .updateAssetLocalTask(state.assets[index]);
+                    },
+                    onUpdateDescription: (String description) async {
+                      state.assets[index].description = description;
+                      await ref
+                          .read(taskControllerProvider.notifier)
+                          .updateAssetLocalTask(state.assets[index]);
+                    },
+                  );
+                },
               );
               // } else {
               //   return const Center(child: CircularProgressIndicator());

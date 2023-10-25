@@ -27,3 +27,7 @@
 - update taskcontrollerprovider untuk mengakomodir set url pada asset menu
 # 18/10/2023
 - update add temuan dynamically (done)
+# 24/10/2023
+- update : save report checklist
+- update : save report torque
+- update : save report verticality

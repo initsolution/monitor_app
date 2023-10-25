@@ -56,8 +56,12 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
           IconButton(
               onPressed: () async =>
                   // context.push('/task/camera', extra: await availableCameras()),
-                  Navigator.of(context).pushNamed(CameraScreen.routeName,
-                      arguments: await availableCameras()),
+                  Navigator.of(context)
+                      .pushNamed(CameraScreen.routeName,
+                          arguments: await availableCameras())
+                      .then((_) async => await ref
+                          .read(taskControllerProvider.notifier)
+                          .getTaskById(widget.taskId)),
               icon: const Icon(Icons.camera)),
           IconButton(
               onPressed: () async {
@@ -98,27 +102,6 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
           return const Center(child: CircularProgressIndicator());
         }
       }),
-      // floatingActionButton: ElevatedButton.icon(
-      //   onPressed: () {
-      //     Navigator.of(context).push(MaterialPageRoute(
-      //       builder: (context) => const TemuanScreen(
-      //         section: '',
-      //       ),
-      //     ));
-      //   },
-      //   style: ElevatedButton.styleFrom(
-      //     elevation: 2,
-      //     backgroundColor: Colors.blue,
-      //   ),
-      //   icon: const Icon(
-      //     Icons.add,
-      //     color: Colors.white,
-      //   ), //icon data for elevated button
-      //   label: const Text(
-      //     "Temuan",
-      //     style: TextStyle(color: Colors.white),
-      //   ), //label text
-      // ),
     );
   }
 
@@ -143,8 +126,11 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
               )),
           ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(FormReportVerticality.routeName,
-                    arguments: task);
+                Navigator.of(context)
+                    .pushNamed(FormReportVerticality.routeName, arguments: task)
+                    .then((_) async => await ref
+                        .read(taskControllerProvider.notifier)
+                        .getTaskById(widget.taskId));
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.pink,
@@ -164,8 +150,14 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
         color: const Color(0xFFEAEEF2),
         child: ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(FormChecklistScreen.routeName,
-                  arguments: task.categoriesChecklist ?? []);
+              Navigator.of(context)
+                  .pushNamed(FormChecklistScreen.routeName,
+                      arguments: task.categoriesChecklist ?? [])
+                  .then((_) async => await ref
+                      .read(taskControllerProvider.notifier)
+                      .getTaskById(widget.taskId));
+              // Navigator.of(context)
+              //     .pushNamed(FormChecklistScreen.routeName, arguments: task.id)
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,
@@ -307,7 +299,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
       var categories = groupBy(sections[key]!, (obj) => obj.category);
       result.addAll({key: categories});
     }
-    debugPrint('result ${result.length}');
+    // debugPrint('result ${result.length}');
     return SingleChildScrollView(
       child: Column(
         children: result.entries.map((e) {
@@ -460,7 +452,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                 decoration: BoxDecoration(
                   color:
                       categories.keys.elementAt(index).toUpperCase() == 'TEMUAN'
-                          ? Colors.amber
+                          ? Colors.yellow[400]
                           : Colors.white,
                   borderRadius: BorderRadius.circular(10),
                 ),

@@ -41,12 +41,6 @@ class _TaskItemCardState extends ConsumerState<TaskItemCard> {
       children: [
         InkWell(
           onTap: () async {
-            // Task task = copyWith(widget.task);
-            // int index = task.assets!
-            //     .indexWhere((element) => element.id == widget.asset.id);
-            // debugPrint('id : ${task.assets![index].description}');
-            // task.assets![index].url = '-----';
-            // ref.read(taskProvider.notifier).state = task;
             Navigator.of(context)
                 .pushNamed(AlbumScreen.routeName, arguments: true)
                 .then((path) async {
@@ -56,44 +50,7 @@ class _TaskItemCardState extends ConsumerState<TaskItemCard> {
                   url = path;
                 });
               }
-            }
-
-                    // (path) async {
-                    //   ref
-                    //       .read(taskControllerProvider.notifier)
-                    //       .updateAssetLocalTask(Asset(
-                    //         id: widget.asset.id,
-                    //         section: widget.asset.section,
-                    //         category: widget.asset.category,
-                    //         description: widget.asset.description,
-                    //         url: path as String,
-                    //         createdDate: widget.asset.createdDate,
-                    //         orderIndex: widget.asset.orderIndex,
-                    //       ));
-
-                    // UPDATE LOCAL DB
-                    // ref.read(localdataServiceProvider).updateAsset(
-                    //       Asset(
-                    //         id: widget.asset.id,
-                    //         section: widget.asset.section,
-                    //         category: widget.asset.category,
-                    //         description: widget.asset.description,
-                    //         url: path as String,
-                    //         createdDate: widget.asset.createdDate,
-                    //         orderIndex: widget.asset.orderIndex,
-                    //       ),
-                    //     );
-
-                    // UPDATE TASK PROVIDER
-                    // Task task = ref.read(taskProvider.notifier).state!;
-
-                    // Task newTask = copyWith(task);
-                    // int index = newTask.assets!
-                    //     .indexWhere((element) => element.id == widget.asset.id);
-                    // newTask.assets![index].url = path;
-                    // ref.read(taskProvider.notifier).state = newTask;
-                    // },
-                    );
+            });
           },
           child: Container(
             height: 300,

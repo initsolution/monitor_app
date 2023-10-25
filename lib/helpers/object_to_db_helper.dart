@@ -1,9 +1,13 @@
 import 'package:monitor_app/db/models/employee_db.dart';
 import 'package:monitor_app/db/models/report_reg_torque_db.dart';
+import 'package:monitor_app/db/models/report_reg_verticality_db.dart';
 import 'package:monitor_app/db/models/site_db.dart';
+import 'package:monitor_app/db/models/value_verticality_db.dart';
 import 'package:monitor_app/model/employee.dart';
 import 'package:monitor_app/model/master_report_reg_torque.dart';
+import 'package:monitor_app/model/report_reg_verticality.dart';
 import 'package:monitor_app/model/site.dart';
+import 'package:monitor_app/model/value_verticality.dart';
 
 SiteDB getSiteDBFromSite(Site site) => SiteDB()
   ..idSite = site.id
@@ -39,4 +43,31 @@ ReportRegTorqueDB getReportTorqueDBFromMasterReportTorque(
       qtyBolt: torque.qtyBolt,
     );
 
+ReportRegVerticalityDB getReportRegVerticalityDBFromReportRegVerticality(
+        ReportRegVerticality report) =>
+    ReportRegVerticalityDB(
+      id: report.id,
+      horizontalityAb: report.horizontalityAb,
+      horizontalityBc: report.horizontalityBc,
+      horizontalityCd: report.horizontalityCd,
+      horizontalityDa: report.horizontalityDa,
+      theodolite1: report.theodolite1,
+      theodolite2: report.theodolite2,
+      alatUkur: report.alatUkur,
+      toleransiKetegakan: report.toleransiKetegakan,
+    )..valueVerticality.addAll(
+        getListValueVerticalityDBFromListValueVerticality(
+            report.valueVerticality!));
+
+List<ValueVerticalityDB> getListValueVerticalityDBFromListValueVerticality(
+    List<ValueVerticality> verticalities) {
+  return verticalities
+      .map((v) => ValueVerticalityDB(
+          id: v.id,
+          theodoliteIndex: v.theodoliteIndex,
+          section: v.section,
+          miringKe: v.miringKe,
+          value: v.value))
+      .toList();
+}
   // PointChecklistDB  getPointChecklistDBFromMasterPointChecklistPreventive(MasterPointChecklistPreventive mpoint,{int idx})=>

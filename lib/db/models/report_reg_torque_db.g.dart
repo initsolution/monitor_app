@@ -102,12 +102,12 @@ ReportRegTorqueDB _reportRegTorqueDBDeserialize(
   final object = ReportRegTorqueDB(
     boltSize: reader.readString(offsets[0]),
     elevasi: reader.readLong(offsets[1]),
+    id: id,
     minimumTorque: reader.readLong(offsets[2]),
     qtyBolt: reader.readLong(offsets[3]),
     remark: reader.readStringOrNull(offsets[4]),
     towerSegment: reader.readString(offsets[5]),
   );
-  object.id = id;
   return object;
 }
 
@@ -136,7 +136,7 @@ P _reportRegTorqueDBDeserializeProp<P>(
 }
 
 Id _reportRegTorqueDBGetId(ReportRegTorqueDB object) {
-  return object.id;
+  return object.id ?? Isar.autoIncrement;
 }
 
 List<IsarLinkBase<dynamic>> _reportRegTorqueDBGetLinks(
@@ -424,7 +424,25 @@ extension ReportRegTorqueDBQueryFilter
   }
 
   QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterFilterCondition>
-      idEqualTo(Id value) {
+      idIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterFilterCondition>
+      idIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterFilterCondition>
+      idEqualTo(Id? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -435,7 +453,7 @@ extension ReportRegTorqueDBQueryFilter
 
   QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterFilterCondition>
       idGreaterThan(
-    Id value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -449,7 +467,7 @@ extension ReportRegTorqueDBQueryFilter
 
   QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterFilterCondition>
       idLessThan(
-    Id value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -463,8 +481,8 @@ extension ReportRegTorqueDBQueryFilter
 
   QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterFilterCondition>
       idBetween(
-    Id lower,
-    Id upper, {
+    Id? lower,
+    Id? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {

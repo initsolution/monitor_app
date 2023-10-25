@@ -84,8 +84,10 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     case 'checklist':
       List<CategoryChecklistPreventive> checklist =
           settings.arguments as List<CategoryChecklistPreventive>;
+      // int taskId = settings.arguments as int;
       return PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
+            // FormChecklistScreen(taskId: taskId),
             FormChecklistScreen(checklist: checklist),
         settings: RouteSettings(name: FormChecklistScreen.routeName),
       );

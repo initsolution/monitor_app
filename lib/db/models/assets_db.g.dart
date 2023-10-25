@@ -69,7 +69,14 @@ const AssetsDBSchema = CollectionSchema(
   deserializeProp: _assetsDBDeserializeProp,
   idName: r'id',
   indexes: {},
-  links: {},
+  links: {
+    r'task': LinkSchema(
+      id: -8706450405940521659,
+      name: r'task',
+      target: r'tasks',
+      single: true,
+    )
+  },
   embeddedSchemas: {},
   getId: _assetsDBGetId,
   getLinks: _assetsDBGetLinks,
@@ -176,11 +183,12 @@ Id _assetsDBGetId(AssetsDB object) {
 }
 
 List<IsarLinkBase<dynamic>> _assetsDBGetLinks(AssetsDB object) {
-  return [];
+  return [object.task];
 }
 
 void _assetsDBAttach(IsarCollection<dynamic> col, Id id, AssetsDB object) {
   object.id = id;
+  object.task.attach(col, col.isar.collection<TaskDB>(), r'task', id);
 }
 
 extension AssetsDBQueryWhereSort on QueryBuilder<AssetsDB, AssetsDB, QWhere> {
@@ -1347,7 +1355,20 @@ extension AssetsDBQueryObject
     on QueryBuilder<AssetsDB, AssetsDB, QFilterCondition> {}
 
 extension AssetsDBQueryLinks
-    on QueryBuilder<AssetsDB, AssetsDB, QFilterCondition> {}
+    on QueryBuilder<AssetsDB, AssetsDB, QFilterCondition> {
+  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> task(
+      FilterQuery<TaskDB> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'task');
+    });
+  }
+
+  QueryBuilder<AssetsDB, AssetsDB, QAfterFilterCondition> taskIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'task', 0, true, 0, true);
+    });
+  }
+}
 
 extension AssetsDBQuerySortBy on QueryBuilder<AssetsDB, AssetsDB, QSortBy> {
   QueryBuilder<AssetsDB, AssetsDB, QAfterSortBy> sortByCategory() {

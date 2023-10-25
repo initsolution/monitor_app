@@ -18,7 +18,7 @@ class TaskCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    debugPrint("rebuild TaskCard");
+    // debugPrint("rebuild TaskCard");
     return InkWell(
       onTap: onSelectTask,
       child: Container(

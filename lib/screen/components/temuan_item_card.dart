@@ -32,6 +32,7 @@ class _TemuanItemCardState extends ConsumerState<TemuanItemCard> {
     super.initState();
     description = 'Deskripsi';
     description = widget.asset.description;
+    textController.text = description;
     url = widget.asset.url;
   }
 
