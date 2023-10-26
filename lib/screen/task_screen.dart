@@ -84,8 +84,12 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
             IconButton(
                 onPressed: () async =>
                     // context.push('/task/camera', extra: await availableCameras()),
-                    Navigator.of(context).pushNamed(CameraScreen.routeName,
-                        arguments: await availableCameras()),
+                    Navigator.of(context)
+                        .pushNamed(CameraScreen.routeName,
+                            arguments: await availableCameras())
+                        .then((_) async => await ref
+                            .read(taskControllerProvider.notifier)
+                            .getTaskById(widget.task.id)),
                 icon: const Icon(Icons.camera)),
             widget.task.status == STATUS_TODO
                 ? IconButton(
@@ -196,7 +200,10 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
           ElevatedButton(
               onPressed: () {
                 Navigator.of(context)
-                    .pushNamed(FormReportTorque.routeName, arguments: task);
+                    .pushNamed(FormReportTorque.routeName, arguments: task)
+                    .then((_) async => await ref
+                        .read(taskControllerProvider.notifier)
+                        .getTaskById(widget.task.id));
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
@@ -208,8 +215,11 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
               )),
           ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(FormReportVerticality.routeName,
-                    arguments: task);
+                Navigator.of(context)
+                    .pushNamed(FormReportVerticality.routeName, arguments: task)
+                    .then((_) async => await ref
+                        .read(taskControllerProvider.notifier)
+                        .getTaskById(widget.task.id));
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.pink,
@@ -229,8 +239,14 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
         color: const Color(0xFFEAEEF2),
         child: ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(FormChecklistScreen.routeName,
-                  arguments: task.categoriesChecklist ?? []);
+              Navigator.of(context)
+                  .pushNamed(FormChecklistScreen.routeName,
+                      arguments: task.categoriesChecklist ?? [])
+                  .then((_) async => await ref
+                      .read(taskControllerProvider.notifier)
+                      .getTaskById(widget.task.id));
+              // Navigator.of(context)
+              //     .pushNamed(FormChecklistScreen.routeName, arguments: task.id)
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,
@@ -372,7 +388,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
       var categories = groupBy(sections[key]!, (obj) => obj.category);
       result.addAll({key: categories});
     }
-    debugPrint('result ${result.length}');
+    // debugPrint('result ${result.length}');
     return SingleChildScrollView(
       child: Column(
         children: result.entries.map((e) {
@@ -503,7 +519,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                       .push(
                         MaterialPageRoute(
                           builder: (context) => TemuanScreen(
-                            taskId: task.id,
+                            task: task,
                             asset: categories.values.elementAt(index),
                             section: key,
                           ),
@@ -540,7 +556,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                 decoration: BoxDecoration(
                   color:
                       categories.keys.elementAt(index).toUpperCase() == 'TEMUAN'
-                          ? Colors.amber
+                          ? Colors.yellow[400]
                           : Colors.white,
                   borderRadius: BorderRadius.circular(10),
                 ),

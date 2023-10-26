@@ -6,7 +6,7 @@ part 'report_reg_torque_db.g.dart';
 @Collection(accessor: "report_torque")
 @Name("report_torque")
 class ReportRegTorqueDB {
-  Id id = Isar.autoIncrement;
+  Id? id = Isar.autoIncrement;
   late String towerSegment;
   late int elevasi;
   late String boltSize;
@@ -15,6 +15,7 @@ class ReportRegTorqueDB {
   late String? remark;
 
   ReportRegTorqueDB({
+    this.id,
     required this.towerSegment,
     required this.elevasi,
     required this.boltSize,
@@ -22,4 +23,9 @@ class ReportRegTorqueDB {
     required this.qtyBolt,
     this.remark,
   });
+
+  @override
+  String toString() {
+    return 'ReportRegTorqueDB(id: $id, towerSegment: $towerSegment, elevasi: $elevasi, boltSize: $boltSize, minimumTorque: $minimumTorque, qtyBolt: $qtyBolt, remark: $remark)';
+  }
 }

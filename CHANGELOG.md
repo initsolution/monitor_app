@@ -29,3 +29,6 @@
 - update add temuan dynamically (done)
 # 24/10/2023
 - upload asset, upload/update task, reload task from REST API
+- update : save report checklist
+- update : save report torque
+- update : save report verticality

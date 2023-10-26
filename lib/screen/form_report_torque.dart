@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monitor_app/controller/task_controller.dart';
 import 'package:monitor_app/model/report_reg_torque.dart';
 import 'package:monitor_app/model/task.dart';
 
@@ -14,40 +15,39 @@ class FormReportTorque extends ConsumerStatefulWidget {
 
 class _FormReportTorqueState extends ConsumerState<FormReportTorque> {
   late List<TextEditingController> controllers;
+  late List<ReportRegTorque>? reports;
+
   @override
   void initState() {
     super.initState();
     controllers = [];
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   ref.read(reportRegTorqueProvider.notifier).getAllMasterReportRegTorque(
-    //       widget.task.site.fabricator, widget.task.site.towerHeight);
-    // });
+    reports = widget.task.reportRegTorque;
   }
 
   @override
   Widget build(BuildContext context) {
-    // final result = ref.watch(reportRegTorqueProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Report Torque'),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                if (reports != null) {
+                  for (int i = 0; i < reports!.length; i++) {
+                    reports![i].remark = controllers[i].text;
+                  }
+                  ref
+                      .read(taskControllerProvider.notifier)
+                      .updateReportTorque(reports!);
+                }
+              },
+              icon: const Icon(Icons.save)),
+        ],
       ),
       body: Container(
         padding: const EdgeInsets.all(10),
         color: const Color(0xFFEAEEF2),
-        child: widget.task.reportRegTorque != null
-            ? _buildListReportTorque(widget.task.reportRegTorque!)
-            : Container(),
-        // child: Consumer(
-        //   builder: (context, ref, child) {
-        //     if (result is ReportRegTorqueLoading) {
-        //       return const Center(child: CircularProgressIndicator());
-        //     } else if (result is ReportRegTorqueLoaded) {
-        //       return _buildListReportTorque(result);
-        //     } else {
-        //       return Container();
-        //     }
-        //   },
-        // ),
+        child: reports != null ? _buildListReportTorque(reports!) : Container(),
       ),
     );
   }
@@ -55,7 +55,9 @@ class _FormReportTorqueState extends ConsumerState<FormReportTorque> {
   ListView _buildListReportTorque(List<ReportRegTorque> report) {
     return ListView.separated(
         itemBuilder: (context, index) {
-          controllers.add(TextEditingController());
+          debugPrint(report[index].toString());
+          controllers
+              .add(TextEditingController()..text = report[index].remark ?? '');
           return Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -72,8 +74,7 @@ class _FormReportTorqueState extends ConsumerState<FormReportTorque> {
                   ),
                   Text('Elevasi (Mm) : ${report[index].elevasi}'),
                   Text('Bolt Size (Dia. Mm): ${report[index].boltSize}'),
-                  Text(
-                      'Minimum Torque : ${report[index].minimumTorque}NM'),
+                  Text('Minimum Torque : ${report[index].minimumTorque}NM'),
                   Text('Qty Bolt : ${report[index].qtyBolt} Pcs'),
                   const SizedBox(height: 20),
                   const Text('Remark/Temuan : '),
@@ -88,40 +89,4 @@ class _FormReportTorqueState extends ConsumerState<FormReportTorque> {
         separatorBuilder: (context, index) => const SizedBox(height: 10),
         itemCount: report.length);
   }
-  // ListView _buildListReportTorque(ReportRegTorqueLoaded result) {
-  //   return ListView.separated(
-  //       itemBuilder: (context, index) {
-  //         controllers.add(TextEditingController());
-  //         return Container(
-  //             padding: const EdgeInsets.all(20),
-  //             decoration: BoxDecoration(
-  //               color: Colors.white,
-  //               borderRadius: BorderRadius.circular(10),
-  //             ),
-  //             child: Column(
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //                 Text(
-  //                   result.points[index].towerSegment.toUpperCase(),
-  //                   style: const TextStyle(
-  //                       fontSize: 16, fontWeight: FontWeight.bold),
-  //                 ),
-  //                 Text('Elevasi (Mm) : ${result.points[index].elevasi}'),
-  //                 Text('Bolt Size (Dia. Mm): ${result.points[index].boltSize}'),
-  //                 Text(
-  //                     'Minimum Torque : ${result.points[index].minimumTorque}NM'),
-  //                 Text('Qty Bolt : ${result.points[index].qtyBolt} Pcs'),
-  //                 const SizedBox(height: 20),
-  //                 const Text('Remark/Temuan : '),
-  //                 TextField(
-  //                   controller: controllers[index],
-  //                   decoration: const InputDecoration(
-  //                       hintText: "Please type remark"),
-  //                 ),
-  //               ],
-  //             ));
-  //       },
-  //       separatorBuilder: (context, index) => const SizedBox(height: 10),
-  //       itemCount: result.points.length);
-  // }
 }

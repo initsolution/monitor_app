@@ -155,6 +155,96 @@ class _RestService implements RestService {
     return httpResponse;
   }
 
+  @override
+  Future<HttpResponse<dynamic>> createReportRegTorque(
+      ReportRegTorque reportRegTorque) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(reportRegTorque.toJson());
+    final _result =
+        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/Reportregulertorque',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<dynamic>> createReportRegVerticality(
+      ReportRegVerticality reportRegVerticality) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(reportRegVerticality.toJson());
+    final _result =
+        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/Reportregulerverticality',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<dynamic>> createPointChecklistPreventive(
+      PointChecklistPreventive pointChecklistPreventive) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(pointChecklistPreventive.toJson());
+    final _result =
+        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/Pointchecklistpreventive',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

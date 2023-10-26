@@ -2,6 +2,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:json_annotation/json_annotation.dart';
+
 import 'package:monitor_app/db/models/point_checklist_db.dart';
 
 part 'point_checklist_preventive.g.dart';
@@ -9,10 +10,10 @@ part 'point_checklist_preventive.g.dart';
 @JsonSerializable()
 class PointChecklistPreventive {
   final int id;
-  final String uraian;
-  final String? kriteria;
-  final String hasil;
-  final String? keterangan;
+  String uraian;
+  String? kriteria;
+  String hasil;
+  String? keterangan;
   final int orderIndex;
 
   PointChecklistPreventive({
@@ -30,10 +31,15 @@ class PointChecklistPreventive {
   factory PointChecklistPreventive.fromPointChecklistDB(
           PointChecklistDB pointDB) =>
       PointChecklistPreventive(
-        id: pointDB.id,
+        id: pointDB.id!,
         uraian: pointDB.uraian,
         hasil: pointDB.hasil,
         kriteria: pointDB.kriteria,
         orderIndex: pointDB.orderIndex,
       );
+
+  @override
+  String toString() {
+    return 'PointChecklistPreventive(id: $id, uraian: $uraian, kriteria: $kriteria, hasil: $hasil, keterangan: $keterangan, orderIndex: $orderIndex)';
+  }
 }

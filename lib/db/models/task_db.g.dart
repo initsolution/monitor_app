@@ -98,6 +98,12 @@ const TaskDBSchema = CollectionSchema(
       name: r'reportTorque',
       target: r'report_torque',
       single: false,
+    ),
+    r'reportVerticality': LinkSchema(
+      id: 6936129420320049315,
+      name: r'reportVerticality',
+      target: r'report_verticality',
+      single: true,
     )
   },
   embeddedSchemas: {},
@@ -196,7 +202,8 @@ List<IsarLinkBase<dynamic>> _taskDBGetLinks(TaskDB object) {
     object.verifierEmployee,
     object.assets,
     object.categoriesChecklist,
-    object.reportTorque
+    object.reportTorque,
+    object.reportVerticality
   ];
 }
 
@@ -213,6 +220,8 @@ void _taskDBAttach(IsarCollection<dynamic> col, Id id, TaskDB object) {
       id);
   object.reportTorque.attach(
       col, col.isar.collection<ReportRegTorqueDB>(), r'reportTorque', id);
+  object.reportVerticality.attach(col,
+      col.isar.collection<ReportRegVerticalityDB>(), r'reportVerticality', id);
 }
 
 extension TaskDBByIndex on IsarCollection<TaskDB> {
@@ -1430,6 +1439,20 @@ extension TaskDBQueryLinks on QueryBuilder<TaskDB, TaskDB, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(
           r'reportTorque', lower, includeLower, upper, includeUpper);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> reportVerticality(
+      FilterQuery<ReportRegVerticalityDB> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'reportVerticality');
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition>
+      reportVerticalityIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'reportVerticality', 0, true, 0, true);
     });
   }
 }

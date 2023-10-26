@@ -5,9 +5,15 @@ import 'package:monitor_app/db/config/database.dart';
 import 'package:monitor_app/db/models/assets_db.dart';
 import 'package:monitor_app/db/models/category_point_checklist_db.dart';
 import 'package:monitor_app/db/models/point_checklist_db.dart';
+import 'package:monitor_app/db/models/report_reg_torque_db.dart';
+import 'package:monitor_app/db/models/report_reg_verticality_db.dart';
 import 'package:monitor_app/db/models/task_db.dart';
+import 'package:monitor_app/db/models/value_verticality_db.dart';
 import 'package:monitor_app/helpers/object_to_db_helper.dart';
 import 'package:monitor_app/model/asset.dart';
+import 'package:monitor_app/model/point_checklist_preventive.dart';
+import 'package:monitor_app/model/report_reg_torque.dart';
+import 'package:monitor_app/model/report_reg_verticality.dart';
 import 'package:monitor_app/model/task.dart';
 
 class LocalDataService {
@@ -86,6 +92,11 @@ class LocalDataService {
             .toList() ??
         [];
 
+    final reportRegVerticalityDB = task.reportRegVerticality != null
+        ? getReportRegVerticalityDBFromReportRegVerticality(
+            task.reportRegVerticality!)
+        : null;
+
     final siteDB = getSiteDBFromSite(task.site);
     final employeeDB = getEmployeeDBFromEmployee(task.verifierEmployee);
     final taskDB = TaskDB()
@@ -99,7 +110,8 @@ class LocalDataService {
       ..status = task.status
       ..assets.addAll(assetsDB)
       ..categoriesChecklist.addAll(categoryPointChecklistDB)
-      ..reportTorque.addAll(reportRegTorqueDB);
+      ..reportTorque.addAll(reportRegTorqueDB)
+      ..reportVerticality.value = reportRegVerticalityDB;
 
     isarDB.writeTxnSync(() => isarDB.tasks.putSync(taskDB));
     return task;
@@ -183,27 +195,139 @@ class LocalDataService {
         await isarDB.assets.put(assetDB);
         taskDB.assets.add(assetDB);
         await taskDB.assets.save();
-        // await isarDB.assets.put(AssetsDB(
-        //     section: temuan.section,
-        //     category: temuan.category,
-        //     description: temuan.description,
-        //     url: temuan.url,
-        //     createdDate: temuan.createdDate,
-        //     orderIndex: temuan.orderIndex));
       });
       return true;
     }
     return false;
   }
 
-  Future<List<Asset>> getAllTemuanByTaskId(int taskId) async {
+  Future<List<Asset>> getAllTemuanByTaskId(int taskId, String section) async {
     final taskDB =
         await isarDB.tasks.filter().idTaskEqualTo(taskId).findFirst();
     List<AssetsDB>? result = await taskDB?.assets
         .filter()
         .categoryEqualTo("TEMUAN", caseSensitive: false)
+        .sectionEqualTo(section)
         .findAll();
 
     return result!.map((assetDB) => Asset.fromAssetDB(assetDB)).toList();
+  }
+
+  Future<void> updatePoinChecklist(
+      PointChecklistPreventive pointChecklist) async {
+    final pointChecklistDB = await isarDB.point_checklist
+        .filter()
+        .idEqualTo(pointChecklist.id)
+        .findFirst();
+    if (pointChecklistDB != null) {
+      final pointChecklistDB2 = PointChecklistDB(
+        id: pointChecklist.id,
+        kriteria: pointChecklist.kriteria,
+        keterangan: pointChecklist.keterangan,
+        uraian: pointChecklist.uraian,
+        hasil: pointChecklist.hasil,
+        orderIndex: pointChecklist.orderIndex,
+      );
+      isarDB.writeTxnSync(
+          () => isarDB.point_checklist.putSync(pointChecklistDB2));
+    }
+  }
+
+  Future<void> updateReportTorque(List<ReportRegTorque> report) async {
+    List<ReportRegTorqueDB> reports = [];
+    for (var r in report) {
+      final rDB =
+          await isarDB.report_torque.filter().idEqualTo(r.id).findFirst();
+
+      if (rDB != null) {
+        final rDB2 = ReportRegTorqueDB(
+            id: rDB.id,
+            towerSegment: rDB.towerSegment,
+            elevasi: rDB.elevasi,
+            boltSize: rDB.boltSize,
+            minimumTorque: rDB.minimumTorque,
+            qtyBolt: rDB.qtyBolt,
+            remark: r.remark);
+        debugPrint('ReportRegTorqueDB : ${rDB2.toString()}');
+        reports.add(rDB2);
+      }
+    }
+    isarDB.writeTxnSync(() => isarDB.report_torque.putAllSync(reports));
+  }
+
+  Future<void> saveReportVerticality(
+      int taskId, ReportRegVerticality reportVerticality) async {
+    final taskDB =
+        await isarDB.tasks.filter().idTaskEqualTo(taskId).findFirst();
+    if (taskDB != null) {
+      if (reportVerticality.valueVerticality != null) {
+        ReportRegVerticalityDB report = ReportRegVerticalityDB(
+            id: reportVerticality.id,
+            horizontalityAb: reportVerticality.horizontalityAb,
+            horizontalityBc: reportVerticality.horizontalityBc,
+            horizontalityCd: reportVerticality.horizontalityCd,
+            horizontalityDa: reportVerticality.horizontalityDa,
+            theodolite1: reportVerticality.theodolite1,
+            theodolite2: reportVerticality.theodolite2,
+            alatUkur: reportVerticality.alatUkur,
+            toleransiKetegakan: reportVerticality.toleransiKetegakan);
+
+        var listValueVerticalityDB =
+            getListValueVerticalityDBFromListValueVerticality(
+                reportVerticality.valueVerticality!);
+        report.valueVerticality.addAll(listValueVerticalityDB);
+
+        isarDB.writeTxnSync(() {
+          isarDB.value_verticality.putAllSync(listValueVerticalityDB);
+          isarDB.report_verticality.putSync(report);
+          taskDB.reportVerticality.value = report;
+          taskDB.reportVerticality.saveSync();
+        });
+      }
+      // if (taskDB.reportVerticality.value != null) {
+      //   debugPrint('sudah ada data');
+      //   // UPDATE REPORT VERTICALITY
+      //   ReportRegVerticalityDB report = ReportRegVerticalityDB(
+      //       id: taskDB.reportVerticality.value!.id,
+      //       horizontalityAb: reportVerticality.horizontalityAb,
+      //       horizontalityBc: reportVerticality.horizontalityBc,
+      //       horizontalityCd: reportVerticality.horizontalityCd,
+      //       horizontalityDa: reportVerticality.horizontalityDa,
+      //       theodolite1: reportVerticality.theodolite1,
+      //       theodolite2: reportVerticality.theodolite2,
+      //       alatUkur: reportVerticality.alatUkur,
+      //       toleransiKetegakan: reportVerticality.toleransiKetegakan);
+
+      //   // taskDB.reportVerticality.value.valueVerticality.
+      // } else {
+      //   // ADD REPORT VERTICALITY
+      //   if (reportVerticality.valueVerticality != null) {
+      //     ReportRegVerticalityDB report = ReportRegVerticalityDB(
+      //         id: reportVerticality.id,
+      //         horizontalityAb: reportVerticality.horizontalityAb,
+      //         horizontalityBc: reportVerticality.horizontalityBc,
+      //         horizontalityCd: reportVerticality.horizontalityCd,
+      //         horizontalityDa: reportVerticality.horizontalityDa,
+      //         theodolite1: reportVerticality.theodolite1,
+      //         theodolite2: reportVerticality.theodolite2,
+      //         alatUkur: reportVerticality.alatUkur,
+      //         toleransiKetegakan: reportVerticality.toleransiKetegakan);
+
+      //     var listValueVerticalityDB =
+      //         getListValueVerticalityDBFromListValueVerticality(
+      //             reportVerticality.valueVerticality!);
+      //     report.valueVerticality.addAll(listValueVerticalityDB);
+
+      //     isarDB.writeTxnSync(() {
+      //       isarDB.value_verticality.putAllSync(listValueVerticalityDB);
+      //       isarDB.report_verticality.putSync(report);
+      //       taskDB.reportVerticality.value = report;
+      //       taskDB.reportVerticality.saveSync();
+      //     });
+      //   }
+
+      //   // taskDB.reportVerticality
+      // }
+    }
   }
 }

@@ -2,6 +2,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:json_annotation/json_annotation.dart';
+
 import 'package:monitor_app/db/models/report_reg_torque_db.dart';
 
 part 'report_reg_torque.g.dart';
@@ -14,7 +15,7 @@ class ReportRegTorque {
   final String boltSize;
   final int minimumTorque;
   final int qtyBolt;
-  final String? remark;
+  String? remark;
 
   ReportRegTorque({
     required this.id,
@@ -31,10 +32,16 @@ class ReportRegTorque {
       _$ReportRegTorqueFromJson(json);
   factory ReportRegTorque.fromReportRegTorqueDB(ReportRegTorqueDB torque) =>
       ReportRegTorque(
-          id: torque.id,
+          id: torque.id!,
           towerSegment: torque.towerSegment,
           elevasi: torque.elevasi,
           boltSize: torque.boltSize,
           minimumTorque: torque.minimumTorque,
-          qtyBolt: torque.qtyBolt);
+          qtyBolt: torque.qtyBolt,
+          remark: torque.remark);
+
+  @override
+  String toString() {
+    return 'ReportRegTorque(id: $id, towerSegment: $towerSegment, elevasi: $elevasi, boltSize: $boltSize, minimumTorque: $minimumTorque, qtyBolt: $qtyBolt, remark: $remark)';
+  }
 }

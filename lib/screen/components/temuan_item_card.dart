@@ -3,16 +3,20 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monitor_app/constants/config.dart';
+import 'package:monitor_app/constants/constants.dart';
 
 import 'package:monitor_app/model/asset.dart';
 import 'package:monitor_app/screen/album_screen.dart';
 
 class TemuanItemCard extends ConsumerStatefulWidget {
+  final String statusTask;
   final Asset asset;
   final Function(String url) onPickImage;
   final Function(String description) onUpdateDescription;
   const TemuanItemCard({
     Key? key,
+    required this.statusTask,
     required this.asset,
     required this.onPickImage,
     required this.onUpdateDescription,
@@ -32,6 +36,7 @@ class _TemuanItemCardState extends ConsumerState<TemuanItemCard> {
     super.initState();
     description = 'Deskripsi';
     description = widget.asset.description;
+    textController.text = description;
     url = widget.asset.url;
   }
 
@@ -41,27 +46,33 @@ class _TemuanItemCardState extends ConsumerState<TemuanItemCard> {
       children: [
         InkWell(
           onTap: () async {
-            Navigator.of(context)
-                .pushNamed(AlbumScreen.routeName, arguments: true)
-                .then(
-              (path) async {
-                if (path != null) {
-                  widget.onPickImage(path as String);
-                  setState(() {
-                    url = path;
-                  });
-                }
-              },
-            );
+            if (widget.statusTask == STATUS_TODO) {
+              Navigator.of(context)
+                  .pushNamed(AlbumScreen.routeName, arguments: true)
+                  .then(
+                (path) async {
+                  if (path != null) {
+                    widget.onPickImage(path as String);
+                    setState(() {
+                      url = path;
+                    });
+                  }
+                },
+              );
+            }
           },
           child: Container(
             height: 300,
             color: Colors.grey,
-            child: Center(
-              child: url != '-'
-                  ? Image.file(File(widget.asset.url))
-                  : const Icon(Icons.image),
-            ),
+            child: widget.statusTask == STATUS_TODO
+                ? Center(
+                    child: url != '-'
+                        ? Image.file(File(widget.asset.url))
+                        : const Icon(Icons.image),
+                  )
+                : Center(
+                    child: Image.network(
+                        '${urlRepo}/asset/getImage/${widget.asset.id}')),
           ),
         ),
         Container(
@@ -70,7 +81,11 @@ class _TemuanItemCardState extends ConsumerState<TemuanItemCard> {
           width: double.infinity,
           padding: const EdgeInsets.all(8),
           child: InkWell(
-            onTap: () => _displayTextInputDialog(context),
+            onTap: () {
+              if (widget.statusTask == STATUS_TODO) {
+                _displayTextInputDialog(context);
+              }
+            },
             child: Text(
               description,
               style: const TextStyle(fontSize: 14),

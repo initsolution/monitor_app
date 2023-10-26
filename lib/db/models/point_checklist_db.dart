@@ -6,7 +6,7 @@ part 'point_checklist_db.g.dart';
 @Collection(accessor: "point_checklist")
 @Name("point_checklist")
 class PointChecklistDB {
-  Id id = Isar.autoIncrement;
+  Id? id = Isar.autoIncrement;
 
   late String uraian;
   late String? kriteria;
@@ -15,6 +15,7 @@ class PointChecklistDB {
   late int orderIndex;
 
   PointChecklistDB({
+    this.id,
     required this.uraian,
     this.kriteria,
     required this.hasil,

@@ -33,14 +33,14 @@ class IconTaskStatus extends StatelessWidget {
             style: TextStyle(fontSize: 12, color: Colors.white),
           ),
         );
-      case 'pass':
+      case 'verified':
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           decoration: BoxDecoration(
               color: const Color(0xFF48DC23),
               borderRadius: BorderRadius.circular(20)),
           child: const Text(
-            'Pass',
+            'Verified',
             style: TextStyle(fontSize: 12, color: Colors.white),
           ),
         );

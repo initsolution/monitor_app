@@ -47,15 +47,15 @@ class AssetController extends AutoDisposeNotifier<AssetState> {
     // }
   }
 
-  getAllTemuanByTaskId(int taskId) async {
+  getAllTemuanByTaskId(int taskId, String section) async {
     state = AssetLoading();
     var temuan =
-        await ref.read(localdataServiceProvider).getAllTemuanByTaskId(taskId);
+        await ref.read(localdataServiceProvider).getAllTemuanByTaskId(taskId, section);
     state = AssetLoaded(assets: temuan);
   }
 
   addAssetToTask(int taskId, Asset temuan) async {
     await ref.read(localdataServiceProvider).addAssetToTask(taskId, temuan);
-    getAllTemuanByTaskId(taskId);
+    getAllTemuanByTaskId(taskId, temuan.section);
   }
 }

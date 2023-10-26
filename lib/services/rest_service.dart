@@ -2,6 +2,9 @@
 
 import 'package:dio/dio.dart';
 import 'package:monitor_app/constants/config.dart';
+import 'package:monitor_app/model/point_checklist_preventive.dart';
+import 'package:monitor_app/model/report_reg_torque.dart';
+import 'package:monitor_app/model/report_reg_verticality.dart';
 import 'package:monitor_app/model/task.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:http_parser/http_parser.dart';
@@ -31,4 +34,13 @@ abstract class RestService {
       @Part(contentType: 'image/jpg', fileName: 'asset', name: 'file')
       List<int> file,
       @Header('Authorization') String token);
+
+    @POST('/Reportregulertorque')
+    Future<HttpResponse> createReportRegTorque(@Body() ReportRegTorque reportRegTorque);
+
+    @POST('/Reportregulerverticality')
+    Future<HttpResponse> createReportRegVerticality(@Body() ReportRegVerticality reportRegVerticality);
+
+    @POST('/Pointchecklistpreventive')
+    Future<HttpResponse> createPointChecklistPreventive(@Body() PointChecklistPreventive pointChecklistPreventive);
 }

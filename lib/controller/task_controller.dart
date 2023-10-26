@@ -8,6 +8,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/model/asset.dart';
+import 'package:monitor_app/model/point_checklist_preventive.dart';
+import 'package:monitor_app/model/report_reg_torque.dart';
+import 'package:monitor_app/model/report_reg_verticality.dart';
 import 'package:monitor_app/model/task.dart';
 import 'package:monitor_app/mstate/task_state.dart';
 
@@ -55,7 +58,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
           if (task.status == STATUS_TODO) {
             await ref.read(localdataServiceProvider).createTask(task);
           } else {
-              reviewTask.add(task);
+            reviewTask.add(task);
           }
         }
       } else {
@@ -115,6 +118,9 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     }
 
     //update checklist
+    var reportRegTorque = task?.reportRegTorque;
+    var reportRegVerticality = task?.reportRegVerticality;
+    var reportPointChecklistPreventive = task?.categoriesChecklist;
 
     //update task
     DateTime now = DateTime.now();
@@ -149,15 +155,24 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     state = TasksLoaded(tasks: [task!]);
   }
 
-//taruh di asset controller
-  // getAllTemuanByTaskId(int taskId) async{
-  //   var task = await ref.read(localdataServiceProvider).getAllTemuanByTaskId(taskId);
-  // }
-  // updateTaskById(Task task) async {
-  //   state = TaskLoading();
-  //   var isSuccess = await ref.read(localdataServiceProvider).updateTaskbyId(task);
-  //   if(isSuccess){
-  //     state = TaskLoaded(task: task)
-  //   }
-  // }
+  updatePointChecklist(PointChecklistPreventive pointChecklist) async {
+    debugPrint('updatePointChecklist : ${pointChecklist.toString()}');
+    await ref
+        .read(localdataServiceProvider)
+        .updatePoinChecklist(pointChecklist);
+  }
+
+  updateReportTorque(List<ReportRegTorque> report) async {
+    for (var element in report) {
+      debugPrint('updateReportTorque : ${element.toString()}');
+    }
+
+    await ref.read(localdataServiceProvider).updateReportTorque(report);
+  }
+
+  saveReportVerticality(int taskId, ReportRegVerticality report) async {
+    await ref
+        .read(localdataServiceProvider)
+        .saveReportVerticality(taskId, report);
+  }
 }

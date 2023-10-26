@@ -4,5 +4,5 @@ const bool DEBUG = true;
 
 const STATUS_TODO = 'todo';
 const STATUS_REVIEW = 'review';
-const STATUS_PASS = 'pass';
+const STATUS_VERIFIED = 'verified';
 const STATUS_REVISION = 'revision';

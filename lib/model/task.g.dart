@@ -36,6 +36,10 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
       reportRegTorque: (json['reportRegTorque'] as List<dynamic>?)
           ?.map((e) => ReportRegTorque.fromJson(e as Map<String, dynamic>))
           .toList(),
+      reportRegVerticality: json['reportRegVerticality'] == null
+          ? null
+          : ReportRegVerticality.fromJson(
+              json['reportRegVerticality'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
@@ -53,4 +57,5 @@ Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'asset': instance.asset,
       'categoriesChecklist': instance.categoriesChecklist,
       'reportRegTorque': instance.reportRegTorque,
+      'reportRegVerticality': instance.reportRegVerticality,
     };

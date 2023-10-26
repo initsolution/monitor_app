@@ -11,6 +11,7 @@ import 'package:monitor_app/model/master_asset.dart';
 import 'package:monitor_app/model/master_checklist.dart';
 import 'package:monitor_app/model/master_report_reg_torque.dart';
 import 'package:monitor_app/model/report_reg_torque.dart';
+import 'package:monitor_app/model/report_reg_verticality.dart';
 import 'package:monitor_app/model/site.dart';
 
 part 'task.g.dart';
@@ -31,6 +32,7 @@ class Task {
   late List<Asset>? asset;
   late List<CategoryChecklistPreventive>? categoriesChecklist;
   late List<ReportRegTorque>? reportRegTorque;
+  late ReportRegVerticality? reportRegVerticality;
 
   Task({
     required this.id,
@@ -47,6 +49,7 @@ class Task {
     this.asset,
     this.categoriesChecklist,
     this.reportRegTorque,
+    this.reportRegVerticality,
   });
 
   Map<String, dynamic> toJson() => _$TaskToJson(this);
@@ -94,5 +97,9 @@ class Task {
         reportRegTorque: taskDB.reportTorque
             .map((torque) => ReportRegTorque.fromReportRegTorqueDB(torque))
             .toList(),
+        reportRegVerticality: taskDB.reportVerticality.value != null
+            ? ReportRegVerticality.fromReportRegVerticalityDB(
+                taskDB.reportVerticality.value!)
+            : null,
       );
 }

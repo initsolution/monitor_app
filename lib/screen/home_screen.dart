@@ -61,7 +61,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
             color: const Color(0xFFEAEEF2),
             child: Consumer(
               builder: (context, ref, child) {
-                debugPrint(state.toString());
+                // debugPrint(state.toString());
                 if (state is TasksLoaded) {
                   if (state.tasks.isEmpty) {
                     return const Center(child: Text('No Task'));
