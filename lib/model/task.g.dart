@@ -29,17 +29,17 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
       asset: (json['asset'] as List<dynamic>?)
           ?.map((e) => Asset.fromJson(e as Map<String, dynamic>))
           .toList(),
-      categoriesChecklist: (json['categoriesChecklist'] as List<dynamic>?)
+      categoriesChecklist: (json['categorychecklistprev'] as List<dynamic>?)
           ?.map((e) =>
               CategoryChecklistPreventive.fromJson(e as Map<String, dynamic>))
           .toList(),
-      reportRegTorque: (json['reportRegTorque'] as List<dynamic>?)
+      reportRegTorque: (json['reportRegulerTorque'] as List<dynamic>?)
           ?.map((e) => ReportRegTorque.fromJson(e as Map<String, dynamic>))
           .toList(),
-      reportRegVerticality: json['reportRegVerticality'] == null
+      reportRegVerticality: json['reportRegulerVerticality'] == null
           ? null
           : ReportRegVerticality.fromJson(
-              json['reportRegVerticality'] as Map<String, dynamic>),
+              json['reportRegulerVerticality'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
@@ -55,7 +55,7 @@ Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'masterChecklist': instance.masterChecklist,
       'masterReportRegTorque': instance.masterReportRegTorque,
       'asset': instance.asset,
-      'categoriesChecklist': instance.categoriesChecklist,
-      'reportRegTorque': instance.reportRegTorque,
-      'reportRegVerticality': instance.reportRegVerticality,
+      'categorychecklistprev': instance.categoriesChecklist,
+      'reportRegulerTorque': instance.reportRegTorque,
+      'reportRegulerVerticality': instance.reportRegVerticality,
     };

@@ -15,7 +15,7 @@ class ReportRegVerticalityDB {
   late String theodolite1;
   late String theodolite2;
   late String alatUkur;
-  late String toleransiKetegakan;
+  late int toleransiKetegakan;
   final valueVerticality = IsarLinks<ValueVerticalityDB>();
   
   ReportRegVerticalityDB({

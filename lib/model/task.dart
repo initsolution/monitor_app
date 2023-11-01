@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: depend_on_referenced_packages
-
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:monitor_app/db/models/task_db.dart';
@@ -30,8 +30,11 @@ class Task {
   final List<MasterChecklist>? masterChecklist;
   final List<MasterReportRegTorque>? masterReportRegTorque;
   late List<Asset>? asset;
+  @JsonKey(name: 'categorychecklistprev')
   late List<CategoryChecklistPreventive>? categoriesChecklist;
+  @JsonKey(name: 'reportRegulerTorque')
   late List<ReportRegTorque>? reportRegTorque;
+  @JsonKey(name: 'reportRegulerVerticality')
   late ReportRegVerticality? reportRegVerticality;
 
   Task({

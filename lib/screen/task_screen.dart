@@ -123,12 +123,15 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                 var assets = task.asset;
                 int idx = 0;
                 for (var asset in assets!) {
-                  if (idx % 2 == 0) {
+                  if (idx % 3 == 0) {
                     asset.url =
-                        "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1697706247629.jpg";
+                        "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1698824121621.jpg";
+                  } else if (idx % 3 == 1) {
+                    asset.url =
+                        "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1698824124715.jpg";
                   } else {
                     asset.url =
-                        "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1697706252760.jpg";
+                        "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1698824128845.jpg";
                   }
                   idx++;
                   await ref
@@ -201,9 +204,13 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
               onPressed: () {
                 Navigator.of(context)
                     .pushNamed(FormReportTorque.routeName, arguments: task)
-                    .then((_) async => await ref
+                    .then((_) async {
+                  if (task.status == STATUS_TODO) {
+                    await ref
                         .read(taskControllerProvider.notifier)
-                        .getTaskById(widget.task.id));
+                        .getTaskById(widget.task.id);
+                  }
+                });
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
@@ -242,9 +249,13 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
               Navigator.of(context)
                   .pushNamed(FormChecklistScreen.routeName,
                       arguments: task.categoriesChecklist ?? [])
-                  .then((_) async => await ref
+                  .then((_) async {
+                if (widget.task.status == STATUS_TODO) {
+                  await ref
                       .read(taskControllerProvider.notifier)
-                      .getTaskById(widget.task.id));
+                      .getTaskById(widget.task.id);
+                }
+              });
               // Navigator.of(context)
               //     .pushNamed(FormChecklistScreen.routeName, arguments: task.id)
             },

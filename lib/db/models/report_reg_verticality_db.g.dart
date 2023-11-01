@@ -56,7 +56,7 @@ const ReportRegVerticalityDBSchema = CollectionSchema(
     r'toleransiKetegakan': PropertySchema(
       id: 7,
       name: r'toleransiKetegakan',
-      type: IsarType.string,
+      type: IsarType.long,
     )
   },
   estimateSize: _reportRegVerticalityDBEstimateSize,
@@ -89,7 +89,6 @@ int _reportRegVerticalityDBEstimateSize(
   bytesCount += 3 + object.alatUkur.length * 3;
   bytesCount += 3 + object.theodolite1.length * 3;
   bytesCount += 3 + object.theodolite2.length * 3;
-  bytesCount += 3 + object.toleransiKetegakan.length * 3;
   return bytesCount;
 }
 
@@ -106,7 +105,7 @@ void _reportRegVerticalityDBSerialize(
   writer.writeLong(offsets[4], object.horizontalityDa);
   writer.writeString(offsets[5], object.theodolite1);
   writer.writeString(offsets[6], object.theodolite2);
-  writer.writeString(offsets[7], object.toleransiKetegakan);
+  writer.writeLong(offsets[7], object.toleransiKetegakan);
 }
 
 ReportRegVerticalityDB _reportRegVerticalityDBDeserialize(
@@ -124,7 +123,7 @@ ReportRegVerticalityDB _reportRegVerticalityDBDeserialize(
     id: id,
     theodolite1: reader.readString(offsets[5]),
     theodolite2: reader.readString(offsets[6]),
-    toleransiKetegakan: reader.readString(offsets[7]),
+    toleransiKetegakan: reader.readLong(offsets[7]),
   );
   return object;
 }
@@ -151,7 +150,7 @@ P _reportRegVerticalityDBDeserializeProp<P>(
     case 6:
       return (reader.readString(offset)) as P;
     case 7:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -969,58 +968,49 @@ extension ReportRegVerticalityDBQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<ReportRegVerticalityDB, ReportRegVerticalityDB,
-      QAfterFilterCondition> toleransiKetegakanEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+      QAfterFilterCondition> toleransiKetegakanEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'toleransiKetegakan',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<ReportRegVerticalityDB, ReportRegVerticalityDB,
       QAfterFilterCondition> toleransiKetegakanGreaterThan(
-    String value, {
+    int value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'toleransiKetegakan',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<ReportRegVerticalityDB, ReportRegVerticalityDB,
       QAfterFilterCondition> toleransiKetegakanLessThan(
-    String value, {
+    int value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'toleransiKetegakan',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<ReportRegVerticalityDB, ReportRegVerticalityDB,
       QAfterFilterCondition> toleransiKetegakanBetween(
-    String lower,
-    String upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -1029,79 +1019,6 @@ extension ReportRegVerticalityDBQueryFilter on QueryBuilder<
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ReportRegVerticalityDB, ReportRegVerticalityDB,
-      QAfterFilterCondition> toleransiKetegakanStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'toleransiKetegakan',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ReportRegVerticalityDB, ReportRegVerticalityDB,
-      QAfterFilterCondition> toleransiKetegakanEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'toleransiKetegakan',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ReportRegVerticalityDB, ReportRegVerticalityDB,
-          QAfterFilterCondition>
-      toleransiKetegakanContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'toleransiKetegakan',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ReportRegVerticalityDB, ReportRegVerticalityDB,
-          QAfterFilterCondition>
-      toleransiKetegakanMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'toleransiKetegakan',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ReportRegVerticalityDB, ReportRegVerticalityDB,
-      QAfterFilterCondition> toleransiKetegakanIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'toleransiKetegakan',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<ReportRegVerticalityDB, ReportRegVerticalityDB,
-      QAfterFilterCondition> toleransiKetegakanIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'toleransiKetegakan',
-        value: '',
       ));
     });
   }
@@ -1472,10 +1389,9 @@ extension ReportRegVerticalityDBQueryWhereDistinct
   }
 
   QueryBuilder<ReportRegVerticalityDB, ReportRegVerticalityDB, QDistinct>
-      distinctByToleransiKetegakan({bool caseSensitive = true}) {
+      distinctByToleransiKetegakan() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'toleransiKetegakan',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'toleransiKetegakan');
     });
   }
 }
@@ -1537,7 +1453,7 @@ extension ReportRegVerticalityDBQueryProperty on QueryBuilder<
     });
   }
 
-  QueryBuilder<ReportRegVerticalityDB, String, QQueryOperations>
+  QueryBuilder<ReportRegVerticalityDB, int, QQueryOperations>
       toleransiKetegakanProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'toleransiKetegakan');

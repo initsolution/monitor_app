@@ -17,7 +17,7 @@ ReportRegVerticality _$ReportRegVerticalityFromJson(
       theodolite1: json['theodolite1'] as String,
       theodolite2: json['theodolite2'] as String,
       alatUkur: json['alatUkur'] as String,
-      toleransiKetegakan: json['toleransiKetegakan'] as String,
+      toleransiKetegakan: json['toleransiKetegakan'] as int,
       valueVerticality: (json['valueVerticality'] as List<dynamic>?)
           ?.map((e) => ValueVerticality.fromJson(e as Map<String, dynamic>))
           .toList(),

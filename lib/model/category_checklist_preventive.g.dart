@@ -10,9 +10,9 @@ CategoryChecklistPreventive _$CategoryChecklistPreventiveFromJson(
         Map<String, dynamic> json) =>
     CategoryChecklistPreventive(
       id: json['id'] as int,
-      categoryName: json['categoryName'] as String,
+      categoryName: json['nama'] as String,
       keterangan: json['keterangan'] as String?,
-      points: (json['points'] as List<dynamic>?)
+      points: (json['pointChecklistPreventive'] as List<dynamic>?)
           ?.map((e) =>
               PointChecklistPreventive.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -23,8 +23,8 @@ Map<String, dynamic> _$CategoryChecklistPreventiveToJson(
         CategoryChecklistPreventive instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'categoryName': instance.categoryName,
+      'nama': instance.categoryName,
       'keterangan': instance.keterangan,
-      'points': instance.points,
+      'pointChecklistPreventive': instance.points,
       'orderIndex': instance.orderIndex,
     };

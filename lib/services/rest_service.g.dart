@@ -53,13 +53,12 @@ class _RestService implements RestService {
   @override
   Future<HttpResponse<dynamic>> updateTaskByTaskId(
     int id,
-    Task task,
+    dynamic task,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(task.toJson());
+    final _data = task;
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'PATCH',
@@ -156,13 +155,11 @@ class _RestService implements RestService {
   }
 
   @override
-  Future<HttpResponse<dynamic>> createReportRegTorque(
-      ReportRegTorque reportRegTorque) async {
+  Future<HttpResponse<dynamic>> createReportRegTorque(dynamic bulk) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(reportRegTorque.toJson());
+    final _data = bulk;
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'POST',
@@ -171,7 +168,7 @@ class _RestService implements RestService {
     )
             .compose(
               _dio.options,
-              '/Reportregulertorque',
+              '/reportregulertorque/bulk',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -186,13 +183,11 @@ class _RestService implements RestService {
   }
 
   @override
-  Future<HttpResponse<dynamic>> createReportRegVerticality(
-      ReportRegVerticality reportRegVerticality) async {
+  Future<HttpResponse<dynamic>> createReportRegVerticality(dynamic bulk) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(reportRegVerticality.toJson());
+    final _data = bulk;
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'POST',
@@ -201,7 +196,7 @@ class _RestService implements RestService {
     )
             .compose(
               _dio.options,
-              '/Reportregulerverticality',
+              '/reportregulerverticality',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -217,12 +212,11 @@ class _RestService implements RestService {
 
   @override
   Future<HttpResponse<dynamic>> createPointChecklistPreventive(
-      PointChecklistPreventive pointChecklistPreventive) async {
+      dynamic bulk) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(pointChecklistPreventive.toJson());
+    final _data = bulk;
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'POST',
@@ -231,7 +225,7 @@ class _RestService implements RestService {
     )
             .compose(
               _dio.options,
-              '/Pointchecklistpreventive',
+              '/categorychecklistpreventive/insertWithPoint',
               queryParameters: queryParameters,
               data: _data,
             )

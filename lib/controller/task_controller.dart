@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/model/asset.dart';
+import 'package:monitor_app/model/category_checklist_preventive.dart';
 import 'package:monitor_app/model/point_checklist_preventive.dart';
 import 'package:monitor_app/model/report_reg_torque.dart';
 import 'package:monitor_app/model/report_reg_verticality.dart';
@@ -42,7 +43,16 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     try {
       var queries = {
         "filter": "makerEmployee.email||eq||$email",
-        "join": ["site", "makerEmployee", "verifierEmployee"],
+        "join": [
+          "site",
+          "makerEmployee",
+          "verifierEmployee",
+          "categorychecklistprev",
+          "categorychecklistprev.pointChecklistPreventive",
+          "reportRegulerTorque",
+          "reportRegulerVerticality",
+          "reportRegulerVerticality.valueVerticality"
+        ],
       };
       // bandingkan tasks yang didapat dengan db local isar
       final tasks =
@@ -92,8 +102,9 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
         }
       }
       localTasks = await ref.read(localdataServiceProvider).getAllTasks();
-      localTasks = List.from(localTasks!)..addAll(reviewTask);
-      for (var task in localTasks!) {
+      localTasks ??= [];
+      localTasks = List.from(localTasks)..addAll(reviewTask);
+      for (var task in localTasks) {
         debugPrint('local task : (${task.id})');
       }
 
@@ -107,27 +118,63 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
   uploadTaskByTaskId(int taskId, token) async {
     state = TaskLoading();
     var task = await ref.read(localdataServiceProvider).getTaskById(taskId);
-    //update asset
+    //UPLOAD ASSET
     var assets = task?.asset;
     for (var asset in assets!) {
-      var file = File(asset.url);
-      ref.read(assetUrlProvider.notifier).state = file.path.split("/").last;
-      await ref
-          .read(assetControllerProvider.notifier)
-          .uploadAsset(taskId, asset, token);
+      if (asset.url != "-") {
+        var file = File(asset.url);
+        ref.read(assetUrlProvider.notifier).state = file.path.split("/").last;
+        await ref
+            .read(assetControllerProvider.notifier)
+            .uploadAsset(taskId, asset, token);
+      }
     }
 
     //update checklist
-    var reportRegTorque = task?.reportRegTorque;
-    var reportRegVerticality = task?.reportRegVerticality;
-    var reportPointChecklistPreventive = task?.categoriesChecklist;
+    if (task?.type == "Preventive") {
+      //REPORT PREVENTIVE
+      var categoriesChecklist = task?.categoriesChecklist;
+      var data =
+          CategoryChecklistPreventiveToBulk(taskId, categoriesChecklist!);
+      var respon = await ref
+          .read(restServiceProvider)
+          .createPointChecklistPreventive(data);
+      debugPrint('respon Preventive : ${respon.response.statusCode}');
+    } else if (task?.type == "Reguler") {
+      //REPORT REGULER TORQUE
+      var reportRegTorque = task?.reportRegTorque;
+      var reportRegTorqueData = ReportRegTorqueToBulk(taskId, reportRegTorque!);
+      var responTorque = await ref
+          .read(restServiceProvider)
+          .createReportRegTorque(reportRegTorqueData);
+      debugPrint('responTorque : ${responTorque.response.statusCode}');
+      if (responTorque.response.statusCode != 201) {
+        //gagall
+        // debugPrint('gagal');
+      }
 
-    //update task
+      //REPORT REGULER VERTICALITY
+      var reportRegVerticality = task?.reportRegVerticality;
+      var data = ReportRegVerticalityToBulk(taskId, reportRegVerticality!);
+      var responReg =
+          await ref.read(restServiceProvider).createReportRegVerticality(data);
+      debugPrint('responn Reguler : ${responReg.response.statusCode}');
+    }
+
+    //update TASK
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd').format(now);
     task?.submitedDate = formattedDate;
     task?.status = STATUS_REVIEW;
-    await ref.read(restServiceProvider).updateTaskByTaskId(taskId, task!);
+    var updateTask = {
+      "id": task!.id,
+      "status": task.status,
+      "submitedDate": task.submitedDate
+    };
+    var responTask = await ref
+        .read(restServiceProvider)
+        .updateTaskByTaskId(taskId, updateTask);
+    debugPrint('respon Task : ${responTask.response.statusCode}');
 
     //delete localtask
     await ref.read(localdataServiceProvider).deleteTask(taskId);
@@ -174,5 +221,61 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     await ref
         .read(localdataServiceProvider)
         .saveReportVerticality(taskId, report);
+  }
+
+  CategoryChecklistPreventiveToBulk(
+      int idTask, List<CategoryChecklistPreventive> categoryChecklist) {
+    var data = [];
+    for (var element in categoryChecklist) {
+      var value = {
+        "nama": element.categoryName,
+        "keterangan": element.keterangan,
+        "orderIndex": element.orderIndex,
+        "task": {"id": idTask},
+        "pointChecklistPreventives":
+            element.points!.map((e) => e.toJson()).toList()
+      };
+      data.add(value);
+    }
+    var bulk = {"bulk": data};
+    // debugPrint('bulk : $bulk');
+    return bulk;
+  }
+
+  ReportRegVerticalityToBulk(
+      int idTask, ReportRegVerticality reportRegVerticality) {
+    var data = {
+      "horizontalityAb": reportRegVerticality.horizontalityAb,
+      "horizontalityBc": reportRegVerticality.horizontalityBc,
+      "horizontalityCd": reportRegVerticality.horizontalityCd,
+      "horizontalityDa": reportRegVerticality.horizontalityDa,
+      "theodolite1": reportRegVerticality.theodolite1,
+      "theodolite2": reportRegVerticality.theodolite2,
+      "alatUkur": reportRegVerticality.alatUkur,
+      "toleransiKetegakan": reportRegVerticality.toleransiKetegakan,
+      "task": {"id": idTask},
+      "valueVerticalities":
+          reportRegVerticality.valueVerticality!.map((e) => e.toJson()).toList()
+    };
+    return data;
+  }
+
+  ReportRegTorqueToBulk(int idTask, List<ReportRegTorque> reportRegTorque) {
+    var data = [];
+    for (var element in reportRegTorque) {
+      var value = {
+        "towerSegment": element.towerSegment,
+        "elevasi": element.elevasi,
+        "boltSize": element.boltSize,
+        "minimumTorque": element.minimumTorque,
+        "qtyBolt": element.qtyBolt,
+        "remark": element.remark,
+        "task": {"id": idTask},
+      };
+      data.add(value);
+    }
+    var bulk = {"bulk": data};
+    // debugPrint('bulk : $bulk');
+    return bulk;
   }
 }

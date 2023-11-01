@@ -2,9 +2,6 @@
 
 import 'package:dio/dio.dart';
 import 'package:monitor_app/constants/config.dart';
-import 'package:monitor_app/model/point_checklist_preventive.dart';
-import 'package:monitor_app/model/report_reg_torque.dart';
-import 'package:monitor_app/model/report_reg_verticality.dart';
 import 'package:monitor_app/model/task.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:http_parser/http_parser.dart';
@@ -19,8 +16,7 @@ abstract class RestService {
   Future<List<Task>> getAllTaskByNIK(@Queries() Map<String, dynamic> queries);
 
   @PATCH('/task/{id}')
-  Future<HttpResponse> updateTaskByTaskId(
-      @Path() int id, @Body() Task task);
+  Future<HttpResponse> updateTaskByTaskId(@Path() int id, @Body() var task);
 
   @POST('/asset')
   @MultiPart()
@@ -35,12 +31,14 @@ abstract class RestService {
       List<int> file,
       @Header('Authorization') String token);
 
-    @POST('/Reportregulertorque')
-    Future<HttpResponse> createReportRegTorque(@Body() ReportRegTorque reportRegTorque);
+  @POST('/reportregulertorque/bulk')
+  Future<HttpResponse> createReportRegTorque(
+      @Body() var bulk);
 
-    @POST('/Reportregulerverticality')
-    Future<HttpResponse> createReportRegVerticality(@Body() ReportRegVerticality reportRegVerticality);
+  @POST('/reportregulerverticality')
+  Future<HttpResponse> createReportRegVerticality(
+      @Body() var bulk);
 
-    @POST('/Pointchecklistpreventive')
-    Future<HttpResponse> createPointChecklistPreventive(@Body() PointChecklistPreventive pointChecklistPreventive);
+  @POST('/categorychecklistpreventive/insertWithPoint')
+  Future<HttpResponse> createPointChecklistPreventive(@Body() var bulk);
 }

@@ -47,13 +47,15 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
   List<String> miringKe2 = [];
   late List<String> miringKeItem;
   late List<String> miringKeItem2;
-  String toleransiKetegakanMenara = '0';
+  int toleransiKetegakanMenara = 0;
 
   List<int> selectedIndexTheodolite = [];
 
   @override
   void initState() {
     super.initState();
+    debugPrint('reports ${widget.task.status}');
+    debugPrint('reports ${widget.task.reportRegVerticality}');
     if (widget.task.reportRegVerticality == null) {
       theodoliteValue = theodoliteItems[0];
       theodoliteValue2 = theodoliteItems[0];
@@ -99,7 +101,7 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
           'toleransi ketegakan menara : ${widget.task.reportRegVerticality!.toleransiKetegakan}');
       toleransiKetegakanMenara =
           widget.task.reportRegVerticality!.toleransiKetegakan;
-      toleransiKetegakanCon.text = toleransiKetegakanMenara;
+      toleransiKetegakanCon.text = toleransiKetegakanMenara.toString();
       alatUkurCon.text = widget.task.reportRegVerticality!.alatUkur;
     }
   }
@@ -821,13 +823,13 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
                   controller: toleransiKetegakanCon,
                   keyboardType: TextInputType.number,
                   onChanged: (value) {
-                    toleransiKetegakanMenara = value;
+                    toleransiKetegakanMenara = int.parse(value);
                     setState(() {});
                   },
                 ),
               ),
               const Text('x (1/1000) ='),
-              Text('${int.parse(toleransiKetegakanMenara) * (1 / 1000)} mm'),
+              Text('${toleransiKetegakanMenara * (1 / 1000)} mm'),
               // Text('$toleransiKetegakanMenara mm'),
             ],
           ),

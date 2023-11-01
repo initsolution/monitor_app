@@ -11,8 +11,10 @@ part 'category_checklist_preventive.g.dart';
 @JsonSerializable()
 class CategoryChecklistPreventive {
   final int id;
+  @JsonKey(name : 'nama')
   final String categoryName;
   final String? keterangan;
+  @JsonKey(name : 'pointChecklistPreventive')
   final List<PointChecklistPreventive>? points;
   final int orderIndex;
 

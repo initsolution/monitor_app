@@ -32,3 +32,8 @@
 - update : save report checklist
 - update : save report torque
 - update : save report verticality
+# 01/11/2023
+- upload asset, ceklist prev, ceklis reg verticality, ceklist torque
+- load data from REST API after submit 
+- penambahan JSONKEY pada Model
+- getAllTask FROM REST API with many join
