@@ -15,6 +15,7 @@ ReportRegTorque _$ReportRegTorqueFromJson(Map<String, dynamic> json) =>
       minimumTorque: json['minimumTorque'] as int,
       qtyBolt: json['qtyBolt'] as int,
       remark: json['remark'] as String?,
+      orderIndex: json['orderIndex'] as int,
     );
 
 Map<String, dynamic> _$ReportRegTorqueToJson(ReportRegTorque instance) =>
@@ -26,4 +27,5 @@ Map<String, dynamic> _$ReportRegTorqueToJson(ReportRegTorque instance) =>
       'minimumTorque': instance.minimumTorque,
       'qtyBolt': instance.qtyBolt,
       'remark': instance.remark,
+      'orderIndex': instance.orderIndex,
     };

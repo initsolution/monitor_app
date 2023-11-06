@@ -13,6 +13,7 @@ class ReportRegTorqueDB {
   late int minimumTorque;
   late int qtyBolt;
   late String? remark;
+  late int? orderIndex;
 
   ReportRegTorqueDB({
     this.id,
@@ -22,10 +23,11 @@ class ReportRegTorqueDB {
     required this.minimumTorque,
     required this.qtyBolt,
     this.remark,
+    this.orderIndex
   });
 
   @override
   String toString() {
-    return 'ReportRegTorqueDB(id: $id, towerSegment: $towerSegment, elevasi: $elevasi, boltSize: $boltSize, minimumTorque: $minimumTorque, qtyBolt: $qtyBolt, remark: $remark)';
+    return 'ReportRegTorqueDB(id: $id, towerSegment: $towerSegment, elevasi: $elevasi, boltSize: $boltSize, minimumTorque: $minimumTorque, qtyBolt: $qtyBolt, remark: $remark, orderIndex: $orderIndex)';
   }
 }

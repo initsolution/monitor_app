@@ -32,18 +32,23 @@ const ReportRegTorqueDBSchema = CollectionSchema(
       name: r'minimumTorque',
       type: IsarType.long,
     ),
-    r'qtyBolt': PropertySchema(
+    r'orderIndex': PropertySchema(
       id: 3,
+      name: r'orderIndex',
+      type: IsarType.long,
+    ),
+    r'qtyBolt': PropertySchema(
+      id: 4,
       name: r'qtyBolt',
       type: IsarType.long,
     ),
     r'remark': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'remark',
       type: IsarType.string,
     ),
     r'towerSegment': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'towerSegment',
       type: IsarType.string,
     )
@@ -88,9 +93,10 @@ void _reportRegTorqueDBSerialize(
   writer.writeString(offsets[0], object.boltSize);
   writer.writeLong(offsets[1], object.elevasi);
   writer.writeLong(offsets[2], object.minimumTorque);
-  writer.writeLong(offsets[3], object.qtyBolt);
-  writer.writeString(offsets[4], object.remark);
-  writer.writeString(offsets[5], object.towerSegment);
+  writer.writeLong(offsets[3], object.orderIndex);
+  writer.writeLong(offsets[4], object.qtyBolt);
+  writer.writeString(offsets[5], object.remark);
+  writer.writeString(offsets[6], object.towerSegment);
 }
 
 ReportRegTorqueDB _reportRegTorqueDBDeserialize(
@@ -104,9 +110,10 @@ ReportRegTorqueDB _reportRegTorqueDBDeserialize(
     elevasi: reader.readLong(offsets[1]),
     id: id,
     minimumTorque: reader.readLong(offsets[2]),
-    qtyBolt: reader.readLong(offsets[3]),
-    remark: reader.readStringOrNull(offsets[4]),
-    towerSegment: reader.readString(offsets[5]),
+    orderIndex: reader.readLongOrNull(offsets[3]),
+    qtyBolt: reader.readLong(offsets[4]),
+    remark: reader.readStringOrNull(offsets[5]),
+    towerSegment: reader.readString(offsets[6]),
   );
   return object;
 }
@@ -125,10 +132,12 @@ P _reportRegTorqueDBDeserializeProp<P>(
     case 2:
       return (reader.readLong(offset)) as P;
     case 3:
-      return (reader.readLong(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 4:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 5:
+      return (reader.readStringOrNull(offset)) as P;
+    case 6:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -554,6 +563,80 @@ extension ReportRegTorqueDBQueryFilter
   }
 
   QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterFilterCondition>
+      orderIndexIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'orderIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterFilterCondition>
+      orderIndexIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'orderIndex',
+      ));
+    });
+  }
+
+  QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterFilterCondition>
+      orderIndexEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'orderIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterFilterCondition>
+      orderIndexGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'orderIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterFilterCondition>
+      orderIndexLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'orderIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterFilterCondition>
+      orderIndexBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'orderIndex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterFilterCondition>
       qtyBoltEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -951,6 +1034,20 @@ extension ReportRegTorqueDBQuerySortBy
   }
 
   QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterSortBy>
+      sortByOrderIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterSortBy>
+      sortByOrderIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterSortBy>
       sortByQtyBolt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'qtyBolt', Sort.asc);
@@ -1051,6 +1148,20 @@ extension ReportRegTorqueDBQuerySortThenBy
   }
 
   QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterSortBy>
+      thenByOrderIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterSortBy>
+      thenByOrderIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QAfterSortBy>
       thenByQtyBolt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'qtyBolt', Sort.asc);
@@ -1117,6 +1228,13 @@ extension ReportRegTorqueDBQueryWhereDistinct
   }
 
   QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QDistinct>
+      distinctByOrderIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'orderIndex');
+    });
+  }
+
+  QueryBuilder<ReportRegTorqueDB, ReportRegTorqueDB, QDistinct>
       distinctByQtyBolt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'qtyBolt');
@@ -1162,6 +1280,12 @@ extension ReportRegTorqueDBQueryProperty
       minimumTorqueProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'minimumTorque');
+    });
+  }
+
+  QueryBuilder<ReportRegTorqueDB, int?, QQueryOperations> orderIndexProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'orderIndex');
     });
   }
 

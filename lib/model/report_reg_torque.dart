@@ -16,6 +16,7 @@ class ReportRegTorque {
   final int minimumTorque;
   final int qtyBolt;
   String? remark;
+  late int orderIndex;
 
   ReportRegTorque({
     required this.id,
@@ -25,6 +26,7 @@ class ReportRegTorque {
     required this.minimumTorque,
     required this.qtyBolt,
     this.remark,
+    required this.orderIndex,
   });
 
   Map<String, dynamic> toJson() => _$ReportRegTorqueToJson(this);
@@ -38,10 +40,11 @@ class ReportRegTorque {
           boltSize: torque.boltSize,
           minimumTorque: torque.minimumTorque,
           qtyBolt: torque.qtyBolt,
-          remark: torque.remark);
+          remark: torque.remark,
+          orderIndex: torque.orderIndex!);
 
   @override
   String toString() {
-    return 'ReportRegTorque(id: $id, towerSegment: $towerSegment, elevasi: $elevasi, boltSize: $boltSize, minimumTorque: $minimumTorque, qtyBolt: $qtyBolt, remark: $remark)';
+    return 'ReportRegTorque(id: $id, towerSegment: $towerSegment, elevasi: $elevasi, boltSize: $boltSize, minimumTorque: $minimumTorque, qtyBolt: $qtyBolt, remark: $remark, orderIndex: $orderIndex)';
   }
 }
