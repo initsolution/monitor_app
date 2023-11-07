@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monitor_app/constants/constants.dart';
 import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/controller/task_controller.dart';
@@ -40,6 +41,8 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
   final CarouselController _controller = CarouselController();
   late Task task;
   String? token;
+
+  bool infoVisible = true;
 
   @override
   void initState() {
@@ -82,15 +85,24 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
           // title: Text(widget.task.site.name),
           actions: [
             IconButton(
-                onPressed: () async =>
-                    // context.push('/task/camera', extra: await availableCameras()),
-                    Navigator.of(context)
-                        .pushNamed(CameraScreen.routeName,
-                            arguments: await availableCameras())
-                        .then((_) async => await ref
-                            .read(taskControllerProvider.notifier)
-                            .getTaskById(widget.task.id)),
-                icon: const Icon(Icons.camera)),
+              onPressed: () async =>
+                  // context.push('/task/camera', extra: await availableCameras()),
+                  Navigator.of(context)
+                      .pushNamed(CameraScreen.routeName,
+                          arguments: await availableCameras())
+                      .then((_) async => await ref
+                          .read(taskControllerProvider.notifier)
+                          .getTaskById(widget.task.id)),
+              icon: const Icon(Icons.camera_alt_rounded),
+            ),
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  infoVisible = !infoVisible;
+                });
+              },
+              icon: const Icon(Icons.info_rounded),
+            ),
             widget.task.status == STATUS_TODO
                 ? IconButton(
                     onPressed: () async {
@@ -113,33 +125,37 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                         // debugPrint('done');
                       }
                     },
-                    icon: const Icon(Icons.upload))
+                    icon: const Icon(Icons.upload),
+                  )
                 : const SizedBox(
                     width: 0,
                   ),
-            IconButton(
-              onPressed: () async {
-                // progressDialogue();
-                var assets = task.asset;
-                int idx = 0;
-                for (var asset in assets!) {
-                  if (idx % 3 == 0) {
-                    asset.url =
-                        "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1698824121621.jpg";
-                  } else if (idx % 3 == 1) {
-                    asset.url =
-                        "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1698824124715.jpg";
-                  } else {
-                    asset.url =
-                        "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1698824128845.jpg";
+            Visibility(
+              visible: false,
+              child: IconButton(
+                onPressed: () async {
+                  // progressDialogue();
+                  var assets = task.asset;
+                  int idx = 0;
+                  for (var asset in assets!) {
+                    if (idx % 3 == 0) {
+                      asset.url =
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1698824121621.jpg";
+                    } else if (idx % 3 == 1) {
+                      asset.url =
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1698824124715.jpg";
+                    } else {
+                      asset.url =
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1698824128845.jpg";
+                    }
+                    idx++;
+                    await ref
+                        .read(taskControllerProvider.notifier)
+                        .updateAssetLocalTask(asset);
                   }
-                  idx++;
-                  await ref
-                      .read(taskControllerProvider.notifier)
-                      .updateAssetLocalTask(asset);
-                }
-              },
-              icon: const Icon(Icons.update),
+                },
+                icon: const Icon(Icons.update),
+              ),
             )
           ],
         ),
@@ -196,57 +212,140 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
 
   Widget _buildReportTorqueAndVerticality() {
     return Container(
-      padding: const EdgeInsets.all(8),
-      color: const Color(0xFFEAEEF2),
+      width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.only(top: 10, bottom: 20, left: 20, right: 20),
+      color: const Color(0xFFCFDEED),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ElevatedButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamed(FormReportTorque.routeName, arguments: task)
-                    .then((_) async {
-                  if (task.status == STATUS_TODO) {
-                    await ref
-                        .read(taskControllerProvider.notifier)
-                        .getTaskById(widget.task.id);
-                  }
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                minimumSize: const Size.fromHeight(40), // NEW
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              'REPORT',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => Navigator.of(context)
+                .pushNamed(FormReportTorque.routeName, arguments: task)
+                .then((_) async {
+              if (task.status == STATUS_TODO) {
+                await ref
+                    .read(taskControllerProvider.notifier)
+                    .getTaskById(widget.task.id);
+              }
+            }),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(10),
               ),
-              child: const Text(
-                'REPORT REGULAR MAINTENANCE : TORQUE',
-                style: TextStyle(color: Colors.white),
-              )),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamed(FormReportVerticality.routeName, arguments: task)
-                    .then((_) async => await ref
-                        .read(taskControllerProvider.notifier)
-                        .getTaskById(widget.task.id));
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.pink,
-                minimumSize: const Size.fromHeight(40), // NEW
+              child: Row(
+                children: [
+                  SvgPicture.asset('assets/icons/ic_report_torque.svg',
+                      width: 40, height: 40),
+                  const SizedBox(width: 20),
+                  const Text('TORQUE BOLT TIGHTENING',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold)),
+                ],
               ),
-              child: const Text(
-                'REPORT REGULAR MAINTENANCE : VERTICALITY',
-                style: TextStyle(color: Colors.white),
-              )),
+            ),
+          ),
+          const SizedBox(height: 10),
+          GestureDetector(
+            onTap: () => Navigator.of(context)
+                .pushNamed(FormReportVerticality.routeName, arguments: task)
+                .then((_) async => await ref
+                    .read(taskControllerProvider.notifier)
+                    .getTaskById(widget.task.id)),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.pink,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                children: [
+                  SvgPicture.asset('assets/icons/ic_report_verticality.svg',
+                      width: 40, height: 40),
+                  const SizedBox(width: 20),
+                  const Text('VERTICALITY',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold)),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
+    // return Container(
+    //   padding: const EdgeInsets.all(8),
+    //   color: const Color(0xFFEAEEF2),
+    //   child: Column(
+    //     children: [
+    //       ElevatedButton(
+    //           onPressed: () {
+    //             Navigator.of(context)
+    //                 .pushNamed(FormReportTorque.routeName, arguments: task)
+    //                 .then((_) async {
+    //               if (task.status == STATUS_TODO) {
+    //                 await ref
+    //                     .read(taskControllerProvider.notifier)
+    //                     .getTaskById(widget.task.id);
+    //               }
+    //             });
+    //           },
+    //           style: ElevatedButton.styleFrom(
+    //             backgroundColor: Colors.blue,
+    //             minimumSize: const Size.fromHeight(40), // NEW
+    //           ),
+    //           child: const Text(
+    //             'REPORT REGULAR MAINTENANCE : TORQUE',
+    //             style: TextStyle(color: Colors.white),
+    //           )),
+    //       ElevatedButton(
+    //           onPressed: () {
+    //             Navigator.of(context)
+    //                 .pushNamed(FormReportVerticality.routeName, arguments: task)
+    //                 .then((_) async => await ref
+    //                     .read(taskControllerProvider.notifier)
+    //                     .getTaskById(widget.task.id));
+    //           },
+    //           style: ElevatedButton.styleFrom(
+    //             backgroundColor: Colors.pink,
+    //             minimumSize: const Size.fromHeight(40), // NEW
+    //           ),
+    //           child: const Text(
+    //             'REPORT REGULAR MAINTENANCE : VERTICALITY',
+    //             style: TextStyle(color: Colors.white),
+    //           )),
+    //     ],
+    //   ),
+    // );
   }
 
   Widget _buildChecklistButton() => Container(
-        padding: const EdgeInsets.all(8),
-        color: const Color(0xFFEAEEF2),
-        child: ElevatedButton(
-            onPressed: () {
-              Navigator.of(context)
+        width: MediaQuery.of(context).size.width,
+        padding:
+            const EdgeInsets.only(top: 10, bottom: 20, left: 20, right: 20),
+        color: const Color(0xFFCFDEED),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: Text(
+                'REPORT',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            GestureDetector(
+              onTap: () => Navigator.of(context)
                   .pushNamed(FormChecklistScreen.routeName,
                       arguments: task.categoriesChecklist ?? [])
                   .then((_) async {
@@ -255,106 +354,158 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                       .read(taskControllerProvider.notifier)
                       .getTaskById(widget.task.id);
                 }
-              });
-              // Navigator.of(context)
-              //     .pushNamed(FormChecklistScreen.routeName, arguments: task.id)
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              minimumSize: const Size.fromHeight(40), // NEW
+              }),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.blue[900],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    SvgPicture.asset('assets/icons/ic_report_checklist.svg',
+                        width: 40, height: 40),
+                    const SizedBox(width: 20),
+                    const Text('CHECKLIST',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              ),
             ),
-            child: const Text(
-              'FORM CHECKLIST PREVENTIVE MAINTENANCE',
-              style: TextStyle(color: Colors.white),
-            )),
+          ],
+        ),
       );
 
+  // Container(
+  //       padding: const EdgeInsets.all(8),
+  //       color: const Color(0xFFEAEEF2),
+  //       child: ElevatedButton(
+  //           onPressed: () {
+  //             Navigator.of(context)
+  //                 .pushNamed(FormChecklistScreen.routeName,
+  //                     arguments: task.categoriesChecklist ?? [])
+  //                 .then((_) async {
+  //               if (widget.task.status == STATUS_TODO) {
+  //                 await ref
+  //                     .read(taskControllerProvider.notifier)
+  //                     .getTaskById(widget.task.id);
+  //               }
+  //             });
+  //             // Navigator.of(context)
+  //             //     .pushNamed(FormChecklistScreen.routeName, arguments: task.id)
+  //           },
+  //           style: ElevatedButton.styleFrom(
+  //             backgroundColor: Colors.blue,
+  //             minimumSize: const Size.fromHeight(40), // NEW
+  //           ),
+  //           child: const Text(
+  //             'FORM CHECKLIST PREVENTIVE MAINTENANCE',
+  //             style: TextStyle(color: Colors.white),
+  //           )),
+  //     );
+
   Widget _getSiteInfo() {
-    return Column(
-      children: [
-        CarouselSlider.builder(
-          carouselController: _controller,
-          options: CarouselOptions(
-            onPageChanged: (index, reason) {
-              setState(() {
-                current = index;
-              });
-            },
-            height: 150.0,
-            enableInfiniteScroll: false,
-            viewportFraction: 1.0,
-            scrollDirection: Axis.horizontal,
-          ),
-          itemBuilder: (context, index, realIndex) {
-            if (index == 0) {
-              return _getBody();
-            } else {
-              return _getBody2();
-            }
-          },
-          itemCount: 2,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [0, 1].asMap().entries.map((entry) {
-            return GestureDetector(
-              onTap: () => _controller.animateToPage(entry.key),
-              child: Container(
-                width: 8.0,
-                height: 8.0,
-                margin:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: (Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black)
-                        .withOpacity(current == entry.key ? 0.9 : 0.4)),
+    return Visibility(
+      visible: infoVisible,
+      child: Container(
+        color: Colors.blue,
+        child: Column(
+          children: [
+            CarouselSlider.builder(
+              carouselController: _controller,
+              options: CarouselOptions(
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    current = index;
+                  });
+                },
+                height: 140.0,
+                enableInfiniteScroll: false,
+                viewportFraction: 1.0,
+                scrollDirection: Axis.horizontal,
               ),
-            );
-          }).toList(),
-        )
-      ],
+              itemBuilder: (context, index, realIndex) {
+                if (index == 0) {
+                  return _buildSiteInfoCard1();
+                } else {
+                  return _buildSiteInfoCard2();
+                }
+              },
+              itemCount: 2,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [0, 1].asMap().entries.map((entry) {
+                return GestureDetector(
+                  onTap: () => _controller.animateToPage(entry.key),
+                  child: Container(
+                    width: 8.0,
+                    height: 8.0,
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 15.0, horizontal: 4.0),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white
+                            .withOpacity(current == entry.key ? 0.9 : 0.4)),
+                    // color: (Theme.of(context).brightness == Brightness.dark
+                    //         ? Colors.white
+                    //         : Colors.black)
+                    //     .withOpacity(current == entry.key ? 0.9 : 0.4)),
+                  ),
+                );
+              }).toList(),
+            )
+          ],
+        ),
+      ),
     );
   }
 
-  Widget _getBody2() {
+  Widget _buildSiteInfoCard2() {
     return Container(
-      // color: Colors.amber,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             task.site.name.toUpperCase(),
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
           ),
-          Text(task.site.id),
-          Text(task.site.address ?? ''),
-          Text('${task.site.region}, ${task.site.province}'),
+          Text(task.site.id, style: const TextStyle(color: Colors.white)),
+          Text(task.site.address ?? '',
+              style: const TextStyle(color: Colors.white)),
+          Text('${task.site.region}, ${task.site.province}',
+              style: const TextStyle(color: Colors.white)),
         ],
       ),
     );
   }
 
-  Widget _getBody() {
+  Widget _buildSiteInfoCard1() {
     return Container(
-      // color: Colors.amber,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.cell_tower, size: 48),
-          const SizedBox(width: 20),
+          // const Icon(Icons.cell_tower, size: 38),
+          // const SizedBox(width: 20),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Height : ${task.site.towerHeight.toString()}'),
-              Text('Type : ${task.site.towerType}'),
-              Text('Fabricator : ${task.site.fabricator}'),
-              Text('Tenant : ${task.site.tenants}'),
-              Text('Created Date : ${task.createdDate}'),
+              Text('Height : ${task.site.towerHeight.toString()}',
+                  style: const TextStyle(color: Colors.white)),
+              Text('Type : ${task.site.towerType}',
+                  style: const TextStyle(color: Colors.white)),
+              Text('Fabricator : ${task.site.fabricator}',
+                  style: const TextStyle(color: Colors.white)),
+              Text('Tenant : ${task.site.tenants}',
+                  style: const TextStyle(color: Colors.white)),
+              Text('Created Date : ${task.createdDate}',
+                  style: const TextStyle(color: Colors.white)),
             ],
           ),
         ],
@@ -562,17 +713,35 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   });
                 }
               },
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color:
-                      categories.keys.elementAt(index).toUpperCase() == 'TEMUAN'
-                          ? Colors.yellow[400]
-                          : Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(categories.keys.elementAt(index)),
-              ),
+              child: categories.keys.elementAt(index).toUpperCase() == 'TEMUAN'
+                  ? Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset('assets/icons/ic_temuan.svg',
+                              width: 40, height: 40),
+                          const SizedBox(width: 20),
+                          Text(
+                            categories.keys.elementAt(index),
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(categories.keys.elementAt(index)),
+                    ),
             );
           },
           separatorBuilder: (context, index) => const SizedBox(height: 10),

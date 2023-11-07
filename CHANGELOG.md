@@ -37,3 +37,5 @@
 - load data from REST API after submit 
 - penambahan JSONKEY pada Model
 - getAllTask FROM REST API with many join
+# 07/11/2023
+- update ui task screen : redesign task screen
