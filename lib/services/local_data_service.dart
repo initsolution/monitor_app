@@ -87,8 +87,9 @@ class LocalDataService {
             }).toList() ??
             [];
 
+    index = 0;
     final reportRegTorqueDB = task.masterReportRegTorque
-            ?.map((torque) => getReportTorqueDBFromMasterReportTorque(torque))
+            ?.map((torque) => getReportTorqueDBFromMasterReportTorque(torque, index++))
             .toList() ??
         [];
 
@@ -247,7 +248,8 @@ class LocalDataService {
             boltSize: rDB.boltSize,
             minimumTorque: rDB.minimumTorque,
             qtyBolt: rDB.qtyBolt,
-            remark: r.remark);
+            remark: r.remark,
+            orderIndex: r.orderIndex);
         debugPrint('ReportRegTorqueDB : ${rDB2.toString()}');
         reports.add(rDB2);
       }

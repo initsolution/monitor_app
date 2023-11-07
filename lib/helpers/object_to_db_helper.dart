@@ -34,13 +34,14 @@ EmployeeDB getEmployeeDBFromEmployee(Employee employee) {
 }
 
 ReportRegTorqueDB getReportTorqueDBFromMasterReportTorque(
-        MasterReportRegTorque torque) =>
+        MasterReportRegTorque torque, index) =>
     ReportRegTorqueDB(
       towerSegment: torque.towerSegment,
       elevasi: torque.elevasi,
       boltSize: torque.boltSize,
       minimumTorque: torque.minimumTorque,
       qtyBolt: torque.qtyBolt,
+      orderIndex: index
     );
 
 ReportRegVerticalityDB getReportRegVerticalityDBFromReportRegVerticality(

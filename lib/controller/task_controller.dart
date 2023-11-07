@@ -270,6 +270,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
         "minimumTorque": element.minimumTorque,
         "qtyBolt": element.qtyBolt,
         "remark": element.remark,
+        "orderIndex" : element.orderIndex,
         "task": {"id": idTask},
       };
       data.add(value);
