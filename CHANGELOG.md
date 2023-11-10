@@ -39,3 +39,7 @@
 - getAllTask FROM REST API with many join
 # 07/11/2023
 - update ui task screen : redesign task screen
+# 10/11/2023
+- delete localtask setelah diupload
+- sorting master asset
+- sorting preventive

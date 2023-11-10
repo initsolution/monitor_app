@@ -4,9 +4,11 @@ import 'package:isar/isar.dart';
 import 'package:monitor_app/db/config/database.dart';
 import 'package:monitor_app/db/models/assets_db.dart';
 import 'package:monitor_app/db/models/category_point_checklist_db.dart';
+import 'package:monitor_app/db/models/employee_db.dart';
 import 'package:monitor_app/db/models/point_checklist_db.dart';
 import 'package:monitor_app/db/models/report_reg_torque_db.dart';
 import 'package:monitor_app/db/models/report_reg_verticality_db.dart';
+import 'package:monitor_app/db/models/site_db.dart';
 import 'package:monitor_app/db/models/task_db.dart';
 import 'package:monitor_app/db/models/value_verticality_db.dart';
 import 'package:monitor_app/helpers/object_to_db_helper.dart';
@@ -23,6 +25,10 @@ class LocalDataService {
     return taskDB != null ? Task.fromTaskDB(taskDB) : null;
   }
 
+  Future<TaskDB?> getLocalTaskById(int taskId) async {
+    return await isarDB.tasks.filter().idTaskEqualTo(taskId).findFirst();
+  }
+
   Future<List<Task>?> getAllTasks() async {
     final result = await isarDB.tasks.where().findAll();
     debugPrint(result.toString());
@@ -34,7 +40,9 @@ class LocalDataService {
   }
 
   Future<Task> createTask(Task task) async {
-    final assetsDB = task.masterAsset?.mapIndexed((idx, masterAsset) {
+    var masterasset = task.masterAsset!.map((e) => e).toList()
+      ..sort((a, b) => a.id.compareTo(b.id));
+    final assetsDB = masterasset.mapIndexed((idx, masterAsset) {
           return AssetsDB(
             section: masterAsset.section,
             category: masterAsset.category,
@@ -89,7 +97,8 @@ class LocalDataService {
 
     index = 0;
     final reportRegTorqueDB = task.masterReportRegTorque
-            ?.map((torque) => getReportTorqueDBFromMasterReportTorque(torque, index++))
+            ?.map((torque) =>
+                getReportTorqueDBFromMasterReportTorque(torque, index++))
             .toList() ??
         [];
 
@@ -179,6 +188,41 @@ class LocalDataService {
   Future<void> deleteTask(int taskId) async {
     await isarDB
         .writeTxn(() async => await isarDB.tasks.deleteByIdTask(taskId));
+  }
+
+  Future<void> deleteSite(int id) async {
+    await isarDB.writeTxn(() async => await isarDB.sites.delete(id));
+  }
+
+  Future<void> deleteEmployee(int id) async {
+    await isarDB.writeTxn(() async => await isarDB.employees.delete(id));
+  }
+
+  Future<void> deleteAsset(int id) async {
+    await isarDB.writeTxn(() async => await isarDB.assets.delete(id));
+  }
+
+  Future<void> deleteCategoryPointChecklist(int id) async {
+    await isarDB
+        .writeTxn(() async => await isarDB.category_point_checklist.delete(id));
+  }
+
+  Future<void> deletePointChecklist(int id) async {
+    await isarDB.writeTxn(() async => await isarDB.point_checklist.delete(id));
+  }
+
+  Future<void> deleteReportTorque(int id) async {
+    await isarDB.writeTxn(() async => await isarDB.report_torque.delete(id));
+  }
+
+  Future<void> deleteReportVerticality(int id) async {
+    await isarDB
+        .writeTxn(() async => await isarDB.report_verticality.delete(id));
+  }
+
+  Future<void> deleteValueVerticality(int id) async {
+    await isarDB
+        .writeTxn(() async => await isarDB.value_verticality.delete(id));
   }
 
   Future<bool> addAssetToTask(int taskId, Asset temuan) async {

@@ -118,6 +118,8 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
   uploadTaskByTaskId(int taskId, token) async {
     state = TaskLoading();
     var task = await ref.read(localdataServiceProvider).getTaskById(taskId);
+    var localTask =
+        await ref.read(localdataServiceProvider).getLocalTaskById(taskId);
     //UPLOAD ASSET
     var assets = task?.asset;
     for (var asset in assets!) {
@@ -177,6 +179,37 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     debugPrint('respon Task : ${responTask.response.statusCode}');
 
     //delete localtask
+    await ref
+        .read(localdataServiceProvider)
+        .deleteSite(localTask!.site.value!.id);
+    await ref
+        .read(localdataServiceProvider)
+        .deleteEmployee(localTask.verifierEmployee.value!.id!);
+    for (var e in localTask.assets) {
+      await ref.read(localdataServiceProvider).deleteAsset(e.id!);
+    }
+    if (localTask.type == "Reguler") {
+      for (var e in localTask.reportTorque) {
+        await ref.read(localdataServiceProvider).deleteReportTorque(e.id!);
+      }
+      for (var e in localTask.reportVerticality.value!.valueVerticality) {
+        await ref.read(localdataServiceProvider).deleteValueVerticality(e.id!);
+      }
+      await ref
+          .read(localdataServiceProvider)
+          .deleteReportVerticality(localTask.reportVerticality.value!.id!);
+    } else if (localTask.type == "Preventive") {
+      for (var e in localTask.categoriesChecklist) {
+        var points = e.points;
+        for (var p in points) {
+          await ref.read(localdataServiceProvider).deletePointChecklist(p.id!);
+        }
+        await ref
+            .read(localdataServiceProvider)
+            .deleteCategoryPointChecklist(e.id);
+      }
+    }
+
     await ref.read(localdataServiceProvider).deleteTask(taskId);
     state = TaskDataChangeSuccess();
   }
@@ -270,7 +303,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
         "minimumTorque": element.minimumTorque,
         "qtyBolt": element.qtyBolt,
         "remark": element.remark,
-        "orderIndex" : element.orderIndex,
+        "orderIndex": element.orderIndex,
         "task": {"id": idTask},
       };
       data.add(value);
