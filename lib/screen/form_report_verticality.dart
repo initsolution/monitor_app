@@ -142,7 +142,7 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: const Text('Report Verticality'),
+        title: const Text('Rep. Verticality'),
         actions: [
           IconButton(
               onPressed: () async {

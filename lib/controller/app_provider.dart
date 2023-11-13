@@ -15,6 +15,10 @@ final localdataServiceProvider = Provider((ref) => LocalDataService());
 
 final assetUrlProvider = StateProvider((ref) => '');
 
+// String statusTask = 'All';
+final statusTaskProvider = StateProvider<String>((ref) => 'All');
+
+
 // final masterAssetProvider =
 //     FutureProvider.family<List<MasterAsset>, Param>((ref, params) async {
 //   return await ref.read(repositoryProvider).getAllMasterAssetTask(

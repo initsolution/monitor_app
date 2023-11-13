@@ -28,7 +28,7 @@ class _FormReportTorqueState extends ConsumerState<FormReportTorque> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Report Torque'),
+        title: const Text('Rep. Bolt Tightening Torque'),
         actions: [
           IconButton(
               onPressed: () async {

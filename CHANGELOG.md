@@ -43,3 +43,6 @@
 - delete localtask setelah diupload
 - sorting master asset
 - sorting preventive
+# 13/11/2023
+- add location, long, lat
+- add filtering task by range date, and statusTask

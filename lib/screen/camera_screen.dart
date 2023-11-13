@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:monitor_app/helpers/image_helper.dart';
 import 'package:monitor_app/screen/album_screen.dart';
 import 'package:path_provider/path_provider.dart';
@@ -42,6 +44,9 @@ class _CameraScreenState extends State<CameraScreen>
   // ignore: unused_field
   FlashMode? _currentFlashMode;
 
+  Position? _currentPosition;
+  late List<String?> _currentAddress;
+
   getPermissionStatus() async {
     await Permission.camera.request();
     var status = await Permission.camera.status;
@@ -51,12 +56,74 @@ class _CameraScreenState extends State<CameraScreen>
       setState(() {
         _isCameraPermissionGranted = true;
       });
+      _getCurrentPosition();
       // Set and initialize the new camera
       onNewCameraSelected(widget.cameras[0]);
       refreshAlreadyCapturedImages();
     } else {
       debugPrint('Camera Permission: DENIED');
     }
+  }
+
+  Future<void> _getAddressFromLatLng(Position position) async {
+    await placemarkFromCoordinates(
+            _currentPosition!.latitude, _currentPosition!.longitude)
+        .then((List<Placemark> placemarks) {
+      Placemark place = placemarks[0];
+      _currentAddress = [];
+      setState(() {
+        // _currentAddress =
+        //     '${place.street}, ${place.subLocality},\n${place.subAdministrativeArea}, ${place.postalCode}';
+        _currentAddress.add(place.street);
+        _currentAddress.add(place.subLocality);
+        _currentAddress.add(place.subAdministrativeArea);
+        _currentAddress.add(place.postalCode);
+      });
+      debugPrint(_currentAddress.toString());
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+
+  Future<void> _getCurrentPosition() async {
+    final hasPermission = await _handleLocationPermission();
+    if (!hasPermission) return;
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      setState(() => _currentPosition = position);
+      _getAddressFromLatLng(_currentPosition!);
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied')));
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location permissions are permanently denied, we cannot request permissions.')));
+      return false;
+    }
+    return true;
   }
 
   refreshAlreadyCapturedImages() async {
@@ -436,8 +503,10 @@ class _CameraScreenState extends State<CameraScreen>
                                           print(fileFormat);
                                           print(
                                               '${directory.path}/$currentUnix.$fileFormat');
-                                          await captureDrawImageInfo(imageFile,
-                                              '${directory.path}/$currentUnix.$fileFormat');
+                                          await captureDrawImageInfo(
+                                              imageFile,
+                                              '${directory.path}/$currentUnix.$fileFormat',
+                                              _currentPosition,_currentAddress);
                                           // await imageFile.copy(
                                           //   '${directory.path}/$currentUnix.$fileFormat',
                                           // );

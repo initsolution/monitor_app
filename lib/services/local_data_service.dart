@@ -25,7 +25,7 @@ class LocalDataService {
     return taskDB != null ? Task.fromTaskDB(taskDB) : null;
   }
 
-  Future<TaskDB?> getLocalTaskById(int taskId) async {
+  Future<TaskDB?> getTaskDBById(int taskId) async {
     return await isarDB.tasks.filter().idTaskEqualTo(taskId).findFirst();
   }
 
@@ -50,8 +50,7 @@ class LocalDataService {
             url: "-",
             orderIndex: idx,
           );
-        }).toList() ??
-        [];
+        }).toList();
     // var assetsDB;
     // if (task.status == STATUS_TODO) {
     //   assetsDB = task.masterAsset?.mapIndexed((idx, masterAsset) {

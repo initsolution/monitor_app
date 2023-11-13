@@ -10,17 +10,17 @@ class TaskInitial extends TaskState {}
 
 class TaskLoading extends TaskState {}
 
-class TasksLoaded extends TaskState {
+class TaskLoaded extends TaskState {
   final List<Task> tasks;
-  TasksLoaded({required this.tasks});
+  TaskLoaded({required this.tasks});
 
   @override
   List<Object?> get props => [tasks];
 }
 
-class TaskLoaded extends TaskState {
+class PrepareTaskSuccess extends TaskState {
   final Task task;
-  TaskLoaded({required this.task});
+  PrepareTaskSuccess({required this.task});
 
   @override
   List<Object?> get props => [task];

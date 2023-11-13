@@ -2,8 +2,7 @@
 
 import 'dart:io';
 
-import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:monitor_app/controller/app_provider.dart';
@@ -34,15 +33,25 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     return TaskInitial();
   }
 
-  getAllTasks(String email) async {
+  getAllTasks(
+      {required String email,
+      required DateTimeRange dateTimeRange,
+      String? status}) async {
     state = TaskLoading();
-    List<Task> reviewTask = [];
-    // cek jika online
 
-    // jika T maka
+    var filters = [
+      "makerEmployee.email||eq||$email",
+      "created_at||gte||${DateFormat('yyyy-MM-dd').format(dateTimeRange.start)}",
+      "created_at||lte||${DateFormat('yyyy-MM-dd').format(dateTimeRange.end.add(const Duration(days: 1)))}",
+    ];
+    if (status != null) {
+      if (status.toLowerCase() != "all") {
+        filters.add("status||eq||${status.toLowerCase()}");
+      }
+    }
     try {
       var queries = {
-        "filter": "makerEmployee.email||eq||$email",
+        "filter": filters,
         "join": [
           "site",
           "makerEmployee",
@@ -54,6 +63,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
           "reportRegulerVerticality.valueVerticality"
         ],
       };
+      debugPrint(filters.toString());
       // bandingkan tasks yang didapat dengan db local isar
       final tasks =
           await ref.read(restServiceProvider).getAllTaskByNIK(queries);
@@ -61,65 +71,69 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
       for (var task in tasks) {
         debugPrint('rest task : (${task.id}) : ${task.verifierEmployee.nik}');
       }
-      var localTasks = await ref.read(localdataServiceProvider).getAllTasks();
-      if (localTasks == null) {
-        for (var task in tasks) {
-          debugPrint(' 0 create : (${task.id})');
-          if (task.status == STATUS_TODO) {
-            await ref.read(localdataServiceProvider).createTask(task);
-          } else {
-            reviewTask.add(task);
-          }
-        }
-      } else {
-        debugPrint('rest: (${tasks.length}) vs local : (${localTasks.length})');
-        for (var task in tasks) {
-          // debugPrint('${localTasks.contains(task)} #task${task.id}');
-          debugPrint(
-              '${localTasks.firstWhereOrNull((element) => element.id == task.id)}');
-          if (localTasks.firstWhereOrNull((element) => element.id == task.id) ==
-              null) {
-            debugPrint('create : (${task.id})');
-            if (task.status == STATUS_TODO) {
-              await ref.read(localdataServiceProvider).createTask(task);
-            } else {
-              reviewTask.add(task);
-            }
-          }
-          // if (!localTasks.contains(task)) {
-          //   debugPrint('create : (${task.id})');
-          //   await ref.read(localdataServiceProvider).createTask(task);
-          // }
-        }
-        for (var task in localTasks) {
-          if (tasks.firstWhereOrNull((element) => element.id == task.id) ==
-              null) {
-            await ref.read(localdataServiceProvider).deleteTask(task.id);
-          }
-          // if (!tasks.contains(task)) {
-          //   await ref.read(localdataServiceProvider).deleteTask(task.id);
-          // }
-        }
-      }
-      localTasks = await ref.read(localdataServiceProvider).getAllTasks();
-      localTasks ??= [];
-      localTasks = List.from(localTasks)..addAll(reviewTask);
-      for (var task in localTasks) {
-        debugPrint('local task : (${task.id})');
-      }
+      state = TaskLoaded(tasks: tasks);
 
-      state = TasksLoaded(tasks: localTasks);
+      // var localTasks = await ref.read(localdataServiceProvider).getAllTasks();
+      // if (localTasks == null) {
+      //   for (var task in tasks) {
+      //     debugPrint(' 0 create : (${task.id})');
+      //     if (task.status == STATUS_TODO) {
+      //       await ref.read(localdataServiceProvider).createTask(task);
+      //     } else {
+      //       reviewTask.add(task);
+      //     }
+      //   }
+      // } else {
+      //   debugPrint('rest: (${tasks.length}) vs local : (${localTasks.length})');
+      //   for (var task in tasks) {
+      //     // debugPrint('${localTasks.contains(task)} #task${task.id}');
+      //     debugPrint(
+      //         '${localTasks.firstWhereOrNull((element) => element.id == task.id)}');
+      //     if (localTasks.firstWhereOrNull((element) => element.id == task.id) ==
+      //         null) {
+      //       debugPrint('create : (${task.id})');
+      //       if (task.status == STATUS_TODO) {
+      //         await ref.read(localdataServiceProvider).createTask(task);
+      //       } else {
+      //         reviewTask.add(task);
+      //       }
+      //     }
+      //   }
+      //   for (var task in localTasks) {
+      //     if (tasks.firstWhereOrNull((element) => element.id == task.id) ==
+      //         null) {
+      //       await ref.read(localdataServiceProvider).deleteTask(task.id);
+      //     }
+      //   }
+      // }
+      // localTasks = await ref.read(localdataServiceProvider).getAllTasks();
+      // localTasks ??= [];
+      // localTasks = List.from(localTasks)..addAll(reviewTask);
+      // for (var task in localTasks) {
+      //   debugPrint('local task : (${task.id})');
+      // }
+
+      // state = TasksLoaded(tasks: localTasks);
     } on Exception catch (e) {
       state = TaskLoadedWithError(message: e.toString());
     }
     //
   }
 
+  isTaskFoundInLocal({required Task task}) async {
+    var result = await ref.read(localdataServiceProvider).getTaskById(task.id);
+    if (result == null) {
+      await ref.read(localdataServiceProvider).createTask(task);
+      result = await ref.read(localdataServiceProvider).getTaskById(task.id);
+    }
+    state = PrepareTaskSuccess(task: result!);
+  }
+
   uploadTaskByTaskId(int taskId, token) async {
     state = TaskLoading();
     var task = await ref.read(localdataServiceProvider).getTaskById(taskId);
     var localTask =
-        await ref.read(localdataServiceProvider).getLocalTaskById(taskId);
+        await ref.read(localdataServiceProvider).getTaskDBById(taskId);
     //UPLOAD ASSET
     var assets = task?.asset;
     for (var asset in assets!) {
@@ -137,7 +151,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
       //REPORT PREVENTIVE
       var categoriesChecklist = task?.categoriesChecklist;
       var data =
-          CategoryChecklistPreventiveToBulk(taskId, categoriesChecklist!);
+          categoryChecklistPreventiveToBulk(taskId, categoriesChecklist!);
       var respon = await ref
           .read(restServiceProvider)
           .createPointChecklistPreventive(data);
@@ -145,7 +159,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     } else if (task?.type == "Reguler") {
       //REPORT REGULER TORQUE
       var reportRegTorque = task?.reportRegTorque;
-      var reportRegTorqueData = ReportRegTorqueToBulk(taskId, reportRegTorque!);
+      var reportRegTorqueData = reportRegTorqueToBulk(taskId, reportRegTorque!);
       var responTorque = await ref
           .read(restServiceProvider)
           .createReportRegTorque(reportRegTorqueData);
@@ -157,7 +171,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
 
       //REPORT REGULER VERTICALITY
       var reportRegVerticality = task?.reportRegVerticality;
-      var data = ReportRegVerticalityToBulk(taskId, reportRegVerticality!);
+      var data = reportRegVerticalityToBulk(taskId, reportRegVerticality!);
       var responReg =
           await ref.read(restServiceProvider).createReportRegVerticality(data);
       debugPrint('responn Reguler : ${responReg.response.statusCode}');
@@ -219,20 +233,20 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     debugPrint('asset : ${asset.toString()}');
     await ref.read(localdataServiceProvider).updateAsset(asset);
     var localTasks = await ref.read(localdataServiceProvider).getAllTasks();
-    state = TasksLoaded(tasks: localTasks!);
+    state = TaskLoaded(tasks: localTasks!);
   }
 
   updateAssetsLocalTask(List<Asset> assets) async {
     state = TaskLoading();
     await ref.read(localdataServiceProvider).updateAssets(assets);
     var localTasks = await ref.read(localdataServiceProvider).getAllTasks();
-    state = TasksLoaded(tasks: localTasks!);
+    state = TaskLoaded(tasks: localTasks!);
   }
 
   getTaskById(int taskId) async {
     state = TaskLoading();
     var task = await ref.read(localdataServiceProvider).getTaskById(taskId);
-    state = TasksLoaded(tasks: [task!]);
+    state = TaskLoaded(tasks: [task!]);
   }
 
   updatePointChecklist(PointChecklistPreventive pointChecklist) async {
@@ -256,7 +270,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
         .saveReportVerticality(taskId, report);
   }
 
-  CategoryChecklistPreventiveToBulk(
+  categoryChecklistPreventiveToBulk(
       int idTask, List<CategoryChecklistPreventive> categoryChecklist) {
     var data = [];
     for (var element in categoryChecklist) {
@@ -275,7 +289,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     return bulk;
   }
 
-  ReportRegVerticalityToBulk(
+  reportRegVerticalityToBulk(
       int idTask, ReportRegVerticality reportRegVerticality) {
     var data = {
       "horizontalityAb": reportRegVerticality.horizontalityAb,
@@ -293,7 +307,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     return data;
   }
 
-  ReportRegTorqueToBulk(int idTask, List<ReportRegTorque> reportRegTorque) {
+  reportRegTorqueToBulk(int idTask, List<ReportRegTorque> reportRegTorque) {
     var data = [];
     for (var element in reportRegTorque) {
       var value = {
@@ -311,5 +325,17 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     var bulk = {"bulk": data};
     // debugPrint('bulk : $bulk');
     return bulk;
+  }
+
+  filterStatus(String status, List<Task> tasks) {
+    state = TaskLoading();
+    if (status == 'All') {
+      state = TaskLoaded(tasks: tasks);
+    } else {
+      List<Task> searchTask = tasks
+          .where((task) => task.status.toLowerCase() == (status.toLowerCase()))
+          .toList();
+      state = TaskLoaded(tasks: searchTask);
+    }
   }
 }
