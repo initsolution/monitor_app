@@ -69,7 +69,7 @@ class _TaskItemCardState extends ConsumerState<TaskItemCard> {
                         : const Icon(Icons.image))
                 : Center(
                     child: Image.network(
-                        '${urlRepo}/asset/getImage/${widget.asset.id}')),
+                        '$urlRepo/asset/getImage/${widget.asset.id}')),
           ),
         ),
         Container(

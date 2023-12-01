@@ -8,8 +8,8 @@ import 'package:monitor_app/constants/constants.dart';
 import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/controller/task_controller.dart';
 import 'package:monitor_app/model/asset.dart';
-
 import 'package:monitor_app/model/task.dart';
+import 'package:monitor_app/model/user_preferences.dart';
 import 'package:monitor_app/mstate/task_state.dart';
 import 'package:monitor_app/screen/camera_screen.dart';
 import 'package:monitor_app/screen/detail_task_screen.dart';
@@ -17,9 +17,6 @@ import 'package:monitor_app/screen/form_checklist_screen.dart';
 import 'package:monitor_app/screen/form_report_torque.dart';
 import 'package:monitor_app/screen/form_report_verticality.dart';
 import 'package:monitor_app/screen/temuan_screen.dart';
-
-import '../controller/auth_controller.dart';
-import '../mstate/auth_state.dart';
 
 class TaskScreen extends ConsumerStatefulWidget {
   static String routeName = 'task';
@@ -32,16 +29,12 @@ class TaskScreen extends ConsumerStatefulWidget {
 }
 
 class _TaskScreenState extends ConsumerState<TaskScreen> {
-  // ignore: prefer_typing_uninitialized_variables
-  // late AsyncValue<List<MasterAsset>> mAssetProv;
-
   List<String> header = [];
   List<dynamic> items = [];
   int current = 0;
   final CarouselController _controller = CarouselController();
   late Task task;
-  String? token;
-
+  late UserPreferences pref;
   bool infoVisible = true;
 
   @override
@@ -54,22 +47,12 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
     } else {
       task = widget.task;
     }
-    Future(() => ref.read(authControllerProvider.notifier).appStarted());
+    Future(() async =>
+        pref = await ref.read(preferenceManagerProvider).getUserData());
   }
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<AuthState>(
-      authControllerProvider,
-      (previous, next) {
-        if (next is AuthAuthorized) {
-          // _onLoginSuccess(context);
-          token = next.userdata.token;
-        } else if (next is AuthFailedWithError) {
-          // _onLoginError(context, next.message);
-        }
-      },
-    );
     ref.listen<TaskState>(
       taskControllerProvider,
       (previous, next) {
@@ -107,23 +90,11 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                 ? IconButton(
                     onPressed: () async {
                       // var task = ref.read(taskProvider.notifier).state;
-                      if (token != null) {
-                        ref
-                            .read(taskControllerProvider.notifier)
-                            .uploadTaskByTaskId(widget.task.id, token);
-                        progressDialogue();
-                        // for (var asset in task.assets!) {
-                        //   // debugPrint('element : ${element.description} , ${element.url}');
-                        //   var file = File(asset.url);
-                        //   ref.read(assetUrlProvider.notifier).state =
-                        //       file.path.split("/").last;
-                        //   await ref
-                        //       .read(assetControllerProvider.notifier)
-                        //       .uploadAsset(widget.taskId, asset, token);
-                        // }
-                        // dismissDialog();
-                        // debugPrint('done');
-                      }
+                      ref
+                          .read(taskControllerProvider.notifier)
+                          .uploadTaskByTaskId(
+                              taskId: widget.task.id, token: pref.token);
+                      progressDialogue();
                     },
                     icon: const Icon(Icons.upload),
                   )
@@ -140,13 +111,13 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   for (var asset in assets!) {
                     if (idx % 3 == 0) {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1699843714069.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1701424521575.jpg";
                     } else if (idx % 3 == 1) {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1699843719016.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1701424536402.jpg";
                     } else {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1699843714069.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1701424547460.jpg";
                     }
                     idx++;
                     await ref
@@ -185,29 +156,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                       : _buildReportTorqueAndVerticality(),
                   _buildAllRequirement(),
                 ],
-              )
-        // floatingActionButton: ElevatedButton.icon(
-        //   onPressed: () {
-        //     Navigator.of(context).push(MaterialPageRoute(
-        //       builder: (context) => const TemuanScreen(
-        //         section: '',
-        //       ),
-        //     ));
-        //   },
-        //   style: ElevatedButton.styleFrom(
-        //     elevation: 2,
-        //     backgroundColor: Colors.blue,
-        //   ),
-        //   icon: const Icon(
-        //     Icons.add,
-        //     color: Colors.white,
-        //   ), //icon data for elevated button
-        //   label: const Text(
-        //     "Temuan",
-        //     style: TextStyle(color: Colors.white),
-        //   ), //label text
-        // ),
-        );
+              ));
   }
 
   Widget _buildReportTorqueAndVerticality() {
@@ -520,20 +469,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
           color: const Color(0xFFEAEEF2),
           padding:
               const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
-          child: task.asset != null ? _buildCategoriesAsset() : Container()
-
-          // Consumer(
-          //   builder: (context, ref, child) {
-          //     if (state is TaskLoaded) {
-          //       return state.task.assets != null
-          //           ? _buildCategoriesAsset()
-          //           : Container();
-          //     } else {
-          //       return const Center(child: CircularProgressIndicator());
-          //     }
-          //   },
-          // ),
-          ),
+          child: task.asset != null ? _buildCategoriesAsset() : Container()),
     );
   }
 
@@ -558,58 +494,6 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
         }).toList(),
       ),
     );
-    // return Column(children: result.entries.map((e) {return }).toList());
-
-    // return ListView.separated(
-    //     itemBuilder: (context, index) {
-    //       if (result[index] is String) {
-    //         return result[index].toString().toUpperCase() != 'SECTION'
-    //             ? Text(result[index].toString().toUpperCase())
-    //             : Container();
-    //       } else {
-    //         return GestureDetector(
-    //           onTap: () async {
-    //             // for (var element
-    //             //     in result[result.keys.elementAt(index)]!) {
-    //             //   print(element.description);
-    //             // }
-    //             await Navigator.of(context)
-    //                 .push(
-    //                   MaterialPageRoute(
-    //                     builder: (context) => DetailTaskScreen(
-    //                       title:
-    //                           '${result[index].keys.elementAt(0)} (${(result[index][result[index].keys.elementAt(0)] as List).length})',
-    //                       // masterAsset: result[index]
-    //                       //     [result[index].keys.elementAt(0)]!,
-    //                       assets: result[index]
-    //                           [result[index].keys.elementAt(0)]!,
-    //                     ),
-    //                   ),
-    //                 )
-    //                 .then((_) async => await ref
-    //                     .read(taskControllerProvider.notifier)
-    //                     .getTaskById(widget.taskId));
-    //           },
-    //           child: Container(
-    //             padding: const EdgeInsets.all(20),
-    //             decoration: BoxDecoration(
-    //               color: result[index]
-    //                           .keys
-    //                           .elementAt(0)
-    //                           .toString()
-    //                           .toUpperCase() ==
-    //                       'TEMUAN'
-    //                   ? Colors.amber
-    //                   : Colors.white,
-    //               borderRadius: BorderRadius.circular(10),
-    //             ),
-    //             child: Text(result[index].keys.elementAt(0)),
-    //           ),
-    //         );
-    //       }
-    //     },
-    //     separatorBuilder: (context, index) => const SizedBox(height: 10),
-    //     itemCount: result.length);
   }
 
   progressDialogue() {

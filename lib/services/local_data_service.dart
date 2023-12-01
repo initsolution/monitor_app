@@ -85,6 +85,7 @@ class LocalDataService {
                         kriteria: mpoint.kriteria,
                         hasil: "NA",
                         orderIndex: idx,
+                        isChecklist: mpoint.isChecklist,
                       ))
                   .toList();
               return CategoryPointChecklistDB(
@@ -271,6 +272,7 @@ class LocalDataService {
         uraian: pointChecklist.uraian,
         hasil: pointChecklist.hasil,
         orderIndex: pointChecklist.orderIndex,
+        isChecklist: pointChecklist.isChecklist,
       );
       isarDB.writeTxnSync(
           () => isarDB.point_checklist.putSync(pointChecklistDB2));

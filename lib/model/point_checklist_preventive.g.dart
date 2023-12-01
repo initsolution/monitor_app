@@ -15,6 +15,7 @@ PointChecklistPreventive _$PointChecklistPreventiveFromJson(
       hasil: json['hasil'] as String,
       keterangan: json['keterangan'] as String?,
       orderIndex: json['orderIndex'] as int,
+      isChecklist: json['isChecklist'] as bool,
     );
 
 Map<String, dynamic> _$PointChecklistPreventiveToJson(
@@ -26,4 +27,5 @@ Map<String, dynamic> _$PointChecklistPreventiveToJson(
       'hasil': instance.hasil,
       'keterangan': instance.keterangan,
       'orderIndex': instance.orderIndex,
+      'isChecklist': instance.isChecklist,
     };

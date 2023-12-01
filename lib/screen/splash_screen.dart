@@ -22,11 +22,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   Widget build(BuildContext context) {
     ref.listen(authControllerProvider, (previous, next) {
       if (next is AuthAuthorized) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => HomeScreen(email: next.userdata.username),
-          ),
-        );
+        Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
       } else if (next is AuthUnauthorized) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(

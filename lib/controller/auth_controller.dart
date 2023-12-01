@@ -4,13 +4,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:monitor_app/constants/values.dart';
 import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/model/user_preferences.dart';
 
 import 'package:monitor_app/mstate/auth_state.dart';
-import 'package:monitor_app/controller/preferences_controller.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final authControllerProvider = NotifierProvider<AuthController, AuthState>(
   () => AuthController(),
@@ -29,13 +26,13 @@ class AuthController extends Notifier<AuthState> {
 
   Future<void> appStarted() async {
     state = AuthLoading();
-    final sharedPref = await SharedPreferences.getInstance();
-
-    var username = sharedPref.getString(StorageKeys.username) ?? '';
-    var token = sharedPref.getString(StorageKeys.token) ?? '';
-
-    if (username != '' && token != '') {
-      state = AuthAuthorized(userdata: UserPreferences(username, token));
+    UserPreferences pref =
+        await ref.read(preferenceManagerProvider).getUserData();
+    var email = pref.username;
+    var token = pref.token;
+    var esign = pref.esign;
+    if (email != '' && token != '') {
+      state = AuthAuthorized(userdata: UserPreferences(email, token, esign));
     } else {
       state = AuthUnauthorized();
     }
@@ -47,21 +44,17 @@ class AuthController extends Notifier<AuthState> {
     final httpResponse = await ref.read(authRepoProvider).login(body);
     debugPrint('${httpResponse.response.data['statusCode']}');
     if (httpResponse.response.data['statusCode'] == HttpStatus.accepted) {
-      var message = httpResponse.response.data['message'];
-      Map<String, dynamic> decodedToken =
-          JwtDecoder.decode(message)['employee'];
+      var token = httpResponse.response.data['message'];
+      Map<String, dynamic> decodedToken = JwtDecoder.decode(token)['employee'];
       String email = decodedToken['email'];
-
-      await ref.read(preferencesControllerProvider.notifier).setUserDataAsync(
-            username: email,
-            token: message,
-          );
-      state = AuthAuthorized(userdata: UserPreferences(email, message));
+      String esign = decodedToken['urlEsign'] ?? '';
+      await ref
+          .read(preferenceManagerProvider)
+          .setUserData(username: email, token: token, esign: esign);
+      state = AuthAuthorized(userdata: UserPreferences(email, token, esign));
     } else {
       state =
           AuthFailedWithError(message: httpResponse.response.data['message']);
     }
-
-    // state = AuthHttpResponse(response: httpResponse);
   }
 }

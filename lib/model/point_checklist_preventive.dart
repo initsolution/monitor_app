@@ -15,6 +15,7 @@ class PointChecklistPreventive {
   String hasil;
   String? keterangan;
   final int orderIndex;
+  bool isChecklist;
 
   PointChecklistPreventive({
     required this.id,
@@ -23,6 +24,7 @@ class PointChecklistPreventive {
     required this.hasil,
     this.keterangan,
     required this.orderIndex,
+    required this.isChecklist,
   });
 
   Map<String, dynamic> toJson() => _$PointChecklistPreventiveToJson(this);
@@ -36,6 +38,7 @@ class PointChecklistPreventive {
         hasil: pointDB.hasil,
         kriteria: pointDB.kriteria,
         orderIndex: pointDB.orderIndex,
+        isChecklist: pointDB.isChecklist,
       );
 
   @override

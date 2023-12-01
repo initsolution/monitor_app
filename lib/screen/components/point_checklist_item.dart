@@ -27,11 +27,15 @@ class _PointChecklistItemState extends ConsumerState<PointChecklistItem> {
   void initState() {
     pointChecklist = widget.pointChecklist;
     super.initState();
-    if (pointChecklist.hasil.toLowerCase() == 'ok') {
-      ckValue = ChecklistValue.ok;
-    } else if (pointChecklist.hasil.toLowerCase() == 'na') {
-      ckValue = ChecklistValue.na;
-    } else if (pointChecklist.hasil.toLowerCase() == 'notok') {
+    if (pointChecklist.isChecklist) {
+      if (pointChecklist.hasil.toLowerCase() == 'ok') {
+        ckValue = ChecklistValue.ok;
+      } else if (pointChecklist.hasil.toLowerCase() == 'na') {
+        ckValue = ChecklistValue.na;
+      } else if (pointChecklist.hasil.toLowerCase() == 'notok') {
+        ckValue = ChecklistValue.notok;
+      }
+    } else {
       ckValue = ChecklistValue.notok;
     }
     uraian = pointChecklist.uraian;
@@ -42,39 +46,64 @@ class _PointChecklistItemState extends ConsumerState<PointChecklistItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InkWell(
-            onTap: () => _displayUraianDialog(context),
-            child: Text(
-              pointChecklist.uraian,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+    if (pointChecklist.isChecklist) {
+      return Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            InkWell(
+              onTap: () => _displayUraianDialog(context),
+              child: Text(
+                pointChecklist.uraian,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          InkWell(
-            onTap: () => _displayKriteriaDialog(context),
-            child: Text(pointChecklist.kriteria ?? ""),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              buildChecklistButton(ChecklistValue.ok, "OK"),
-              buildChecklistButton(ChecklistValue.notok, "NOT OK"),
-              buildChecklistButton(ChecklistValue.na, "NA"),
-            ],
-          ),
-        ],
-      ),
-    );
+            const SizedBox(height: 10),
+            InkWell(
+              onTap: () => _displayKriteriaDialog(context),
+              child: Text(pointChecklist.kriteria ?? ""),
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                buildChecklistButton(ChecklistValue.ok, "OK"),
+                buildChecklistButton(ChecklistValue.notok, "NOT OK"),
+                buildChecklistButton(ChecklistValue.na, "NA"),
+              ],
+            ),
+          ],
+        ),
+      );
+    } else {
+      // SUB CATEGORY
+      return Container(
+        padding: const EdgeInsets.all(20),
+        color: const Color.fromARGB(255, 217, 228, 233),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            InkWell(
+              onTap: () => _displayUraianDialog(context),
+              child: Text(
+                pointChecklist.uraian,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(height: 10),
+            InkWell(
+              onTap: () => _displayKriteriaDialog(context),
+              child: Text(pointChecklist.kriteria ?? ""),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   Widget buildChecklistButton(ChecklistValue value, String text) {

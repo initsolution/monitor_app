@@ -29,8 +29,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _onLoginSuccess(BuildContext context) {
-    Navigator.of(context)
-        .pushReplacementNamed(HomeScreen.routeName, arguments: username);
+    Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
   }
 
   void _onLoginError(BuildContext context, String message) {

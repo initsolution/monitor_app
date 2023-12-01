@@ -39,10 +39,8 @@ import 'package:monitor_app/screen/task_screen.dart';
 Route<dynamic>? onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
     case 'home':
-      String email = settings.arguments as String;
       return PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            HomeScreen(email: email),
+        pageBuilder: (context, animation, secondaryAnimation) => const HomeScreen(),
         settings: RouteSettings(name: HomeScreen.routeName),
       );
     case 'task':

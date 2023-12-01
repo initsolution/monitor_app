@@ -2,9 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:monitor_app/constants/constants.dart';
 import 'package:monitor_app/controller/app_provider.dart';
-
+import 'package:monitor_app/model/account.dart';
+import 'package:monitor_app/model/user_preferences.dart';
+import 'package:monitor_app/screen/account_screen.dart';
 import 'package:monitor_app/screen/components/task_card.dart';
 import 'package:monitor_app/constants/strings.dart';
 import 'package:monitor_app/mstate/task_state.dart';
@@ -13,11 +16,7 @@ import 'package:monitor_app/screen/task_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   static String routeName = 'home';
-  final String email;
-  const HomeScreen({
-    Key? key,
-    required this.email,
-  }) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   HomeScreenState createState() => HomeScreenState();
@@ -25,7 +24,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class HomeScreenState extends ConsumerState<HomeScreen> {
   late DateTimeRange dateRange;
-
+  late UserPreferences pref;
   @override
   void initState() {
     super.initState();
@@ -33,11 +32,13 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
       start: DateTime.now().subtract(const Duration(days: 30)),
       end: DateTime.now(),
     );
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      debugPrint('HomeScreen initState : email ${widget.email}');
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      pref = await ref.read(preferenceManagerProvider).getUserData();
+
       ref.read(taskControllerProvider.notifier).getAllTasks(
-            email: widget.email,
+            email: pref.username,
             dateTimeRange: dateRange,
+            token: pref.token,
           );
     });
   }
@@ -52,9 +53,10 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
             .pushNamed(TaskScreen.routeName, arguments: newState.task)
             .then((_) => Future(
                 () => ref.read(taskControllerProvider.notifier).getAllTasks(
-                      email: widget.email,
+                      email: pref.username,
                       dateTimeRange: dateRange,
                       status: status,
+                      token: pref.token,
                     )));
       }
     });
@@ -66,6 +68,17 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           IconButton(
             onPressed: () async => _buildModalBottomSheet(),
             icon: const Icon(Icons.filter_alt_rounded),
+          ),
+          IconButton(
+            onPressed: () {
+              Account account = Account.fromMap(JwtDecoder.decode(pref.token)['employee']);
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => AccountScreen(account: account),
+                ),
+              );
+            },
+            icon: const Icon(Icons.account_circle_rounded),
           ),
         ],
       ),
@@ -112,12 +125,18 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                               await Navigator.of(context)
                                   .pushNamed(TaskScreen.routeName,
                                       arguments: state.tasks[index])
-                                  .then((_) => Future(() => ref
-                                      .read(taskControllerProvider.notifier)
-                                      .getAllTasks(
-                                          email: widget.email,
-                                          dateTimeRange: dateRange,
-                                          status: status)));
+                                  .then(
+                                    (_) => Future(
+                                      () => ref
+                                          .read(taskControllerProvider.notifier)
+                                          .getAllTasks(
+                                            email: pref.username,
+                                            dateTimeRange: dateRange,
+                                            status: status,
+                                            token: pref.token,
+                                          ),
+                                    ),
+                                  );
                             }
                           },
                         );
@@ -258,9 +277,10 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                   return InkWell(
                     onTap: () {
                       ref.read(taskControllerProvider.notifier).getAllTasks(
-                            email: widget.email,
+                            email: pref.username,
                             dateTimeRange: dateRange,
                             status: status,
+                            token: pref.token,
                           );
                     },
                     child: Container(
@@ -297,7 +317,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(width: 1, color: const Color.fromARGB(255, 187, 201, 230))),
+            border: Border.all(
+                width: 1, color: const Color.fromARGB(255, 187, 201, 230))),
         child: DropdownButton(
           underline: const SizedBox(),
           borderRadius: BorderRadius.circular(10),

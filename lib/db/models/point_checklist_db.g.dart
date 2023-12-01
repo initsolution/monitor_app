@@ -22,23 +22,28 @@ const PointChecklistDBSchema = CollectionSchema(
       name: r'hasil',
       type: IsarType.string,
     ),
-    r'keterangan': PropertySchema(
+    r'isChecklist': PropertySchema(
       id: 1,
+      name: r'isChecklist',
+      type: IsarType.bool,
+    ),
+    r'keterangan': PropertySchema(
+      id: 2,
       name: r'keterangan',
       type: IsarType.string,
     ),
     r'kriteria': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'kriteria',
       type: IsarType.string,
     ),
     r'orderIndex': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'orderIndex',
       type: IsarType.long,
     ),
     r'uraian': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'uraian',
       type: IsarType.string,
     )
@@ -87,10 +92,11 @@ void _pointChecklistDBSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.hasil);
-  writer.writeString(offsets[1], object.keterangan);
-  writer.writeString(offsets[2], object.kriteria);
-  writer.writeLong(offsets[3], object.orderIndex);
-  writer.writeString(offsets[4], object.uraian);
+  writer.writeBool(offsets[1], object.isChecklist);
+  writer.writeString(offsets[2], object.keterangan);
+  writer.writeString(offsets[3], object.kriteria);
+  writer.writeLong(offsets[4], object.orderIndex);
+  writer.writeString(offsets[5], object.uraian);
 }
 
 PointChecklistDB _pointChecklistDBDeserialize(
@@ -102,10 +108,11 @@ PointChecklistDB _pointChecklistDBDeserialize(
   final object = PointChecklistDB(
     hasil: reader.readString(offsets[0]),
     id: id,
-    keterangan: reader.readStringOrNull(offsets[1]),
-    kriteria: reader.readStringOrNull(offsets[2]),
-    orderIndex: reader.readLong(offsets[3]),
-    uraian: reader.readString(offsets[4]),
+    isChecklist: reader.readBool(offsets[1]),
+    keterangan: reader.readStringOrNull(offsets[2]),
+    kriteria: reader.readStringOrNull(offsets[3]),
+    orderIndex: reader.readLong(offsets[4]),
+    uraian: reader.readString(offsets[5]),
   );
   return object;
 }
@@ -120,12 +127,14 @@ P _pointChecklistDBDeserializeProp<P>(
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
-      return (reader.readLong(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 4:
+      return (reader.readLong(offset)) as P;
+    case 5:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -432,6 +441,16 @@ extension PointChecklistDBQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterFilterCondition>
+      isChecklistEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isChecklist',
+        value: value,
       ));
     });
   }
@@ -959,6 +978,20 @@ extension PointChecklistDBQuerySortBy
   }
 
   QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterSortBy>
+      sortByIsChecklist() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isChecklist', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterSortBy>
+      sortByIsChecklistDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isChecklist', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterSortBy>
       sortByKeterangan() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'keterangan', Sort.asc);
@@ -1044,6 +1077,20 @@ extension PointChecklistDBQuerySortThenBy
   }
 
   QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterSortBy>
+      thenByIsChecklist() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isChecklist', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterSortBy>
+      thenByIsChecklistDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isChecklist', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QAfterSortBy>
       thenByKeterangan() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'keterangan', Sort.asc);
@@ -1110,6 +1157,13 @@ extension PointChecklistDBQueryWhereDistinct
   }
 
   QueryBuilder<PointChecklistDB, PointChecklistDB, QDistinct>
+      distinctByIsChecklist() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isChecklist');
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, PointChecklistDB, QDistinct>
       distinctByKeterangan({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'keterangan', caseSensitive: caseSensitive);
@@ -1149,6 +1203,12 @@ extension PointChecklistDBQueryProperty
   QueryBuilder<PointChecklistDB, String, QQueryOperations> hasilProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'hasil');
+    });
+  }
+
+  QueryBuilder<PointChecklistDB, bool, QQueryOperations> isChecklistProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isChecklist');
     });
   }
 

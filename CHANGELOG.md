@@ -46,3 +46,5 @@
 # 13/11/2023
 - add location, long, lat
 - add filtering task by range date, and statusTask
+# 01/12/2023
+- add sub category point checklist berdasarkan isChecklist

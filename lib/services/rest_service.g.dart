@@ -21,12 +21,16 @@ class _RestService implements RestService {
   String? baseUrl;
 
   @override
-  Future<List<Task>> getAllTaskByNIK(Map<String, dynamic> queries) async {
+  Future<List<Task>> getAllTaskByNIK(
+    Map<String, dynamic> queries,
+    String token,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.addAll(queries);
-    final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
     final _result =
         await _dio.fetch<List<dynamic>>(_setStreamType<List<Task>>(Options(
       method: 'GET',
@@ -54,10 +58,12 @@ class _RestService implements RestService {
   Future<HttpResponse<dynamic>> updateTaskByTaskId(
     int id,
     dynamic task,
+    String token,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = task;
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
@@ -155,10 +161,14 @@ class _RestService implements RestService {
   }
 
   @override
-  Future<HttpResponse<dynamic>> createReportRegTorque(dynamic bulk) async {
+  Future<HttpResponse<dynamic>> createReportRegTorque(
+    dynamic bulk,
+    String token,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = bulk;
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
@@ -183,10 +193,14 @@ class _RestService implements RestService {
   }
 
   @override
-  Future<HttpResponse<dynamic>> createReportRegVerticality(dynamic bulk) async {
+  Future<HttpResponse<dynamic>> createReportRegVerticality(
+    dynamic bulk,
+    String token,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = bulk;
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
@@ -212,10 +226,13 @@ class _RestService implements RestService {
 
   @override
   Future<HttpResponse<dynamic>> createPointChecklistPreventive(
-      dynamic bulk) async {
+    dynamic bulk,
+    String token,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = bulk;
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
@@ -226,6 +243,74 @@ class _RestService implements RestService {
             .compose(
               _dio.options,
               '/categorychecklistpreventive/insertWithPoint',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<dynamic>> updateEmployeeWithFile(
+    String nik,
+    String? name,
+    String? email,
+    String? hp,
+    String? password,
+    List<int> file,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    if (name != null) {
+      _data.fields.add(MapEntry(
+        'name',
+        name,
+      ));
+    }
+    if (email != null) {
+      _data.fields.add(MapEntry(
+        'email',
+        email,
+      ));
+    }
+    if (hp != null) {
+      _data.fields.add(MapEntry(
+        'hp',
+        hp,
+      ));
+    }
+    if (password != null) {
+      _data.fields.add(MapEntry(
+        'password',
+        password,
+      ));
+    }
+    _data.files.add(MapEntry(
+        'file',
+        MultipartFile.fromBytes(
+          file,
+          filename: 'esign',
+          contentType: MediaType.parse('image/png'),
+        )));
+    final _result =
+        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
+      method: 'PATCH',
+      headers: _headers,
+      extra: _extra,
+      contentType: 'multipart/form-data',
+    )
+            .compose(
+              _dio.options,
+              '/employee/updateWithFile/${nik}',
               queryParameters: queryParameters,
               data: _data,
             )

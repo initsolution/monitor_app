@@ -13,6 +13,7 @@ class PointChecklistDB {
   late String hasil;
   late String? keterangan;
   late int orderIndex;
+  late bool isChecklist;
 
   PointChecklistDB({
     this.id,
@@ -21,5 +22,6 @@ class PointChecklistDB {
     required this.hasil,
     this.keterangan,
     required this.orderIndex,
+    required this.isChecklist,
   });
 }

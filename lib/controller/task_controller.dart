@@ -36,7 +36,8 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
   getAllTasks(
       {required String email,
       required DateTimeRange dateTimeRange,
-      String? status}) async {
+      String? status,
+      required String token}) async {
     state = TaskLoading();
 
     var filters = [
@@ -52,6 +53,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     try {
       var queries = {
         "filter": filters,
+        "sort":"created_at,ASC",
         "join": [
           "site",
           "makerEmployee",
@@ -66,7 +68,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
       debugPrint(filters.toString());
       // bandingkan tasks yang didapat dengan db local isar
       final tasks =
-          await ref.read(restServiceProvider).getAllTaskByNIK(queries);
+          await ref.read(restServiceProvider).getAllTaskByNIK(queries, token);
 
       for (var task in tasks) {
         debugPrint('rest task : (${task.id}) : ${task.verifierEmployee.nik}');
@@ -129,7 +131,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     state = PrepareTaskSuccess(task: result!);
   }
 
-  uploadTaskByTaskId(int taskId, token) async {
+  uploadTaskByTaskId({required int taskId, required String token}) async {
     state = TaskLoading();
     var task = await ref.read(localdataServiceProvider).getTaskById(taskId);
     var localTask =
@@ -154,7 +156,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
           categoryChecklistPreventiveToBulk(taskId, categoriesChecklist!);
       var respon = await ref
           .read(restServiceProvider)
-          .createPointChecklistPreventive(data);
+          .createPointChecklistPreventive(data, token);
       debugPrint('respon Preventive : ${respon.response.statusCode}');
     } else if (task?.type == "Reguler") {
       //REPORT REGULER TORQUE
@@ -162,7 +164,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
       var reportRegTorqueData = reportRegTorqueToBulk(taskId, reportRegTorque!);
       var responTorque = await ref
           .read(restServiceProvider)
-          .createReportRegTorque(reportRegTorqueData);
+          .createReportRegTorque(reportRegTorqueData, token);
       debugPrint('responTorque : ${responTorque.response.statusCode}');
       if (responTorque.response.statusCode != 201) {
         //gagall
@@ -172,8 +174,9 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
       //REPORT REGULER VERTICALITY
       var reportRegVerticality = task?.reportRegVerticality;
       var data = reportRegVerticalityToBulk(taskId, reportRegVerticality!);
-      var responReg =
-          await ref.read(restServiceProvider).createReportRegVerticality(data);
+      var responReg = await ref
+          .read(restServiceProvider)
+          .createReportRegVerticality(data, token);
       debugPrint('responn Reguler : ${responReg.response.statusCode}');
     }
 
@@ -189,7 +192,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     };
     var responTask = await ref
         .read(restServiceProvider)
-        .updateTaskByTaskId(taskId, updateTask);
+        .updateTaskByTaskId(taskId, updateTask, token);
     debugPrint('respon Task : ${responTask.response.statusCode}');
 
     //delete localtask
