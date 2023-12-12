@@ -31,7 +31,8 @@ abstract class RestService {
       @Part(name: 'taskId') int taskId,
       @Part(contentType: 'image/jpg', fileName: 'asset', name: 'file')
       List<int> file,
-      @Header('Authorization') String token);
+      @Header('Authorization') String token,
+      @Header('task-id') int taskIdHeader);
 
   @POST('/reportregulertorque/bulk')
   Future<HttpResponse> createReportRegTorque(

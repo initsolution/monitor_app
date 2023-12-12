@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monitor_app/controller/task_controller.dart';
@@ -55,7 +56,7 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
   void initState() {
     super.initState();
     debugPrint('reports ${widget.task.status}');
-    debugPrint('reports ${widget.task.reportRegVerticality}');
+    debugPrint('reports ${widget.task.reportRegVerticality.toString()}');
     if (widget.task.reportRegVerticality == null) {
       theodoliteValue = theodoliteItems[0];
       theodoliteValue2 = theodoliteItems[0];
@@ -68,6 +69,14 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
         valueT2Con.add(TextEditingController());
       }
     } else {
+      var verticality = widget.task.reportRegVerticality!.valueVerticality!
+        ..sort((a, b) {
+          if (a.theodoliteIndex != b.theodoliteIndex) {
+            return a.theodoliteIndex.compareTo(b.theodoliteIndex);
+          } else {
+            return a.section.compareTo(b.section);
+          }
+        });
       theodoliteValue = widget.task.reportRegVerticality!.theodolite1;
       theodoliteValue2 = widget.task.reportRegVerticality!.theodolite2;
       setSelectedIndexTheodolite(theodoliteValue);
@@ -643,27 +652,7 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(width: 50, child: Text('    ${i + 1}')),
-                SizedBox(
-                  width: 60,
-                  child: DropdownButton(
-                    value: miringKe[i],
-                    icon: const Icon(Icons.arrow_drop_down),
-                    elevation: 5,
-                    iconSize: 24,
-                    items: miringKeItem
-                        .map<DropdownMenuItem<String>>(
-                            (value) => DropdownMenuItem(
-                                  value: value,
-                                  child: Text(value),
-                                ))
-                        .toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        miringKe[i] = value!;
-                      });
-                    },
-                  ),
-                ),
+                _dropdown(i),
                 SizedBox(
                   width: 50,
                   child: TextField(
@@ -772,6 +761,31 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
               ],
             ),
         ],
+      ),
+    );
+  }
+
+  SizedBox _dropdown(int i) {
+    // debugPrint(
+    //     "miringke : ${miringKe[i]} miringKeItem : ${miringKeItem.toString()}");
+    return SizedBox(
+      width: 60,
+      child: DropdownButton(
+        value: miringKe[i],
+        icon: const Icon(Icons.arrow_drop_down),
+        elevation: 5,
+        iconSize: 24,
+        items: miringKeItem
+            .map<DropdownMenuItem<String>>((value) => DropdownMenuItem(
+                  value: value,
+                  child: Text(value),
+                ))
+            .toList(),
+        onChanged: (value) {
+          setState(() {
+            miringKe[i] = value!;
+          });
+        },
       ),
     );
   }

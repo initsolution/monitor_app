@@ -8,7 +8,6 @@ import 'package:monitor_app/constants/strings.dart';
 import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/controller/esign_controller.dart';
 import 'package:monitor_app/model/account.dart';
-import 'package:monitor_app/model/user_preferences.dart';
 import 'package:monitor_app/mstate/esign_state.dart';
 import 'package:monitor_app/screen/login_screen.dart';
 
@@ -40,7 +39,12 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
         title: const Text(titleAccountScreen),
         actions: [
           IconButton(
-            onPressed: () async => _logout(),
+            onPressed: () async => showDialog(
+              context: context,
+              builder: (context) {
+                return _showDialoglogout();
+              },
+            ),
             icon: const Icon(Icons.logout_rounded),
           ),
         ],
@@ -286,5 +290,18 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
           builder: (context) => const LoginScreen(),
         ),
         (route) => false);
+  }
+
+  _showDialoglogout() {
+    return AlertDialog(
+      actionsAlignment: MainAxisAlignment.spaceBetween,
+      actions: [
+        TextButton(onPressed: () => _logout(), child: const Text('Ya')),
+        TextButton(
+            onPressed: () => Navigator.pop(context), child: const Text('Tidak'))
+      ],
+      title: const Text('Keluar Aplikasi'),
+      content: const Text('Apakah Anda yakin ingin keluar dari aplikasi?'),
+    );
   }
 }

@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously
 
 import 'dart:io';
 
@@ -56,10 +56,11 @@ class _CameraScreenState extends State<CameraScreen>
       setState(() {
         _isCameraPermissionGranted = true;
       });
-      _getCurrentPosition();
-      // Set and initialize the new camera
-      onNewCameraSelected(widget.cameras[0]);
-      refreshAlreadyCapturedImages();
+      _getCurrentPosition().then((value) {
+        // Set and initialize the new camera
+        onNewCameraSelected(widget.cameras[0]);
+        refreshAlreadyCapturedImages();
+      });
     } else {
       debugPrint('Camera Permission: DENIED');
     }
@@ -506,7 +507,8 @@ class _CameraScreenState extends State<CameraScreen>
                                           await captureDrawImageInfo(
                                               imageFile,
                                               '${directory.path}/$currentUnix.$fileFormat',
-                                              _currentPosition,_currentAddress);
+                                              _currentPosition,
+                                              _currentAddress);
                                           // await imageFile.copy(
                                           //   '${directory.path}/$currentUnix.$fileFormat',
                                           // );

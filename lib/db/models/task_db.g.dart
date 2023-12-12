@@ -22,28 +22,33 @@ const TaskDBSchema = CollectionSchema(
       name: r'createdDate',
       type: IsarType.string,
     ),
-    r'idTask': PropertySchema(
+    r'dueDate': PropertySchema(
       id: 1,
+      name: r'dueDate',
+      type: IsarType.string,
+    ),
+    r'idTask': PropertySchema(
+      id: 2,
       name: r'idTask',
       type: IsarType.long,
     ),
     r'status': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'status',
       type: IsarType.string,
     ),
     r'submitedDate': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'submitedDate',
       type: IsarType.string,
     ),
     r'type': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'type',
       type: IsarType.string,
     ),
     r'verifiedDate': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'verifiedDate',
       type: IsarType.string,
     )
@@ -120,6 +125,12 @@ int _taskDBEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.createdDate.length * 3;
+  {
+    final value = object.dueDate;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.status.length * 3;
   {
     final value = object.submitedDate;
@@ -144,11 +155,12 @@ void _taskDBSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.createdDate);
-  writer.writeLong(offsets[1], object.idTask);
-  writer.writeString(offsets[2], object.status);
-  writer.writeString(offsets[3], object.submitedDate);
-  writer.writeString(offsets[4], object.type);
-  writer.writeString(offsets[5], object.verifiedDate);
+  writer.writeString(offsets[1], object.dueDate);
+  writer.writeLong(offsets[2], object.idTask);
+  writer.writeString(offsets[3], object.status);
+  writer.writeString(offsets[4], object.submitedDate);
+  writer.writeString(offsets[5], object.type);
+  writer.writeString(offsets[6], object.verifiedDate);
 }
 
 TaskDB _taskDBDeserialize(
@@ -159,12 +171,13 @@ TaskDB _taskDBDeserialize(
 ) {
   final object = TaskDB();
   object.createdDate = reader.readString(offsets[0]);
+  object.dueDate = reader.readStringOrNull(offsets[1]);
   object.id = id;
-  object.idTask = reader.readLong(offsets[1]);
-  object.status = reader.readString(offsets[2]);
-  object.submitedDate = reader.readStringOrNull(offsets[3]);
-  object.type = reader.readString(offsets[4]);
-  object.verifiedDate = reader.readStringOrNull(offsets[5]);
+  object.idTask = reader.readLong(offsets[2]);
+  object.status = reader.readString(offsets[3]);
+  object.submitedDate = reader.readStringOrNull(offsets[4]);
+  object.type = reader.readString(offsets[5]);
+  object.verifiedDate = reader.readStringOrNull(offsets[6]);
   return object;
 }
 
@@ -178,14 +191,16 @@ P _taskDBDeserializeProp<P>(
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
-      return (reader.readLong(offset)) as P;
-    case 2:
-      return (reader.readString(offset)) as P;
-    case 3:
       return (reader.readStringOrNull(offset)) as P;
-    case 4:
+    case 2:
+      return (reader.readLong(offset)) as P;
+    case 3:
       return (reader.readString(offset)) as P;
+    case 4:
+      return (reader.readStringOrNull(offset)) as P;
     case 5:
+      return (reader.readString(offset)) as P;
+    case 6:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -575,6 +590,152 @@ extension TaskDBQueryFilter on QueryBuilder<TaskDB, TaskDB, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'createdDate',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> dueDateIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'dueDate',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> dueDateIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'dueDate',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> dueDateEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'dueDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> dueDateGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'dueDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> dueDateLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'dueDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> dueDateBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'dueDate',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> dueDateStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'dueDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> dueDateEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'dueDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> dueDateContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'dueDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> dueDateMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'dueDate',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> dueDateIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'dueDate',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> dueDateIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'dueDate',
         value: '',
       ));
     });
@@ -1470,6 +1631,18 @@ extension TaskDBQuerySortBy on QueryBuilder<TaskDB, TaskDB, QSortBy> {
     });
   }
 
+  QueryBuilder<TaskDB, TaskDB, QAfterSortBy> sortByDueDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'dueDate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterSortBy> sortByDueDateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'dueDate', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskDB, TaskDB, QAfterSortBy> sortByIdTask() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'idTask', Sort.asc);
@@ -1541,6 +1714,18 @@ extension TaskDBQuerySortThenBy on QueryBuilder<TaskDB, TaskDB, QSortThenBy> {
   QueryBuilder<TaskDB, TaskDB, QAfterSortBy> thenByCreatedDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdDate', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterSortBy> thenByDueDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'dueDate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterSortBy> thenByDueDateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'dueDate', Sort.desc);
     });
   }
 
@@ -1625,6 +1810,13 @@ extension TaskDBQueryWhereDistinct on QueryBuilder<TaskDB, TaskDB, QDistinct> {
     });
   }
 
+  QueryBuilder<TaskDB, TaskDB, QDistinct> distinctByDueDate(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'dueDate', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<TaskDB, TaskDB, QDistinct> distinctByIdTask() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'idTask');
@@ -1670,6 +1862,12 @@ extension TaskDBQueryProperty on QueryBuilder<TaskDB, TaskDB, QQueryProperty> {
   QueryBuilder<TaskDB, String, QQueryOperations> createdDateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createdDate');
+    });
+  }
+
+  QueryBuilder<TaskDB, String?, QQueryOperations> dueDateProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'dueDate');
     });
   }
 

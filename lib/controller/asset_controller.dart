@@ -37,9 +37,10 @@ class AssetController extends AutoDisposeNotifier<AssetState> {
         asset.orderIndex,
         idTask,
         imageBytes,
-        token);
+        token,
+        idTask);
 
-    print('res : $response');
+    // print('res : $response');
     // final response =
     //     await ref.read(restServiceProvider).createAsset(idTask, asset, token);
     // if (response.response.statusCode == 201) {
@@ -49,8 +50,9 @@ class AssetController extends AutoDisposeNotifier<AssetState> {
 
   getAllTemuanByTaskId(int taskId, String section) async {
     state = AssetLoading();
-    var temuan =
-        await ref.read(localdataServiceProvider).getAllTemuanByTaskId(taskId, section);
+    var temuan = await ref
+        .read(localdataServiceProvider)
+        .getAllTemuanByTaskId(taskId, section);
     state = AssetLoaded(assets: temuan);
   }
 

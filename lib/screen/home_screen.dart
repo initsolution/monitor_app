@@ -71,7 +71,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           ),
           IconButton(
             onPressed: () {
-              Account account = Account.fromMap(JwtDecoder.decode(pref.token)['employee']);
+              Account account =
+                  Account.fromMap(JwtDecoder.decode(pref.token)['employee']);
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => AccountScreen(account: account),
@@ -102,56 +103,61 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
       children: [
         // _buildSortAndFilter(),
         Expanded(
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            color: const Color(0xFFEAEEF2),
-            child: Consumer(
-              builder: (context, ref, child) {
-                // debugPrint(state.toString());
-                if (state is TaskLoaded) {
-                  if (state.tasks.isEmpty) {
-                    return const Center(child: Text('No Task'));
+          child: RefreshIndicator(
+            onRefresh: () async {
+              Future(
+                () => ref.read(taskControllerProvider.notifier).getAllTasks(
+                      email: pref.username,
+                      dateTimeRange: dateRange,
+                      status: status,
+                      token: pref.token,
+                    ),
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              color: const Color(0xFFEAEEF2),
+              child: Consumer(
+                builder: (context, ref, child) {
+                  // debugPrint(state.toString());
+                  if (state is TaskLoaded) {
+                    if (state.tasks.isEmpty) {
+                      return const Center(child: Text('No Task'));
+                    } else {
+                      return ListView.separated(
+                        itemBuilder: (context, index) {
+                          return TaskCard(
+                            task: state.tasks[index],
+                            onSelectTask: () async {
+                              if (state.tasks[index].status == STATUS_TODO) {
+                                ref
+                                    .read(taskControllerProvider.notifier)
+                                    .isTaskFoundInLocal(
+                                        task: state.tasks[index]);
+                                ref.read(isEditableChecklist.notifier).state =
+                                    true;
+                              } else {
+                                ref
+                                    .read(taskControllerProvider.notifier)
+                                    .sortTaskByRest(task: state.tasks[index]);
+                                ref.read(isEditableChecklist.notifier).state =
+                                    false;
+                              }
+                            },
+                          );
+                        },
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 10),
+                        itemCount: state.tasks.length,
+                      );
+                    }
+                  } else if (state is TaskLoadedWithError) {
+                    return Center(child: Text(state.message));
                   } else {
-                    return ListView.separated(
-                      itemBuilder: (context, index) {
-                        return TaskCard(
-                          task: state.tasks[index],
-                          onSelectTask: () async {
-                            if (state.tasks[index].status == STATUS_TODO) {
-                              ref
-                                  .read(taskControllerProvider.notifier)
-                                  .isTaskFoundInLocal(task: state.tasks[index]);
-                            } else {
-                              await Navigator.of(context)
-                                  .pushNamed(TaskScreen.routeName,
-                                      arguments: state.tasks[index])
-                                  .then(
-                                    (_) => Future(
-                                      () => ref
-                                          .read(taskControllerProvider.notifier)
-                                          .getAllTasks(
-                                            email: pref.username,
-                                            dateTimeRange: dateRange,
-                                            status: status,
-                                            token: pref.token,
-                                          ),
-                                    ),
-                                  );
-                            }
-                          },
-                        );
-                      },
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 10),
-                      itemCount: state.tasks.length,
-                    );
+                    return const Center(child: CircularProgressIndicator());
                   }
-                } else if (state is TaskLoadedWithError) {
-                  return Center(child: Text(state.message));
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              },
+                },
+              ),
             ),
           ),
         ),

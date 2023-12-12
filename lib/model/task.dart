@@ -1,5 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 // ignore_for_file: depend_on_referenced_packages
+import 'package:collection/collection.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:monitor_app/db/models/task_db.dart';
@@ -21,7 +22,8 @@ class Task {
   final String type;
   final Site site;
   final Employee verifierEmployee;
-  final String createdDate;
+  final String created_at;
+  final String? dueDate;
   late String? submitedDate;
   final String? verifiedDate;
   late String status;
@@ -41,7 +43,8 @@ class Task {
     required this.type,
     required this.site,
     required this.verifierEmployee,
-    required this.createdDate,
+    required this.created_at,
+    this.dueDate,
     this.submitedDate,
     this.verifiedDate,
     required this.status,
@@ -81,7 +84,8 @@ class Task {
           taskDB.verifierEmployee.value!.urlEsign,
           taskDB.verifierEmployee.value!.instansi,
         ),
-        createdDate: taskDB.createdDate,
+        created_at: taskDB.createdDate,
+        dueDate: taskDB.dueDate,
         submitedDate: taskDB.submitedDate,
         verifiedDate: taskDB.verifiedDate,
         status: taskDB.status,
@@ -97,9 +101,9 @@ class Task {
             .toList()
           ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex)),
         reportRegTorque: taskDB.reportTorque
+            .sorted((a, b) => a.orderIndex!.compareTo(b.orderIndex!))
             .map((torque) => ReportRegTorque.fromReportRegTorqueDB(torque))
-            .toList()
-          ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex)),
+            .toList(),
         reportRegVerticality: taskDB.reportVerticality.value != null
             ? ReportRegVerticality.fromReportRegVerticalityDB(
                 taskDB.reportVerticality.value!)

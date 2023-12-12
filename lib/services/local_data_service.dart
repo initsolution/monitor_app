@@ -43,14 +43,14 @@ class LocalDataService {
     var masterasset = task.masterAsset!.map((e) => e).toList()
       ..sort((a, b) => a.id.compareTo(b.id));
     final assetsDB = masterasset.mapIndexed((idx, masterAsset) {
-          return AssetsDB(
-            section: masterAsset.section,
-            category: masterAsset.category,
-            description: masterAsset.description,
-            url: "-",
-            orderIndex: idx,
-          );
-        }).toList();
+      return AssetsDB(
+        section: masterAsset.section,
+        category: masterAsset.category,
+        description: masterAsset.description,
+        url: "-",
+        orderIndex: idx,
+      );
+    }).toList();
     // var assetsDB;
     // if (task.status == STATUS_TODO) {
     //   assetsDB = task.masterAsset?.mapIndexed((idx, masterAsset) {
@@ -77,8 +77,13 @@ class LocalDataService {
     //       [];
     // }
     int index = 0;
+    task.masterChecklist?.sort(
+      (a, b) => a.id.compareTo(b.id),
+    );
     final categoryPointChecklistDB =
         task.masterChecklist?.map((masterChecklist) {
+              masterChecklist.mpointchecklistpreventive
+                  .sort((a, b) => a.id.compareTo(b.id));
               final mChecklistDB = masterChecklist.mpointchecklistpreventive
                   .mapIndexed((idx, mpoint) => PointChecklistDB(
                         uraian: mpoint.uraian,
@@ -95,12 +100,13 @@ class LocalDataService {
             }).toList() ??
             [];
 
-    index = 0;
-    final reportRegTorqueDB = task.masterReportRegTorque
-            ?.map((torque) =>
-                getReportTorqueDBFromMasterReportTorque(torque, index++))
-            .toList() ??
-        [];
+    final List<ReportRegTorqueDB> reportRegTorqueDB =
+        task.masterReportRegTorque != null
+            ? task.masterReportRegTorque!.mapIndexed((idx, torque) {
+                debugPrint('$idx ${torque.toString()}');
+                return getReportTorqueDBFromMasterReportTorque(torque, idx);
+              }).toList()
+            : [];
 
     final reportRegVerticalityDB = task.reportRegVerticality != null
         ? getReportRegVerticalityDBFromReportRegVerticality(
@@ -114,7 +120,7 @@ class LocalDataService {
       ..type = task.type
       ..site.value = siteDB
       ..verifierEmployee.value = employeeDB
-      ..createdDate = task.createdDate
+      ..createdDate = task.created_at
       ..submitedDate = task.submitedDate
       ..verifiedDate = task.verifiedDate
       ..status = task.status
@@ -123,6 +129,7 @@ class LocalDataService {
       ..reportTorque.addAll(reportRegTorqueDB)
       ..reportVerticality.value = reportRegVerticalityDB;
 
+    // taskDB.categoriesChecklist.sortedBy((element) => ),
     isarDB.writeTxnSync(() => isarDB.tasks.putSync(taskDB));
     return task;
   }

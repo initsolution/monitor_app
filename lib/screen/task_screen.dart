@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monitor_app/constants/constants.dart';
 import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/controller/task_controller.dart';
+import 'package:monitor_app/helpers/format_helper.dart';
 import 'package:monitor_app/model/asset.dart';
 import 'package:monitor_app/model/task.dart';
 import 'package:monitor_app/model/user_preferences.dart';
@@ -111,19 +112,20 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   for (var asset in assets!) {
                     if (idx % 3 == 0) {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1701424521575.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1702093868183.jpg";
                     } else if (idx % 3 == 1) {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1701424536402.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1702093879045.jpg";
                     } else {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1701424547460.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1702093889429.jpg";
                     }
                     idx++;
                     await ref
                         .read(taskControllerProvider.notifier)
                         .updateAssetLocalTask(asset);
                   }
+                  await ref.read(taskControllerProvider.notifier).getTaskById(widget.task.id);
                 },
                 icon: const Icon(Icons.update),
               ),
@@ -453,7 +455,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   style: const TextStyle(color: Colors.white)),
               Text('Tenant : ${task.site.tenants}',
                   style: const TextStyle(color: Colors.white)),
-              Text('Created Date : ${task.createdDate}',
+              Text('Created Date : ${formatTanggalIndonesia(task.created_at, 2) }',
                   style: const TextStyle(color: Colors.white)),
             ],
           ),

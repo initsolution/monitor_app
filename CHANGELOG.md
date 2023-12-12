@@ -48,3 +48,9 @@
 - add filtering task by range date, and statusTask
 # 01/12/2023
 - add sub category point checklist berdasarkan isChecklist
+# 02/12/2023
+- change flow camera permission
+- add logout dialog
+- show default pointchecklist "NA"
+# 12/12/2023
+- sorting preventive and reguler task : all status

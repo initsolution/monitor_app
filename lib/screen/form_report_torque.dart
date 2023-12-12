@@ -21,7 +21,14 @@ class _FormReportTorqueState extends ConsumerState<FormReportTorque> {
   void initState() {
     super.initState();
     controllers = [];
-    reports = widget.task.reportRegTorque;
+    if (widget.task.reportRegTorque != null) {
+      reports = widget.task.reportRegTorque!
+        ..sort(
+          (a, b) => a.orderIndex.compareTo(b.orderIndex),
+        );
+    } else {
+      reports = null;
+    }
   }
 
   @override

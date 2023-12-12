@@ -53,7 +53,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     try {
       var queries = {
         "filter": filters,
-        "sort":"created_at,ASC",
+        "sort": "created_at,ASC",
         "join": [
           "site",
           "makerEmployee",
@@ -131,9 +131,40 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     state = PrepareTaskSuccess(task: result!);
   }
 
+  sortTaskByRest({required Task task}) async {
+    if (task.asset != null) {
+      task.asset!.sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
+    }
+    if (task.categoriesChecklist != null) {
+      task.categoriesChecklist!
+          .sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
+    }
+    if (task.categoriesChecklist != null) {
+      task.categoriesChecklist
+          ?.forEach((categories) => categories.points?.sort((a, b) {
+                return a.orderIndex.compareTo(b.orderIndex);
+              }));
+    }
+    if (task.reportRegTorque != null) {
+      task.reportRegTorque?.sort((a, b) => a.id.compareTo(b.id));
+    }
+    if (task.reportRegVerticality != null) {
+      task.reportRegVerticality?.valueVerticality?.sort((a, b) {
+        if (a.theodoliteIndex != b.theodoliteIndex) {
+          return a.theodoliteIndex.compareTo(b.theodoliteIndex);
+        } else {
+          return a.section.compareTo(b.section);
+        }
+      });
+    }
+    state = PrepareTaskSuccess(task: task);
+  }
+
   uploadTaskByTaskId({required int taskId, required String token}) async {
     state = TaskLoading();
     var task = await ref.read(localdataServiceProvider).getTaskById(taskId);
+    // _checkAllResourcesComplete(task);
+
     var localTask =
         await ref.read(localdataServiceProvider).getTaskDBById(taskId);
     //UPLOAD ASSET
@@ -232,19 +263,19 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
   }
 
   updateAssetLocalTask(Asset asset) async {
-    state = TaskLoading();
+    // state = TaskLoading();
     debugPrint('asset : ${asset.toString()}');
     await ref.read(localdataServiceProvider).updateAsset(asset);
-    var localTasks = await ref.read(localdataServiceProvider).getAllTasks();
-    state = TaskLoaded(tasks: localTasks!);
+    // var localTasks = await ref.read(localdataServiceProvider).getAllTasks();
+    // state = TaskLoaded(tasks: localTasks!);
   }
 
-  updateAssetsLocalTask(List<Asset> assets) async {
-    state = TaskLoading();
-    await ref.read(localdataServiceProvider).updateAssets(assets);
-    var localTasks = await ref.read(localdataServiceProvider).getAllTasks();
-    state = TaskLoaded(tasks: localTasks!);
-  }
+  // updateAssetsLocalTask(List<Asset> assets) async {
+  //   state = TaskLoading();
+  //   await ref.read(localdataServiceProvider).updateAssets(assets);
+  //   var localTasks = await ref.read(localdataServiceProvider).getAllTasks();
+  //   state = TaskLoaded(tasks: localTasks!);
+  // }
 
   getTaskById(int taskId) async {
     state = TaskLoading();
@@ -282,10 +313,13 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
         "keterangan": element.keterangan,
         "orderIndex": element.orderIndex,
         "task": {"id": idTask},
-        "pointChecklistPreventives":
-            element.points!.map((e) => e.toJson()).toList()
+        "pointChecklistPreventives": element.points!.map((e) {
+          debugPrint(' point : ${e.uraian}');
+          return e.toJson();
+        }).toList()
       };
       data.add(value);
+      debugPrint('jumlah point : ${element.points?.length}');
     }
     var bulk = {"bulk": data};
     // debugPrint('bulk : $bulk');
@@ -341,4 +375,14 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
       state = TaskLoaded(tasks: searchTask);
     }
   }
+
+  // bool _checkAllResourcesComplete(Task? task) {
+  //   if (task != null) {
+  //     if (task.type == "preventive") {
+  //       task.categoriesChecklist?.map((item) => item.points?.map((poin) => poin.hasil));
+  //     }
+  //   }
+
+  //   return false;
+  // }
 }

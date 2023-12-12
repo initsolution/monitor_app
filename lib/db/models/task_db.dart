@@ -21,6 +21,7 @@ class TaskDB {
   final verifierEmployee = IsarLink<EmployeeDB>();
 
   late String createdDate;
+  String? dueDate;
   String? submitedDate;
   String? verifiedDate;
   late String status;

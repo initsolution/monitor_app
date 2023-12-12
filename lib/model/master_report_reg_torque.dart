@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:json_annotation/json_annotation.dart';
@@ -28,4 +29,9 @@ class MasterReportRegTorque {
 
   Map<String, dynamic> toJson() => _$MasterReportRegTorqueToJson(this);
   factory MasterReportRegTorque.fromJson(Map<String, dynamic> json) => _$MasterReportRegTorqueFromJson(json);
+
+  @override
+  String toString() {
+    return 'MasterReportRegTorque(id: $id, fabricator: $fabricator, towerHeight: $towerHeight, towerSegment: $towerSegment, elevasi: $elevasi, boltSize: $boltSize, minimumTorque: $minimumTorque, qtyBolt: $qtyBolt)';
+  }
 }

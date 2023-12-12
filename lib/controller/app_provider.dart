@@ -11,7 +11,7 @@ final authRepoProvider = Provider((ref) => AuthRepository(Dio()));
 final preferenceManagerProvider = Provider((ref) => SPrefController());
 final restServiceProvider = Provider((ref) => RestService(Dio()));
 final localdataServiceProvider = Provider((ref) => LocalDataService());
-
+final isEditableChecklist = StateProvider((ref) => true);
 final assetUrlProvider = StateProvider((ref) => '');
 
 final statusTaskProvider = StateProvider<String>((ref) => 'All');

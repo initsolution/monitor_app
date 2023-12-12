@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:monitor_app/constants/enum.dart';
+import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/controller/task_controller.dart';
 import 'package:monitor_app/model/point_checklist_preventive.dart';
 
@@ -107,36 +108,46 @@ class _PointChecklistItemState extends ConsumerState<PointChecklistItem> {
   }
 
   Widget buildChecklistButton(ChecklistValue value, String text) {
-    return OutlinedButton(
-      onPressed: () {
-        pointChecklist.hasil = value.name;
-        ref
-            .read(taskControllerProvider.notifier)
-            .updatePointChecklist(pointChecklist);
-        setState(() {
-          ckValue = value;
-        });
-      },
-      style: OutlinedButton.styleFrom(
-        minimumSize: const Size(100, 40),
-        backgroundColor: (pointChecklist.hasil == value.name)
-            ? Colors.lightBlueAccent
-            : Colors.transparent,
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        side: BorderSide(
-            width: 1.5,
-            color: (pointChecklist.hasil == value.name)
+    // debugPrint("checkButton : ${pointChecklist.hasil} = ${value.name}");
+    return Consumer(
+      builder: (context, ref, child) {
+        bool isEditable = ref.watch(isEditableChecklist);
+
+        return OutlinedButton(
+          onPressed: isEditable
+              ? () {
+                  pointChecklist.hasil = value.name;
+                  ref
+                      .read(taskControllerProvider.notifier)
+                      .updatePointChecklist(pointChecklist);
+                  setState(() {
+                    ckValue = value;
+                  });
+                }
+              : null,
+          style: OutlinedButton.styleFrom(
+            minimumSize: const Size(100, 40),
+            backgroundColor: (pointChecklist.hasil.toLowerCase() == value.name)
                 ? Colors.lightBlueAccent
-                : Colors.black),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-            color: (pointChecklist.hasil == value.name)
-                ? Colors.white
-                : Colors.black),
-      ),
+                : Colors.transparent,
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            side: BorderSide(
+                width: 1.5,
+                color: (pointChecklist.hasil.toLowerCase() == value.name)
+                    ? Colors.lightBlueAccent
+                    : Colors.black),
+          ),
+          child: Text(
+            text,
+            style: TextStyle(
+                color: (pointChecklist.hasil.toLowerCase() == value.name)
+                    ? Colors.white
+                    : Colors.black),
+          ),
+        );
+      },
     );
   }
 

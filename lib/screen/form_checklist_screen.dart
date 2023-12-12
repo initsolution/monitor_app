@@ -20,11 +20,18 @@ class FormChecklistScreen extends ConsumerStatefulWidget {
 
 class _FormChecklistScreenState extends ConsumerState<FormChecklistScreen> {
   // late Map<int, ChecklistValue> values;
-
+  // late List<CategoryChecklistPreventive> checklist;
   @override
   void initState() {
     super.initState();
-    // values = {};
+    // checklist = widget.checklist;
+    // for (var e in checklist) {
+    //   debugPrint('opo before: ${e.orderIndex} ${e.categoryName}');
+    // }
+    // checklist.sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
+    // for (var e in checklist) {
+    //   debugPrint('opo after: ${e.orderIndex} ${e.categoryName}');
+    // }
   }
 
   @override
@@ -44,12 +51,12 @@ class _FormChecklistScreenState extends ConsumerState<FormChecklistScreen> {
   Widget buildListPointsChecklist() {
     return ListView.separated(
         itemBuilder: (context, index) {
-          CategoryChecklistPreventive checklist = widget.checklist[index];
+          CategoryChecklistPreventive c = widget.checklist[index];
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                checklist.categoryName.toUpperCase(),
+                '${c.categoryName.toUpperCase()} (${c.points?.length})',
                 style:
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
@@ -58,12 +65,12 @@ class _FormChecklistScreenState extends ConsumerState<FormChecklistScreen> {
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
                   itemBuilder: (context, index) => PointChecklistItem(
-                      pointChecklist: checklist.points![index]),
+                      pointChecklist: c.points![index]),
                   // _buildChecklistItem(checklist, index),
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 10),
                   itemCount:
-                      checklist.points != null ? checklist.points!.length : 0),
+                      c.points != null ? c.points!.length : 0),
             ],
           );
         },
