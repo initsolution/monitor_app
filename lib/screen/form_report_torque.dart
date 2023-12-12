@@ -16,6 +16,7 @@ class FormReportTorque extends ConsumerStatefulWidget {
 class _FormReportTorqueState extends ConsumerState<FormReportTorque> {
   late List<TextEditingController> controllers;
   late List<ReportRegTorque>? reports;
+  bool isEnable = true;
 
   @override
   void initState() {
@@ -29,6 +30,20 @@ class _FormReportTorqueState extends ConsumerState<FormReportTorque> {
     } else {
       reports = null;
     }
+
+    if (widget.task.status.toLowerCase() == 'todo') {
+      isEnable = true;
+    } else {
+      isEnable = false;
+    }
+  }
+
+  @override
+  void dispose() {
+    for (var c in controllers) {
+      c.dispose();
+    }
+    super.dispose();
   }
 
   @override
@@ -86,6 +101,7 @@ class _FormReportTorqueState extends ConsumerState<FormReportTorque> {
                   const SizedBox(height: 20),
                   const Text('Remark/Temuan : '),
                   TextField(
+                    enabled: isEnable,
                     controller: controllers[index],
                     decoration:
                         const InputDecoration(hintText: "Please type remark"),

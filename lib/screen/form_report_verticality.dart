@@ -51,6 +51,7 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
   int toleransiKetegakanMenara = 0;
 
   List<int> selectedIndexTheodolite = [];
+  bool isEnable = true;
 
   @override
   void initState() {
@@ -69,6 +70,11 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
         valueT2Con.add(TextEditingController());
       }
     } else {
+      if (widget.task.status.toLowerCase() == 'todo') {
+        isEnable = true;
+      } else {
+        isEnable = false;
+      }
       var verticality = widget.task.reportRegVerticality!.valueVerticality!
         ..sort((a, b) {
           if (a.theodoliteIndex != b.theodoliteIndex) {
@@ -296,6 +302,7 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
           const Text('HORIZONTALITY',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           TextField(
+            enabled: isEnable,
             controller: horCon1,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -303,6 +310,7 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
                 hintText: "Please type value"),
           ),
           TextField(
+            enabled: isEnable,
             controller: horCon2,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -310,6 +318,7 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
                 hintText: "Please type value"),
           ),
           TextField(
+            enabled: isEnable,
             controller: horCon3,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -317,6 +326,7 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
                 hintText: "Please type value"),
           ),
           TextField(
+            enabled: isEnable,
             controller: horCon4,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -348,50 +358,52 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
               children: [
                 // Button TOP
                 OutlinedButton(
-                  onPressed: () {
-                    if (selectedIndexTheodolite.contains(1)) {
-                      selectedIndexTheodolite.remove(1);
-                      if (selectedIndexTheodolite.isNotEmpty) {
-                        theodoliteValue =
-                            theodoliteItems[selectedIndexTheodolite[0] - 1];
-                        miringKeItem = theodoliteValue.split('-');
-                        for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                          miringKe[i] = miringKeItem[0];
-                        }
-                        // miringKe[0] = miringKeItem[0];
-                        // miringKe[1] = miringKeItem[0];
-                        // miringKe[2] = miringKeItem[0];
-                        // miringKe[3] = miringKeItem[0];
-                      }
-                    } else {
-                      if (selectedIndexTheodolite.length < 2 &&
-                          !selectedIndexTheodolite.contains(3)) {
-                        selectedIndexTheodolite.add(1);
-                        if (selectedIndexTheodolite.indexOf(1) == 0) {
-                          theodoliteValue = theodoliteItems[0];
-                          miringKeItem = theodoliteValue.split('-');
-                          for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                            miringKe[i] = miringKeItem[0];
+                  onPressed: isEnable
+                      ? () {
+                          if (selectedIndexTheodolite.contains(1)) {
+                            selectedIndexTheodolite.remove(1);
+                            if (selectedIndexTheodolite.isNotEmpty) {
+                              theodoliteValue = theodoliteItems[
+                                  selectedIndexTheodolite[0] - 1];
+                              miringKeItem = theodoliteValue.split('-');
+                              for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                                miringKe[i] = miringKeItem[0];
+                              }
+                              // miringKe[0] = miringKeItem[0];
+                              // miringKe[1] = miringKeItem[0];
+                              // miringKe[2] = miringKeItem[0];
+                              // miringKe[3] = miringKeItem[0];
+                            }
+                          } else {
+                            if (selectedIndexTheodolite.length < 2 &&
+                                !selectedIndexTheodolite.contains(3)) {
+                              selectedIndexTheodolite.add(1);
+                              if (selectedIndexTheodolite.indexOf(1) == 0) {
+                                theodoliteValue = theodoliteItems[0];
+                                miringKeItem = theodoliteValue.split('-');
+                                for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                                  miringKe[i] = miringKeItem[0];
+                                }
+                                // miringKe[0] = miringKeItem[0];
+                                // miringKe[1] = miringKeItem[0];
+                                // miringKe[2] = miringKeItem[0];
+                                // miringKe[3] = miringKeItem[0];
+                              } else {
+                                theodoliteValue2 = theodoliteItems[0];
+                                miringKeItem2 = theodoliteValue2.split('-');
+                                for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                                  miringKe2[i] = miringKeItem2[0];
+                                }
+                                // miringKe2[0] = miringKeItem2[0];
+                                // miringKe2[1] = miringKeItem2[0];
+                                // miringKe2[2] = miringKeItem2[0];
+                                // miringKe2[3] = miringKeItem2[0];
+                              }
+                            }
                           }
-                          // miringKe[0] = miringKeItem[0];
-                          // miringKe[1] = miringKeItem[0];
-                          // miringKe[2] = miringKeItem[0];
-                          // miringKe[3] = miringKeItem[0];
-                        } else {
-                          theodoliteValue2 = theodoliteItems[0];
-                          miringKeItem2 = theodoliteValue2.split('-');
-                          for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                            miringKe2[i] = miringKeItem2[0];
-                          }
-                          // miringKe2[0] = miringKeItem2[0];
-                          // miringKe2[1] = miringKeItem2[0];
-                          // miringKe2[2] = miringKeItem2[0];
-                          // miringKe2[3] = miringKeItem2[0];
+                          setState(() {});
                         }
-                      }
-                    }
-                    setState(() {});
-                  },
+                      : null,
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size(40, 40),
                     padding:
@@ -409,50 +421,56 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
                   children: [
                     // Button LEFT
                     OutlinedButton(
-                      onPressed: () {
-                        if (selectedIndexTheodolite.contains(4)) {
-                          selectedIndexTheodolite.remove(4);
-                          if (selectedIndexTheodolite.isNotEmpty) {
-                            theodoliteValue =
-                                theodoliteItems[selectedIndexTheodolite[0] - 1];
-                            miringKeItem = theodoliteValue.split('-');
-                            for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                              miringKe[i] = miringKeItem[0];
-                            }
-                            // miringKe[0] = miringKeItem[0];
-                            // miringKe[1] = miringKeItem[0];
-                            // miringKe[2] = miringKeItem[0];
-                            // miringKe[3] = miringKeItem[0];
-                          }
-                        } else {
-                          if (selectedIndexTheodolite.length < 2 &&
-                              !selectedIndexTheodolite.contains(2)) {
-                            selectedIndexTheodolite.add(4);
-                            if (selectedIndexTheodolite.indexOf(4) == 0) {
-                              theodoliteValue = theodoliteItems[3];
-                              miringKeItem = theodoliteValue.split('-');
-                              for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                                miringKe[i] = miringKeItem[0];
+                      onPressed: isEnable
+                          ? () {
+                              if (selectedIndexTheodolite.contains(4)) {
+                                selectedIndexTheodolite.remove(4);
+                                if (selectedIndexTheodolite.isNotEmpty) {
+                                  theodoliteValue = theodoliteItems[
+                                      selectedIndexTheodolite[0] - 1];
+                                  miringKeItem = theodoliteValue.split('-');
+                                  for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                                    miringKe[i] = miringKeItem[0];
+                                  }
+                                  // miringKe[0] = miringKeItem[0];
+                                  // miringKe[1] = miringKeItem[0];
+                                  // miringKe[2] = miringKeItem[0];
+                                  // miringKe[3] = miringKeItem[0];
+                                }
+                              } else {
+                                if (selectedIndexTheodolite.length < 2 &&
+                                    !selectedIndexTheodolite.contains(2)) {
+                                  selectedIndexTheodolite.add(4);
+                                  if (selectedIndexTheodolite.indexOf(4) == 0) {
+                                    theodoliteValue = theodoliteItems[3];
+                                    miringKeItem = theodoliteValue.split('-');
+                                    for (var i = 0;
+                                        i < MAX_SECTION_NUMBER;
+                                        i++) {
+                                      miringKe[i] = miringKeItem[0];
+                                    }
+                                    // miringKe[0] = miringKeItem[0];
+                                    // miringKe[1] = miringKeItem[0];
+                                    // miringKe[2] = miringKeItem[0];
+                                    // miringKe[3] = miringKeItem[0];
+                                  } else {
+                                    theodoliteValue2 = theodoliteItems[3];
+                                    miringKeItem2 = theodoliteValue2.split('-');
+                                    for (var i = 0;
+                                        i < MAX_SECTION_NUMBER;
+                                        i++) {
+                                      miringKe2[i] = miringKeItem2[0];
+                                    }
+                                    // miringKe2[0] = miringKeItem2[0];
+                                    // miringKe2[1] = miringKeItem2[0];
+                                    // miringKe2[2] = miringKeItem2[0];
+                                    // miringKe2[3] = miringKeItem2[0];
+                                  }
+                                }
                               }
-                              // miringKe[0] = miringKeItem[0];
-                              // miringKe[1] = miringKeItem[0];
-                              // miringKe[2] = miringKeItem[0];
-                              // miringKe[3] = miringKeItem[0];
-                            } else {
-                              theodoliteValue2 = theodoliteItems[3];
-                              miringKeItem2 = theodoliteValue2.split('-');
-                              for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                                miringKe2[i] = miringKeItem2[0];
-                              }
-                              // miringKe2[0] = miringKeItem2[0];
-                              // miringKe2[1] = miringKeItem2[0];
-                              // miringKe2[2] = miringKeItem2[0];
-                              // miringKe2[3] = miringKeItem2[0];
+                              setState(() {});
                             }
-                          }
-                        }
-                        setState(() {});
-                      },
+                          : null,
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size(40, 40),
                         padding: const EdgeInsets.symmetric(
@@ -471,50 +489,56 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
                     ),
                     // Button RIGHT
                     OutlinedButton(
-                      onPressed: () {
-                        if (selectedIndexTheodolite.contains(2)) {
-                          selectedIndexTheodolite.remove(2);
-                          if (selectedIndexTheodolite.isNotEmpty) {
-                            theodoliteValue =
-                                theodoliteItems[selectedIndexTheodolite[0] - 1];
-                            miringKeItem = theodoliteValue.split('-');
-                            for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                              miringKe[i] = miringKeItem[0];
-                            }
-                            // miringKe[0] = miringKeItem[0];
-                            // miringKe[1] = miringKeItem[0];
-                            // miringKe[2] = miringKeItem[0];
-                            // miringKe[3] = miringKeItem[0];
-                          }
-                        } else {
-                          if (selectedIndexTheodolite.length < 2 &&
-                              !selectedIndexTheodolite.contains(4)) {
-                            selectedIndexTheodolite.add(2);
-                            if (selectedIndexTheodolite.indexOf(2) == 0) {
-                              theodoliteValue = theodoliteItems[1];
-                              miringKeItem = theodoliteValue.split('-');
-                              for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                                miringKe[i] = miringKeItem[0];
+                      onPressed: isEnable
+                          ? () {
+                              if (selectedIndexTheodolite.contains(2)) {
+                                selectedIndexTheodolite.remove(2);
+                                if (selectedIndexTheodolite.isNotEmpty) {
+                                  theodoliteValue = theodoliteItems[
+                                      selectedIndexTheodolite[0] - 1];
+                                  miringKeItem = theodoliteValue.split('-');
+                                  for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                                    miringKe[i] = miringKeItem[0];
+                                  }
+                                  // miringKe[0] = miringKeItem[0];
+                                  // miringKe[1] = miringKeItem[0];
+                                  // miringKe[2] = miringKeItem[0];
+                                  // miringKe[3] = miringKeItem[0];
+                                }
+                              } else {
+                                if (selectedIndexTheodolite.length < 2 &&
+                                    !selectedIndexTheodolite.contains(4)) {
+                                  selectedIndexTheodolite.add(2);
+                                  if (selectedIndexTheodolite.indexOf(2) == 0) {
+                                    theodoliteValue = theodoliteItems[1];
+                                    miringKeItem = theodoliteValue.split('-');
+                                    for (var i = 0;
+                                        i < MAX_SECTION_NUMBER;
+                                        i++) {
+                                      miringKe[i] = miringKeItem[0];
+                                    }
+                                    // miringKe[0] = miringKeItem[0];
+                                    // miringKe[1] = miringKeItem[0];
+                                    // miringKe[2] = miringKeItem[0];
+                                    // miringKe[3] = miringKeItem[0];
+                                  } else {
+                                    theodoliteValue2 = theodoliteItems[1];
+                                    miringKeItem2 = theodoliteValue2.split('-');
+                                    for (var i = 0;
+                                        i < MAX_SECTION_NUMBER;
+                                        i++) {
+                                      miringKe2[i] = miringKeItem2[0];
+                                    }
+                                    // miringKe2[0] = miringKeItem2[0];
+                                    // miringKe2[1] = miringKeItem2[0];
+                                    // miringKe2[2] = miringKeItem2[0];
+                                    // miringKe2[3] = miringKeItem2[0];
+                                  }
+                                }
                               }
-                              // miringKe[0] = miringKeItem[0];
-                              // miringKe[1] = miringKeItem[0];
-                              // miringKe[2] = miringKeItem[0];
-                              // miringKe[3] = miringKeItem[0];
-                            } else {
-                              theodoliteValue2 = theodoliteItems[1];
-                              miringKeItem2 = theodoliteValue2.split('-');
-                              for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                                miringKe2[i] = miringKeItem2[0];
-                              }
-                              // miringKe2[0] = miringKeItem2[0];
-                              // miringKe2[1] = miringKeItem2[0];
-                              // miringKe2[2] = miringKeItem2[0];
-                              // miringKe2[3] = miringKeItem2[0];
+                              setState(() {});
                             }
-                          }
-                        }
-                        setState(() {});
-                      },
+                          : null,
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size(40, 40),
                         padding: const EdgeInsets.symmetric(
@@ -530,50 +554,52 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
                 ),
                 // Button BOTTOM
                 OutlinedButton(
-                  onPressed: () {
-                    if (selectedIndexTheodolite.contains(3)) {
-                      selectedIndexTheodolite.remove(3);
-                      if (selectedIndexTheodolite.isNotEmpty) {
-                        theodoliteValue =
-                            theodoliteItems[selectedIndexTheodolite[0] - 1];
-                        miringKeItem = theodoliteValue.split('-');
-                        for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                          miringKe[i] = miringKeItem[0];
-                        }
-                        // miringKe[0] = miringKeItem[0];
-                        // miringKe[1] = miringKeItem[0];
-                        // miringKe[2] = miringKeItem[0];
-                        // miringKe[3] = miringKeItem[0];
-                      }
-                    } else {
-                      if (selectedIndexTheodolite.length < 2 &&
-                          !selectedIndexTheodolite.contains(1)) {
-                        selectedIndexTheodolite.add(3);
-                        if (selectedIndexTheodolite.indexOf(3) == 0) {
-                          theodoliteValue = theodoliteItems[2];
-                          miringKeItem = theodoliteValue.split('-');
-                          for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                            miringKe[i] = miringKeItem[0];
+                  onPressed: isEnable
+                      ? () {
+                          if (selectedIndexTheodolite.contains(3)) {
+                            selectedIndexTheodolite.remove(3);
+                            if (selectedIndexTheodolite.isNotEmpty) {
+                              theodoliteValue = theodoliteItems[
+                                  selectedIndexTheodolite[0] - 1];
+                              miringKeItem = theodoliteValue.split('-');
+                              for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                                miringKe[i] = miringKeItem[0];
+                              }
+                              // miringKe[0] = miringKeItem[0];
+                              // miringKe[1] = miringKeItem[0];
+                              // miringKe[2] = miringKeItem[0];
+                              // miringKe[3] = miringKeItem[0];
+                            }
+                          } else {
+                            if (selectedIndexTheodolite.length < 2 &&
+                                !selectedIndexTheodolite.contains(1)) {
+                              selectedIndexTheodolite.add(3);
+                              if (selectedIndexTheodolite.indexOf(3) == 0) {
+                                theodoliteValue = theodoliteItems[2];
+                                miringKeItem = theodoliteValue.split('-');
+                                for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                                  miringKe[i] = miringKeItem[0];
+                                }
+                                // miringKe[0] = miringKeItem[0];
+                                // miringKe[1] = miringKeItem[0];
+                                // miringKe[2] = miringKeItem[0];
+                                // miringKe[3] = miringKeItem[0];
+                              } else {
+                                theodoliteValue2 = theodoliteItems[2];
+                                miringKeItem2 = theodoliteValue2.split('-');
+                                for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                                  miringKe2[i] = miringKeItem2[0];
+                                }
+                                // miringKe2[0] = miringKeItem2[0];
+                                // miringKe2[1] = miringKeItem2[0];
+                                // miringKe2[2] = miringKeItem2[0];
+                                // miringKe2[3] = miringKeItem2[0];
+                              }
+                            }
                           }
-                          // miringKe[0] = miringKeItem[0];
-                          // miringKe[1] = miringKeItem[0];
-                          // miringKe[2] = miringKeItem[0];
-                          // miringKe[3] = miringKeItem[0];
-                        } else {
-                          theodoliteValue2 = theodoliteItems[2];
-                          miringKeItem2 = theodoliteValue2.split('-');
-                          for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                            miringKe2[i] = miringKeItem2[0];
-                          }
-                          // miringKe2[0] = miringKeItem2[0];
-                          // miringKe2[1] = miringKeItem2[0];
-                          // miringKe2[2] = miringKeItem2[0];
-                          // miringKe2[3] = miringKeItem2[0];
+                          setState(() {});
                         }
-                      }
-                    }
-                    setState(() {});
-                  },
+                      : null,
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size(40, 40),
                     padding:
@@ -656,6 +682,7 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
                 SizedBox(
                   width: 50,
                   child: TextField(
+                    enabled: isEnable,
                     controller: valueT1Con[i],
                     keyboardType: TextInputType.number,
                     // decoration: const InputDecoration(
@@ -742,16 +769,19 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
                                   child: Text(value),
                                 ))
                         .toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        miringKe2[j] = value!;
-                      });
-                    },
+                    onChanged: isEnable
+                        ? (String? value) {
+                            setState(() {
+                              miringKe2[j] = value!;
+                            });
+                          }
+                        : null,
                   ),
                 ),
                 SizedBox(
                   width: 50,
                   child: TextField(
+                    enabled: isEnable,
                     controller: valueT2Con[j],
                     keyboardType: TextInputType.number,
                     // decoration: const InputDecoration(
@@ -781,11 +811,13 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
                   child: Text(value),
                 ))
             .toList(),
-        onChanged: (value) {
-          setState(() {
-            miringKe[i] = value!;
-          });
-        },
+        onChanged: isEnable
+            ? (String? value) {
+                setState(() {
+                  miringKe[i] = value!;
+                });
+              }
+            : null,
       ),
     );
   }
@@ -803,6 +835,7 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
           const Text('ALAT UKUR YANG DIGUNAKAN',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           TextField(
+            enabled: isEnable,
             controller: alatUkurCon,
             maxLines: 4,
             keyboardType: TextInputType.multiline,
@@ -834,6 +867,7 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
               SizedBox(
                 width: 60,
                 child: TextField(
+                  enabled: isEnable,
                   controller: toleransiKetegakanCon,
                   keyboardType: TextInputType.number,
                   onChanged: (value) {

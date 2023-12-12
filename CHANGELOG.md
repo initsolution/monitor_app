@@ -54,3 +54,4 @@
 - show default pointchecklist "NA"
 # 12/12/2023
 - sorting preventive and reguler task : all status
+- disable input form torque and verticality when not todo
