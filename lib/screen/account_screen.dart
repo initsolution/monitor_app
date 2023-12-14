@@ -213,6 +213,8 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
                                       if (loadingProgress == null) return child;
                                       return Center(
                                         child: CircularProgressIndicator(
+                                          backgroundColor: Colors.white,
+                                          color: Colors.lightBlue,
                                           value: loadingProgress
                                                       .expectedTotalBytes !=
                                                   null

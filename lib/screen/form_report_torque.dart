@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monitor_app/controller/task_controller.dart';
+import 'package:monitor_app/helpers/utils.dart';
 import 'package:monitor_app/model/report_reg_torque.dart';
 import 'package:monitor_app/model/task.dart';
 
@@ -48,28 +49,37 @@ class _FormReportTorqueState extends ConsumerState<FormReportTorque> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Rep. Bolt Tightening Torque'),
-        actions: [
-          IconButton(
-              onPressed: () async {
-                if (reports != null) {
-                  for (int i = 0; i < reports!.length; i++) {
-                    reports![i].remark = controllers[i].text;
+    return WillPopScope(
+      onWillPop: () async {
+        if (widget.task.status.toLowerCase() == "todo") {
+          await showAlertDialog(context);
+        }
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Rep. Bolt Tightening Torque'),
+          actions: [
+            IconButton(
+                onPressed: () async {
+                  if (reports != null) {
+                    for (int i = 0; i < reports!.length; i++) {
+                      reports![i].remark = controllers[i].text;
+                    }
+                    ref
+                        .read(taskControllerProvider.notifier)
+                        .updateReportTorque(reports!);
                   }
-                  ref
-                      .read(taskControllerProvider.notifier)
-                      .updateReportTorque(reports!);
-                }
-              },
-              icon: const Icon(Icons.save)),
-        ],
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(10),
-        color: const Color(0xFFEAEEF2),
-        child: reports != null ? _buildListReportTorque(reports!) : Container(),
+                },
+                icon: const Icon(Icons.save)),
+          ],
+        ),
+        body: Container(
+          padding: const EdgeInsets.all(10),
+          color: const Color(0xFFEAEEF2),
+          child:
+              reports != null ? _buildListReportTorque(reports!) : Container(),
+        ),
       ),
     );
   }

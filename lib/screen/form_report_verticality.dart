@@ -3,6 +3,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:monitor_app/controller/task_controller.dart';
+import 'package:monitor_app/helpers/utils.dart';
 import 'package:monitor_app/model/report_reg_verticality.dart';
 import 'package:monitor_app/model/task.dart';
 import 'package:monitor_app/model/value_verticality.dart';
@@ -156,138 +157,146 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        title: const Text('Rep. Verticality'),
-        actions: [
-          IconButton(
-              onPressed: () async {
-                if (theodoliteValue == theodoliteValue2) {
+    return WillPopScope(
+      onWillPop: () async {
+        if (widget.task.status.toLowerCase() == "todo") {
+          await showAlertDialog(context);
+        }
+        return true;
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          title: const Text('Rep. Verticality'),
+          actions: [
+            IconButton(
+                onPressed: () async {
+                  if (theodoliteValue == theodoliteValue2) {
                   warningDialog();
                   return;
                 }
 
                 if (widget.task.reportRegVerticality != null) {
-                  List<ValueVerticality> valueVerticalities = [];
-                  //theo 1
-                  for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                    ValueVerticality valueVerticality = ValueVerticality(
-                        id: widget
-                            .task.reportRegVerticality!.valueVerticality![i].id,
-                        theodoliteIndex: 1,
-                        section: i + 1,
-                        miringKe: miringKe[i],
-                        value: valueT1Con[i].text != ''
-                            ? int.parse(valueT1Con[i].text)
-                            : 0);
-                    valueVerticalities.add(valueVerticality);
+                    List<ValueVerticality> valueVerticalities = [];
+                    //theo 1
+                    for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                      ValueVerticality valueVerticality = ValueVerticality(
+                          id: widget.task.reportRegVerticality!
+                              .valueVerticality![i].id,
+                          theodoliteIndex: 1,
+                          section: i + 1,
+                          miringKe: miringKe[i],
+                          value: valueT1Con[i].text != ''
+                              ? int.parse(valueT1Con[i].text)
+                              : 0);
+                      valueVerticalities.add(valueVerticality);
+                    }
+                    //theo 2
+                    for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                      ValueVerticality valueVerticality = ValueVerticality(
+                          id: widget.task.reportRegVerticality!
+                              .valueVerticality![MAX_SECTION_NUMBER + i].id,
+                          theodoliteIndex: 2,
+                          section: i + 1,
+                          miringKe: miringKe2[i],
+                          value: valueT2Con[i].text != ''
+                              ? int.parse(valueT2Con[i].text)
+                              : 0);
+                      valueVerticalities.add(valueVerticality);
+                    }
+                    ReportRegVerticality report = ReportRegVerticality(
+                        id: widget.task.reportRegVerticality!.id,
+                        horizontalityAb:
+                            horCon1.text != '' ? int.parse(horCon1.text) : 0,
+                        horizontalityBc:
+                            horCon2.text != '' ? int.parse(horCon2.text) : 0,
+                        horizontalityCd:
+                            horCon3.text != '' ? int.parse(horCon3.text) : 0,
+                        horizontalityDa:
+                            horCon4.text != '' ? int.parse(horCon4.text) : 0,
+                        theodolite1: theodoliteValue,
+                        theodolite2: theodoliteValue2,
+                        alatUkur: alatUkurCon.text,
+                        toleransiKetegakan: toleransiKetegakanMenara,
+                        valueVerticality: valueVerticalities);
+                    ref
+                        .read(taskControllerProvider.notifier)
+                        .saveReportVerticality(widget.task.id, report);
+                  } else {
+                    List<ValueVerticality> valueVerticalities = [];
+                    for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                      ValueVerticality valueVerticality = ValueVerticality(
+                          theodoliteIndex: 1,
+                          section: i + 1,
+                          miringKe: miringKe[i],
+                          value: valueT1Con[i].text != ''
+                              ? int.parse(valueT1Con[i].text)
+                              : 0);
+                      valueVerticalities.add(valueVerticality);
+                    }
+                    for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                      ValueVerticality valueVerticality = ValueVerticality(
+                          theodoliteIndex: 2,
+                          section: i + 1,
+                          miringKe: miringKe2[i],
+                          value: valueT2Con[i].text != ''
+                              ? int.parse(valueT2Con[i].text)
+                              : 0);
+                      valueVerticalities.add(valueVerticality);
+                    }
+                    ReportRegVerticality report = ReportRegVerticality(
+                        horizontalityAb:
+                            horCon1.text != '' ? int.parse(horCon1.text) : 0,
+                        horizontalityBc:
+                            horCon2.text != '' ? int.parse(horCon2.text) : 0,
+                        horizontalityCd:
+                            horCon3.text != '' ? int.parse(horCon3.text) : 0,
+                        horizontalityDa:
+                            horCon4.text != '' ? int.parse(horCon4.text) : 0,
+                        theodolite1: theodoliteValue,
+                        theodolite2: theodoliteValue2,
+                        alatUkur: alatUkurCon.text,
+                        toleransiKetegakan: toleransiKetegakanMenara,
+                        valueVerticality: valueVerticalities);
+                    ref
+                        .read(taskControllerProvider.notifier)
+                        .saveReportVerticality(widget.task.id, report);
                   }
-                  //theo 2
-                  for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                    ValueVerticality valueVerticality = ValueVerticality(
-                        id: widget.task.reportRegVerticality!
-                            .valueVerticality![MAX_SECTION_NUMBER + i].id,
-                        theodoliteIndex: 2,
-                        section: i + 1,
-                        miringKe: miringKe2[i],
-                        value: valueT2Con[i].text != ''
-                            ? int.parse(valueT2Con[i].text)
-                            : 0);
-                    valueVerticalities.add(valueVerticality);
-                  }
-                  ReportRegVerticality report = ReportRegVerticality(
-                      id: widget.task.reportRegVerticality!.id,
-                      horizontalityAb:
-                          horCon1.text != '' ? int.parse(horCon1.text) : 0,
-                      horizontalityBc:
-                          horCon2.text != '' ? int.parse(horCon2.text) : 0,
-                      horizontalityCd:
-                          horCon3.text != '' ? int.parse(horCon3.text) : 0,
-                      horizontalityDa:
-                          horCon4.text != '' ? int.parse(horCon4.text) : 0,
-                      theodolite1: theodoliteValue,
-                      theodolite2: theodoliteValue2,
-                      alatUkur: alatUkurCon.text,
-                      toleransiKetegakan: toleransiKetegakanMenara,
-                      valueVerticality: valueVerticalities);
-                  ref
-                      .read(taskControllerProvider.notifier)
-                      .saveReportVerticality(widget.task.id, report);
-                } else {
-                  List<ValueVerticality> valueVerticalities = [];
-                  for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                    ValueVerticality valueVerticality = ValueVerticality(
-                        theodoliteIndex: 1,
-                        section: i + 1,
-                        miringKe: miringKe[i],
-                        value: valueT1Con[i].text != ''
-                            ? int.parse(valueT1Con[i].text)
-                            : 0);
-                    valueVerticalities.add(valueVerticality);
-                  }
-                  for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                    ValueVerticality valueVerticality = ValueVerticality(
-                        theodoliteIndex: 2,
-                        section: i + 1,
-                        miringKe: miringKe2[i],
-                        value: valueT2Con[i].text != ''
-                            ? int.parse(valueT2Con[i].text)
-                            : 0);
-                    valueVerticalities.add(valueVerticality);
-                  }
-                  ReportRegVerticality report = ReportRegVerticality(
-                      horizontalityAb:
-                          horCon1.text != '' ? int.parse(horCon1.text) : 0,
-                      horizontalityBc:
-                          horCon2.text != '' ? int.parse(horCon2.text) : 0,
-                      horizontalityCd:
-                          horCon3.text != '' ? int.parse(horCon3.text) : 0,
-                      horizontalityDa:
-                          horCon4.text != '' ? int.parse(horCon4.text) : 0,
-                      theodolite1: theodoliteValue,
-                      theodolite2: theodoliteValue2,
-                      alatUkur: alatUkurCon.text,
-                      toleransiKetegakan: toleransiKetegakanMenara,
-                      valueVerticality: valueVerticalities);
-                  ref
-                      .read(taskControllerProvider.notifier)
-                      .saveReportVerticality(widget.task.id, report);
-                }
-              },
-              // onPressed: () async {
-              //   if (reports != null) {
-              //     for (int i = 0; i < reports!.length; i++) {
-              //       reports![i].remark = controllers[i].text;
-              //     }
-              //     ref
-              //         .read(taskControllerProvider.notifier)
-              //         .updateReportTorque(reports!);
-              //   }
-              // },
-              icon: const Icon(Icons.save)),
-        ],
-      ),
-      body: LayoutBuilder(
-        builder: (context, constraints) => SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-                minWidth: constraints.maxWidth,
-                minHeight: constraints.maxHeight),
-            child: Container(
-              color: const Color(0xFFEAEEF2),
-              padding: const EdgeInsets.only(
-                  left: 20, right: 20, top: 8, bottom: 20),
-              child: Column(
-                children: [
-                  _buildHorizotalityPoint(),
-                  const SizedBox(height: 20),
-                  _buildVerticalityPoint(),
-                  const SizedBox(height: 20),
-                  _buildAlatUkur(),
-                  const SizedBox(height: 20),
-                  _buildTolerasiKetegakanMenara(),
-                ],
+                },
+                // onPressed: () async {
+                //   if (reports != null) {
+                //     for (int i = 0; i < reports!.length; i++) {
+                //       reports![i].remark = controllers[i].text;
+                //     }
+                //     ref
+                //         .read(taskControllerProvider.notifier)
+                //         .updateReportTorque(reports!);
+                //   }
+                // },
+                icon: const Icon(Icons.save)),
+          ],
+        ),
+        body: LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                  minWidth: constraints.maxWidth,
+                  minHeight: constraints.maxHeight),
+              child: Container(
+                color: const Color(0xFFEAEEF2),
+                padding: const EdgeInsets.only(
+                    left: 20, right: 20, top: 8, bottom: 20),
+                child: Column(
+                  children: [
+                    _buildHorizotalityPoint(),
+                    const SizedBox(height: 20),
+                    _buildVerticalityPoint(),
+                    const SizedBox(height: 20),
+                    _buildAlatUkur(),
+                    const SizedBox(height: 20),
+                    _buildTolerasiKetegakanMenara(),
+                  ],
+                ),
               ),
             ),
           ),
