@@ -60,6 +60,13 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
         if (next is TaskDataChangeSuccess) {
           dismissDialog();
           exitScreen();
+        } else if (next is TaskDataNotComplete) {
+          var title = next.title;
+          var msg = next.message;
+          var type = next.type;
+          dismissDialog();
+          ref.read(taskControllerProvider.notifier).getTaskById(widget.task.id);
+          dialogErrorMsg(title, msg, type);
         }
       },
     );
@@ -112,20 +119,22 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   for (var asset in assets!) {
                     if (idx % 3 == 0) {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1702093868183.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1702518316507.jpg";
                     } else if (idx % 3 == 1) {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1702093879045.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1702518316507.jpg";
                     } else {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1702093889429.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1702518316507.jpg";
                     }
                     idx++;
                     await ref
                         .read(taskControllerProvider.notifier)
                         .updateAssetLocalTask(asset);
                   }
-                  await ref.read(taskControllerProvider.notifier).getTaskById(widget.task.id);
+                  await ref
+                      .read(taskControllerProvider.notifier)
+                      .getTaskById(widget.task.id);
                 },
                 icon: const Icon(Icons.update),
               ),
@@ -455,7 +464,8 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   style: const TextStyle(color: Colors.white)),
               Text('Tenant : ${task.site.tenants}',
                   style: const TextStyle(color: Colors.white)),
-              Text('Created Date : ${formatTanggalIndonesia(task.created_at, 2) }',
+              Text(
+                  'Created Date : ${formatTanggalIndonesia(task.created_at, 2)}',
                   style: const TextStyle(color: Colors.white)),
             ],
           ),
@@ -530,6 +540,93 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
         return WillPopScope(onWillPop: () async => false, child: alert);
       },
     );
+  }
+
+  dialogErrorMsg(String title, String msg, String type) {
+    Widget closeButton = TextButton(
+      child: const Text("Close"),
+      onPressed: () {
+        dismissDialog();
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      elevation: 0,
+      title: Text(title),
+      content: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * 0.2,
+        child: displayContent(msg, type),
+      ),
+      actions: [closeButton],
+    );
+    showDialog(
+      //prevent outside touch
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        //prevent Back button press
+        return WillPopScope(onWillPop: () async => false, child: alert);
+      },
+    );
+  }
+
+  Widget displayContent(msg, type) {
+    var split = msg.split(";");
+    if (type == "asset") {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Lengkapi Asset Gambar\n'),
+          const Text(
+            'Category :',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text('${split[0]}'),
+          const Text(
+            'Description :',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text('${split[1]}')
+        ],
+      );
+    } else if (type == "torque") {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Lengkapi Isian Torque\n'),
+          const Text(
+            'Tower Segment :',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text('${split[0]}'),
+        ],
+      );
+    } else if (type == "horizontality") {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Lengkapi Isian Verticality\n'),
+          const Text(
+            'Horizontality :',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text('${split[0]}'),
+        ],
+      );
+    } else if (type == "theodolite") {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Lengkapi Isian Theodolite\n'),
+          const Text(
+            'Theodolite :',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text('${split[0]}'),
+        ],
+      );
+    }
+    return Container();
   }
 
   dismissDialog() {

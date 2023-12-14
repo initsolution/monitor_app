@@ -35,3 +35,14 @@ class TaskLoadedWithError extends TaskState {
 }
 
 class TaskDataChangeSuccess extends TaskState {}
+
+class TaskDataNotComplete extends TaskState {
+  final String title;
+  final String message;
+  final String type;
+  TaskDataNotComplete(
+      {required this.title, required this.message, required this.type});
+
+  @override
+  List<Object?> get props => [message];
+}

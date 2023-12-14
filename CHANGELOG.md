@@ -55,3 +55,5 @@
 # 12/12/2023
 - sorting preventive and reguler task : all status
 - disable input form torque and verticality when not todo
+# 14/12/2023
+- Add Message Dialog jika asset, report regular verticality, theodolite 1 dan 2, report reg Torque, dan gambar not exist

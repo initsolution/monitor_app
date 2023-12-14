@@ -61,6 +61,8 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
     if (widget.task.reportRegVerticality == null) {
       theodoliteValue = theodoliteItems[0];
       theodoliteValue2 = theodoliteItems[0];
+      debugPrint('theoDolite : ${theodoliteValue}');
+      debugPrint('theoDolite : ${theodoliteValue2}');
       miringKeItem = theodoliteItems[0].split('-');
       miringKeItem2 = theodoliteItems[0].split('-');
       for (int i = 0; i < MAX_SECTION_NUMBER; i++) {
@@ -161,6 +163,11 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
         actions: [
           IconButton(
               onPressed: () async {
+                if (theodoliteValue == theodoliteValue2) {
+                  warningDialog();
+                  return;
+                }
+
                 if (widget.task.reportRegVerticality != null) {
                   List<ValueVerticality> valueVerticalities = [];
                   //theo 1
@@ -883,6 +890,30 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
           ),
         ],
       ),
+    );
+  }
+
+  warningDialog() {
+    Widget closeButton = TextButton(
+      child: const Text("Close"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      elevation: 0,
+      title: const Text('Informasi'),
+      content: const Text('Lengkapi Posisi Theodolite'),
+      actions: [closeButton],
+    );
+    showDialog(
+      //prevent outside touch
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        //prevent Back button press
+        return WillPopScope(onWillPop: () async => false, child: alert);
+      },
     );
   }
 }

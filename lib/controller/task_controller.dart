@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -161,105 +162,119 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
   }
 
   uploadTaskByTaskId({required int taskId, required String token}) async {
-    state = TaskLoading();
     var task = await ref.read(localdataServiceProvider).getTaskById(taskId);
-    // _checkAllResourcesComplete(task);
-
-    var localTask =
-        await ref.read(localdataServiceProvider).getTaskDBById(taskId);
-    //UPLOAD ASSET
-    var assets = task?.asset;
-    for (var asset in assets!) {
-      if (asset.url != "-") {
-        var file = File(asset.url);
-        ref.read(assetUrlProvider.notifier).state = file.path.split("/").last;
-        await ref
-            .read(assetControllerProvider.notifier)
-            .uploadAsset(taskId, asset, token);
+    var status = _checkAllResourcesComplete(task);
+    if (status["message"] == "complete") {
+      debugPrint('proses uploading');
+      state = TaskLoading();
+      var localTask =
+          await ref.read(localdataServiceProvider).getTaskDBById(taskId);
+      //UPLOAD ASSET
+      var assets = task?.asset;
+      for (var asset in assets!) {
+        if (asset.url != "-") {
+          var file = File(asset.url);
+          ref.read(assetUrlProvider.notifier).state = file.path.split("/").last;
+          await ref
+              .read(assetControllerProvider.notifier)
+              .uploadAsset(taskId, asset, token);
+        }
       }
-    }
 
-    //update checklist
-    if (task?.type == "Preventive") {
-      //REPORT PREVENTIVE
-      var categoriesChecklist = task?.categoriesChecklist;
-      var data =
-          categoryChecklistPreventiveToBulk(taskId, categoriesChecklist!);
-      var respon = await ref
+      //update checklist
+      if (task?.type == "Preventive") {
+        //REPORT PREVENTIVE
+        var categoriesChecklist = task?.categoriesChecklist;
+        var data =
+            categoryChecklistPreventiveToBulk(taskId, categoriesChecklist!);
+        var respon = await ref
+            .read(restServiceProvider)
+            .createPointChecklistPreventive(data, token);
+        debugPrint('respon Preventive : ${respon.response.statusCode}');
+      } else if (task?.type == "Reguler") {
+        //REPORT REGULER TORQUE
+        var reportRegTorque = task?.reportRegTorque;
+        var reportRegTorqueData =
+            reportRegTorqueToBulk(taskId, reportRegTorque!);
+        var responTorque = await ref
+            .read(restServiceProvider)
+            .createReportRegTorque(reportRegTorqueData, token);
+        debugPrint('responTorque : ${responTorque.response.statusCode}');
+        if (responTorque.response.statusCode != 201) {
+          //gagall
+          // debugPrint('gagal');
+        }
+
+        //REPORT REGULER VERTICALITY
+        var reportRegVerticality = task?.reportRegVerticality;
+        var data = reportRegVerticalityToBulk(taskId, reportRegVerticality!);
+        var responReg = await ref
+            .read(restServiceProvider)
+            .createReportRegVerticality(data, token);
+        debugPrint('responn Reguler : ${responReg.response.statusCode}');
+      }
+
+      //update TASK
+      DateTime now = DateTime.now();
+      String formattedDate = DateFormat('yyyy-MM-dd').format(now);
+      task?.submitedDate = formattedDate;
+      task?.status = STATUS_REVIEW;
+      var updateTask = {
+        "id": task!.id,
+        "status": task.status,
+        "submitedDate": task.submitedDate
+      };
+      var responTask = await ref
           .read(restServiceProvider)
-          .createPointChecklistPreventive(data, token);
-      debugPrint('respon Preventive : ${respon.response.statusCode}');
-    } else if (task?.type == "Reguler") {
-      //REPORT REGULER TORQUE
-      var reportRegTorque = task?.reportRegTorque;
-      var reportRegTorqueData = reportRegTorqueToBulk(taskId, reportRegTorque!);
-      var responTorque = await ref
-          .read(restServiceProvider)
-          .createReportRegTorque(reportRegTorqueData, token);
-      debugPrint('responTorque : ${responTorque.response.statusCode}');
-      if (responTorque.response.statusCode != 201) {
-        //gagall
-        // debugPrint('gagal');
-      }
+          .updateTaskByTaskId(taskId, updateTask, token);
+      debugPrint('respon Task : ${responTask.response.statusCode}');
 
-      //REPORT REGULER VERTICALITY
-      var reportRegVerticality = task?.reportRegVerticality;
-      var data = reportRegVerticalityToBulk(taskId, reportRegVerticality!);
-      var responReg = await ref
-          .read(restServiceProvider)
-          .createReportRegVerticality(data, token);
-      debugPrint('responn Reguler : ${responReg.response.statusCode}');
-    }
-
-    //update TASK
-    DateTime now = DateTime.now();
-    String formattedDate = DateFormat('yyyy-MM-dd').format(now);
-    task?.submitedDate = formattedDate;
-    task?.status = STATUS_REVIEW;
-    var updateTask = {
-      "id": task!.id,
-      "status": task.status,
-      "submitedDate": task.submitedDate
-    };
-    var responTask = await ref
-        .read(restServiceProvider)
-        .updateTaskByTaskId(taskId, updateTask, token);
-    debugPrint('respon Task : ${responTask.response.statusCode}');
-
-    //delete localtask
-    await ref
-        .read(localdataServiceProvider)
-        .deleteSite(localTask!.site.value!.id);
-    await ref
-        .read(localdataServiceProvider)
-        .deleteEmployee(localTask.verifierEmployee.value!.id!);
-    for (var e in localTask.assets) {
-      await ref.read(localdataServiceProvider).deleteAsset(e.id!);
-    }
-    if (localTask.type == "Reguler") {
-      for (var e in localTask.reportTorque) {
-        await ref.read(localdataServiceProvider).deleteReportTorque(e.id!);
-      }
-      for (var e in localTask.reportVerticality.value!.valueVerticality) {
-        await ref.read(localdataServiceProvider).deleteValueVerticality(e.id!);
-      }
+      //delete localtask
       await ref
           .read(localdataServiceProvider)
-          .deleteReportVerticality(localTask.reportVerticality.value!.id!);
-    } else if (localTask.type == "Preventive") {
-      for (var e in localTask.categoriesChecklist) {
-        var points = e.points;
-        for (var p in points) {
-          await ref.read(localdataServiceProvider).deletePointChecklist(p.id!);
+          .deleteSite(localTask!.site.value!.id);
+      await ref
+          .read(localdataServiceProvider)
+          .deleteEmployee(localTask.verifierEmployee.value!.id!);
+      for (var e in localTask.assets) {
+        await ref.read(localdataServiceProvider).deleteAsset(e.id!);
+      }
+      if (localTask.type == "Reguler") {
+        for (var e in localTask.reportTorque) {
+          await ref.read(localdataServiceProvider).deleteReportTorque(e.id!);
+        }
+        for (var e in localTask.reportVerticality.value!.valueVerticality) {
+          await ref
+              .read(localdataServiceProvider)
+              .deleteValueVerticality(e.id!);
         }
         await ref
             .read(localdataServiceProvider)
-            .deleteCategoryPointChecklist(e.id);
+            .deleteReportVerticality(localTask.reportVerticality.value!.id!);
+      } else if (localTask.type == "Preventive") {
+        for (var e in localTask.categoriesChecklist) {
+          var points = e.points;
+          for (var p in points) {
+            await ref
+                .read(localdataServiceProvider)
+                .deletePointChecklist(p.id!);
+          }
+          await ref
+              .read(localdataServiceProvider)
+              .deleteCategoryPointChecklist(e.id);
+        }
       }
-    }
 
-    await ref.read(localdataServiceProvider).deleteTask(taskId);
-    state = TaskDataChangeSuccess();
+      await ref.read(localdataServiceProvider).deleteTask(taskId);
+      state = TaskDataChangeSuccess();
+    } else {
+      debugPrint('failed');
+      debugPrint(status["title"]);
+      state = TaskDataNotComplete(
+          title: status["title"],
+          message: status["message"],
+          type: status["type"]);
+    }
   }
 
   updateAssetLocalTask(Asset asset) async {
@@ -376,13 +391,131 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     }
   }
 
-  // bool _checkAllResourcesComplete(Task? task) {
-  //   if (task != null) {
-  //     if (task.type == "preventive") {
-  //       task.categoriesChecklist?.map((item) => item.points?.map((poin) => poin.hasil));
-  //     }
-  //   }
+  dynamic _checkAllResourcesComplete(Task? task) {
+    // String status = "complete";
+    var status = {"title": "Informasi", "message": "complete", "type": "asset"};
+    if (task != null) {
+      if (task.type == "Preventive") {
+        // task.categoriesChecklist?.map((item) => item.points?.map((poin) => poin.hasil));
+        for (var asset in task.asset!) {
+          if (asset.url == "-") {
+            // status["title"] = "Information";
+            // status["message"] = asset.category + ";" + asset.description;
+            // status["type"] = "asset";
+            return status = {
+              "title": "Informasi",
+              "message": asset.category + ";" + asset.description,
+              "type": "asset"
+            };
+          } else {
+            var isFileExists = File(asset.url).existsSync();
+            if (!isFileExists) {
+              // status["title"] = "Image Not Exist";
+              // status["message"] = asset.category + ";" + asset.description;
+              // status["type"] = "asset";
+              return status = {
+                "title": "File Gambar Tidak Ada",
+                "message": asset.category + ";" + asset.description,
+                "type": "asset"
+              };
+            }
+          }
+        }
+      } else if (task.type == "Reguler") {
+        //reguler verticality
+        // horizontality harus isi 4
+        // theodeolite 1 dan 2 harus diisi
+        // bolt torque harus diisi
+        for (var asset in task.asset!) {
+          if (asset.url == "-") {
+            // status["title"] = "Information";
+            // status["message"] = asset.category + ";" + asset.description;
+            // status["type"] = "asset";
+            return status = {
+              "title": "Informasi",
+              "message": asset.category + ";" + asset.description,
+              "type": "asset"
+            };
+          } else {
+            var isFileExists = File(asset.url).existsSync();
+            if (!isFileExists) {
+              // status["title"] = "Image Not Exist";
+              // status["message"] = asset.category + ";" + asset.description;
+              // status["type"] = "asset";
+              return status = {
+                "title": "File Gambar Tidak Ada",
+                "message": asset.category + ";" + asset.description,
+                "type": "asset"
+              };
+            }
+          }
+        }
 
-  //   return false;
-  // }
+        for (var e in task.reportRegTorque!) {
+          debugPrint('ez : ${e.remark}');
+          if (e.remark == null || e.remark!.isEmpty) {
+            // debugPrint('towerSegment : ${e.towerSegment}');
+            // status["title"] = "Information";
+            // status["message"] = e.towerSegment + ";" + "nul";
+            // status["type"] = "torque";
+            return status = {
+              "title": "Informasi",
+              "message": e.towerSegment + ";",
+              "type": "torque"
+            };
+          }
+        }
+
+        var report = task.reportRegVerticality;
+        if (report?.horizontalityAb == null) {
+          return status = {
+            "title": "Informasi",
+            "message": "horizontality pondasi AB;",
+            "type": "horizontality"
+          };
+        }
+        if (report?.horizontalityBc == null) {
+          return status = {
+            "title": "Informasi",
+            "message": "horizontality pondasi BC;",
+            "type": "horizontality"
+          };
+        }
+        if (report?.horizontalityCd == null) {
+          return status = {
+            "title": "Informasi",
+            "message": "horizontality pondasi CD;",
+            "type": "horizontality"
+          };
+        }
+        if (report?.horizontalityDa == null) {
+          return status = {
+            "title": "Informasi",
+            "message": "horizontality pondasi DA;",
+            "type": "horizontality"
+          };
+        }
+
+        debugPrint("theodolite1 ${report?.theodolite1}");
+        if (report?.theodolite1 == null) {
+          return status = {
+            "title": "Informasi",
+            "message": "Theodolite1 Kosong;",
+            "type": "theodolite"
+          };
+        }
+
+        debugPrint("theodolite2 ${report?.theodolite2}");
+        if (report?.theodolite2 == null) {
+          return status = {
+            "title": "Informasi",
+            "message": "Theodolite2 Kosong;",
+            "type": "theodolite"
+          };
+        }
+      }
+    }
+
+    return status;
+  }
 }
