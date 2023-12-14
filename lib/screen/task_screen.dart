@@ -92,10 +92,34 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                     onPressed: () async {
                       // var task = ref.read(taskProvider.notifier).state;
                       ref
-                          .read(taskControllerProvider.notifier)
-                          .uploadTaskByTaskId(
-                              taskId: widget.task.id, token: pref.token);
-                      progressDialogue();
+                          .read(preferenceManagerProvider)
+                          .getEsignData()
+                          .then((value) {
+                        if (value != '') {
+                          ref
+                              .read(taskControllerProvider.notifier)
+                              .uploadTaskByTaskId(
+                                  taskId: widget.task.id, token: pref.token);
+                          progressDialogue();
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              actionsAlignment: MainAxisAlignment.spaceBetween,
+                              actions: [
+                                Center(
+                                  child: TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text('OK')),
+                                )
+                              ],
+                              title: const Text('Problem'),
+                              content: const Text(
+                                  'Please, make sure you have uploaded your E-sign (see account page)'),
+                            ),
+                          );
+                        }
+                      });
                     },
                     icon: const Icon(Icons.upload),
                   )
@@ -125,7 +149,9 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                         .read(taskControllerProvider.notifier)
                         .updateAssetLocalTask(asset);
                   }
-                  await ref.read(taskControllerProvider.notifier).getTaskById(widget.task.id);
+                  await ref
+                      .read(taskControllerProvider.notifier)
+                      .getTaskById(widget.task.id);
                 },
                 icon: const Icon(Icons.update),
               ),
@@ -455,7 +481,8 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   style: const TextStyle(color: Colors.white)),
               Text('Tenant : ${task.site.tenants}',
                   style: const TextStyle(color: Colors.white)),
-              Text('Created Date : ${formatTanggalIndonesia(task.created_at, 2) }',
+              Text(
+                  'Created Date : ${formatTanggalIndonesia(task.created_at, 2)}',
                   style: const TextStyle(color: Colors.white)),
             ],
           ),

@@ -29,7 +29,7 @@ class AssetController extends AutoDisposeNotifier<AssetState> {
     // print('token $token');
     File file = File(asset.url);
     List<int> imageBytes = file.readAsBytesSync();
-    final response = await ref.read(restServiceProvider).createAsset(
+    await ref.read(restServiceProvider).createAsset(
         asset.section,
         asset.category,
         asset.description,

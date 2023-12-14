@@ -69,7 +69,23 @@ class _TaskItemCardState extends ConsumerState<TaskItemCard> {
                         : const Icon(Icons.image))
                 : Center(
                     child: Image.network(
-                        '$urlRepo/asset/getImage/${widget.asset.id}')),
+                      '$urlRepo/asset/getImage/${widget.asset.id}',
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.white,
+                            color: Colors.lightBlue,
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
           ),
         ),
         Container(

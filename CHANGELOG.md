@@ -55,3 +55,8 @@
 # 12/12/2023
 - sorting preventive and reguler task : all status
 - disable input form torque and verticality when not todo
+# 13/12/2023
+- Keluar Aplikasi ada dialog konfirmasi
+- Handling login error
+- Sebelum upload asset, maker harus upload e-sign
+- Add loading indicator when load asset from server (selain todo)

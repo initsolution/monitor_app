@@ -59,7 +59,7 @@ class TaskCard extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                 decoration: BoxDecoration(
-                    color: Colors.blue[800],
+                    color: Colors.black87,
                     borderRadius: BorderRadius.circular(5)),
                 child: task.dueDate != null
                     ? Text(

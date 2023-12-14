@@ -35,6 +35,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   void _onLoginError(BuildContext context, String message) {
     _isFormLoading = false;
     debugPrint('error : $message');
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        actionsAlignment: MainAxisAlignment.spaceBetween,
+        actions: [
+          Center(
+            child: TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('OK')),
+          )
+        ],
+        title: const Text('Problem'),
+        content: Text(message),
+      ),
+    );
     // final dialog = AwesomeDialog(
     //   context: context,
     //   dialogType: DialogType.error,
