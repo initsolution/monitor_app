@@ -51,7 +51,8 @@ class _TemuanScreenState extends ConsumerState<TemuanScreen> {
                   category: 'TEMUAN',
                   description: 'Deskripsi Temuan',
                   url: '-',
-                  orderIndex: widget.asset!.length + 1,
+                  orderIndex:
+                      widget.asset![widget.asset!.length - 1].orderIndex + 1,
                 );
                 // setState(() {
                 //   assets.add(temuan);

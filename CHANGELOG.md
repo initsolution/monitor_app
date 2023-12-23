@@ -62,3 +62,5 @@
 - Handling login error
 - Sebelum upload asset, maker harus upload e-sign
 - Add loading indicator when load asset from server (selain todo)
+# 23/12/2023
+- Bug Temuan -> tambah gambar Kolom temuan, Kategory temuan jadi naik
