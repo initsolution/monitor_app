@@ -27,3 +27,17 @@ class AuthFailedWithError extends AuthState {
   @override
   List<Object?> get props => [message];
 }
+
+class ResetPasswordFailedWithError extends AuthState {
+  final String message;
+  ResetPasswordFailedWithError({required this.message});
+  @override
+  List<Object?> get props => [message];
+}
+
+class ResetPasswordSuccess extends AuthState {
+  final String message;
+  ResetPasswordSuccess({required this.message});
+  @override
+  List<Object?> get props => [message];
+}

@@ -42,7 +42,7 @@ class LocalDataService {
   Future<Task> createTask(Task task) async {
     var masterasset = task.masterAsset!.map((e) => e).toList()
       ..sort((a, b) => a.id.compareTo(b.id));
-    final assetsDB = masterasset.mapIndexed((idx, masterAsset) {
+    List<AssetsDB> assetsDB = masterasset.mapIndexed((idx, masterAsset) {
       return AssetsDB(
         section: masterAsset.section,
         category: masterAsset.category,
@@ -123,6 +123,7 @@ class LocalDataService {
       ..createdDate = task.created_at
       ..submitedDate = task.submitedDate
       ..verifiedDate = task.verifiedDate
+      ..notBefore = task.notBefore
       ..status = task.status
       ..assets.addAll(assetsDB)
       ..categoriesChecklist.addAll(categoryPointChecklistDB)

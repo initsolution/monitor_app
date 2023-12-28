@@ -33,25 +33,36 @@ class IconTaskStatus extends StatelessWidget {
             style: TextStyle(fontSize: 12, color: Colors.white),
           ),
         );
-      case 'verified':
+      case 'accepted':
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           decoration: BoxDecoration(
               color: const Color(0xFF48DC23),
               borderRadius: BorderRadius.circular(20)),
           child: const Text(
-            'Verified',
+            'Accepted',
             style: TextStyle(fontSize: 12, color: Colors.white),
           ),
         );
-      case 'revision':
+      case 'rejected':
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           decoration: BoxDecoration(
               color: const Color(0xFFF60000),
               borderRadius: BorderRadius.circular(20)),
           child: const Text(
-            'Revision',
+            'Rejected',
+            style: TextStyle(fontSize: 12, color: Colors.white),
+          ),
+        );
+      case 'expired':
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+          decoration: BoxDecoration(
+              color: const Color(0xFFA2A2A2),
+              borderRadius: BorderRadius.circular(20)),
+          child: const Text(
+            'Expired',
             style: TextStyle(fontSize: 12, color: Colors.white),
           ),
         );
@@ -59,10 +70,10 @@ class IconTaskStatus extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           decoration: BoxDecoration(
-              color: const Color(0xFF005EFF),
+              color: const Color(0xFF000000),
               borderRadius: BorderRadius.circular(20)),
           child: const Text(
-            'To Do',
+            'Unknown',
             style: TextStyle(fontSize: 12, color: Colors.white),
           ),
         );

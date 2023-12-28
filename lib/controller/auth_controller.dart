@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/model/user_preferences.dart';
-
+import 'package:dio/dio.dart';
 import 'package:monitor_app/mstate/auth_state.dart';
 
 final authControllerProvider = NotifierProvider<AuthController, AuthState>(
@@ -55,6 +55,25 @@ class AuthController extends Notifier<AuthState> {
     } else {
       state =
           AuthFailedWithError(message: httpResponse.response.data['message']);
+    }
+  }
+
+  void resetPassword(String email) async {
+    state = AuthLoading();
+    try {
+      final httpResponse =
+          await ref.read(authRepoProvider).resetPassword(email);
+      debugPrint(httpResponse.response.data.toString());
+      if (httpResponse.response.data['statusCode'] == HttpStatus.accepted) {
+        var message = httpResponse.response.data['message'];
+        state = ResetPasswordSuccess(message: message);
+      } else {
+        var message = httpResponse.response.data['message'];
+        state = ResetPasswordFailedWithError(message: message);
+      }
+    } on DioException catch (e) {
+      var message = e.response?.data['message'];
+      state = ResetPasswordFailedWithError(message: message);
     }
   }
 }

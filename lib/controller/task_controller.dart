@@ -65,14 +65,14 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
           "reportRegulerVerticality.valueVerticality"
         ],
       };
-      debugPrint(filters.toString());
+      // debugPrint(filters.toString());
       // bandingkan tasks yang didapat dengan db local isar
       final tasks =
           await ref.read(restServiceProvider).getAllTaskByNIK(queries, token);
 
-      for (var task in tasks) {
-        debugPrint('rest task : (${task.id}) : ${task.verifierEmployee.nik}');
-      }
+      // for (var task in tasks) {
+      //   debugPrint('rest task : (${task.id}) : ${task.verifierEmployee.nik}');
+      // }
       state = TaskLoaded(tasks: tasks);
 
       // var localTasks = await ref.read(localdataServiceProvider).getAllTasks();
@@ -401,11 +401,13 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
             // status["title"] = "Information";
             // status["message"] = asset.category + ";" + asset.description;
             // status["type"] = "asset";
-            return status = {
-              "title": "Informasi",
-              "message": asset.category + ";" + asset.description,
-              "type": "asset"
-            };
+            if (asset.category != "TEMUAN") {
+              return status = {
+                "title": "Informasi",
+                "message": "${asset.category};${asset.description}",
+                "type": "asset"
+              };
+            }
           } else {
             var isFileExists = File(asset.url).existsSync();
             if (!isFileExists) {
@@ -414,7 +416,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
               // status["type"] = "asset";
               return status = {
                 "title": "File Gambar Tidak Ada",
-                "message": asset.category + ";" + asset.description,
+                "message": "${asset.category};${asset.description}",
                 "type": "asset"
               };
             }
@@ -430,11 +432,13 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
             // status["title"] = "Information";
             // status["message"] = asset.category + ";" + asset.description;
             // status["type"] = "asset";
-            return status = {
-              "title": "Informasi",
-              "message": asset.category + ";" + asset.description,
-              "type": "asset"
-            };
+            if (asset.category != "TEMUAN") {
+              return status = {
+                "title": "Informasi",
+                "message": "${asset.category};${asset.description}",
+                "type": "asset"
+              };
+            }
           } else {
             var isFileExists = File(asset.url).existsSync();
             if (!isFileExists) {
@@ -443,7 +447,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
               // status["type"] = "asset";
               return status = {
                 "title": "File Gambar Tidak Ada",
-                "message": asset.category + ";" + asset.description,
+                "message": "${asset.category};${asset.description}",
                 "type": "asset"
               };
             }
@@ -459,7 +463,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
             // status["type"] = "torque";
             return status = {
               "title": "Informasi",
-              "message": e.towerSegment + ";",
+              "message": "${e.towerSegment};",
               "type": "torque"
             };
           }

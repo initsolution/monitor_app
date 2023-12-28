@@ -16,6 +16,7 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
       dueDate: json['dueDate'] as String?,
       submitedDate: json['submitedDate'] as String?,
       verifiedDate: json['verifiedDate'] as String?,
+      notBefore: json['notBefore'] as String?,
       status: json['status'] as String,
       masterAsset: (json['masterAsset'] as List<dynamic>?)
           ?.map((e) => MasterAsset.fromJson(e as Map<String, dynamic>))
@@ -52,6 +53,7 @@ Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'dueDate': instance.dueDate,
       'submitedDate': instance.submitedDate,
       'verifiedDate': instance.verifiedDate,
+      'notBefore': instance.notBefore,
       'status': instance.status,
       'masterAsset': instance.masterAsset,
       'masterChecklist': instance.masterChecklist,

@@ -52,50 +52,53 @@ class TaskCard extends ConsumerWidget {
             '${task.site.id} - ${task.site.name}',
             style: const TextStyle(fontSize: 16),
           ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                decoration: BoxDecoration(
-                    color: Colors.black87,
-                    borderRadius: BorderRadius.circular(5)),
-                child: task.dueDate != null
-                    ? Text(
+          const SizedBox(height: 20),
+          task.dueDate != null
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 2, horizontal: 8),
+                      decoration: BoxDecoration(
+                          color: selisihTanggal(task.dueDate!) > 3
+                              ? Colors.black
+                              : Colors.red,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Text(
                         'Due Date: ${formatTanggalIndonesia(task.dueDate!, 3)}',
                         style: const TextStyle(color: Colors.white),
-                      )
-                    : const Text('-'),
-              ),
-              task.dueDate != null
-                  ? Text(
-                      '${selisihTanggal(task.dueDate!)}d left',
-                      style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-                    )
-                  : const Text('-'),
-            ],
-          ),
-          // const SizedBox(height: 20),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     Row(
-          //       children: [
-          //         SvgPicture.asset(
-          //           icCalendar,
-          //           width: 14,
-          //           height: 14,
-          //         ),
-          //         const SizedBox(width: 10),
-          //         Text(todo.createdDate)
-          //       ],
-          //     ),
-          //   ],
-          // ),
+                      ),
+                    ),
+                    _buildDaysLeft(task.dueDate!)
+                  ],
+                )
+              : Container(),
         ]),
       ),
     );
+  }
+
+  Widget _buildDaysLeft(String dueDate) {
+    int selisih = selisihTanggal(dueDate);
+    if (selisih > 0) {
+      return Text(
+        "${selisih}d left",
+        style: TextStyle(
+            color: (selisih <= 3) ? Colors.red : Colors.black,
+            fontWeight: FontWeight.bold),
+      );
+    } else if (selisih == 0) {
+      return const Text(
+        "today",
+        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+      );
+    } else {
+      return const Text(
+        "expired",
+        style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+      );
+    }
   }
 
   // SvgPicture _buildTodoIcon(String todoType) {

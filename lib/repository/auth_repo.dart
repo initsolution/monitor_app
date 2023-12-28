@@ -11,4 +11,7 @@ abstract class AuthRepository {
 
   @POST('/employee/login')
   Future<HttpResponse> login(@Body() Map<String, dynamic> body);
+
+  @GET('/employee/resetDataPassword/{email}')
+  Future<HttpResponse> resetPassword(@Path() String email);
 }

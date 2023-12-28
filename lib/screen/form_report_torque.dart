@@ -60,18 +60,19 @@ class _FormReportTorqueState extends ConsumerState<FormReportTorque> {
         appBar: AppBar(
           title: const Text('Rep. Bolt Tightening Torque'),
           actions: [
-            IconButton(
-                onPressed: () async {
-                  if (reports != null) {
-                    for (int i = 0; i < reports!.length; i++) {
-                      reports![i].remark = controllers[i].text;
+            if (widget.task.status.toLowerCase() == "todo")
+              IconButton(
+                  onPressed: () async {
+                    if (reports != null) {
+                      for (int i = 0; i < reports!.length; i++) {
+                        reports![i].remark = controllers[i].text;
+                      }
+                      ref
+                          .read(taskControllerProvider.notifier)
+                          .updateReportTorque(reports!);
                     }
-                    ref
-                        .read(taskControllerProvider.notifier)
-                        .updateReportTorque(reports!);
-                  }
-                },
-                icon: const Icon(Icons.save)),
+                  },
+                  icon: const Icon(Icons.save)),
           ],
         ),
         body: Container(

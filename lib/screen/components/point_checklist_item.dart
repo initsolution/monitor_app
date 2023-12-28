@@ -9,7 +9,10 @@ import 'package:monitor_app/model/point_checklist_preventive.dart';
 
 class PointChecklistItem extends ConsumerStatefulWidget {
   final PointChecklistPreventive pointChecklist;
-  const PointChecklistItem({Key? key, required this.pointChecklist})
+  final bool isEditable;
+
+  const PointChecklistItem(
+      {Key? key, required this.pointChecklist, required this.isEditable})
       : super(key: key);
 
   @override
@@ -46,6 +49,13 @@ class _PointChecklistItemState extends ConsumerState<PointChecklistItem> {
   }
 
   @override
+  void dispose() {
+    uraianTextController.dispose();
+    kriteriaTextController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (pointChecklist.isChecklist) {
       return Container(
@@ -58,7 +68,8 @@ class _PointChecklistItemState extends ConsumerState<PointChecklistItem> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             InkWell(
-              onTap: () => _displayUraianDialog(context),
+              onTap: () =>
+                  widget.isEditable ? _displayUraianDialog(context) : null,
               child: Text(
                 pointChecklist.uraian,
                 style: const TextStyle(fontWeight: FontWeight.bold),
@@ -66,7 +77,8 @@ class _PointChecklistItemState extends ConsumerState<PointChecklistItem> {
             ),
             const SizedBox(height: 10),
             InkWell(
-              onTap: () => _displayKriteriaDialog(context),
+              onTap: () =>
+                  widget.isEditable ? _displayKriteriaDialog(context) : null,
               child: Text(pointChecklist.kriteria ?? ""),
             ),
             const SizedBox(height: 10),
@@ -90,7 +102,8 @@ class _PointChecklistItemState extends ConsumerState<PointChecklistItem> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             InkWell(
-              onTap: () => _displayUraianDialog(context),
+              onTap: () =>
+                  widget.isEditable ? _displayUraianDialog(context) : null,
               child: Text(
                 pointChecklist.uraian,
                 style: const TextStyle(fontWeight: FontWeight.bold),
@@ -98,7 +111,8 @@ class _PointChecklistItemState extends ConsumerState<PointChecklistItem> {
             ),
             const SizedBox(height: 10),
             InkWell(
-              onTap: () => _displayKriteriaDialog(context),
+              onTap: () =>
+                  widget.isEditable ? _displayKriteriaDialog(context) : null,
               child: Text(pointChecklist.kriteria ?? ""),
             ),
           ],
@@ -109,45 +123,38 @@ class _PointChecklistItemState extends ConsumerState<PointChecklistItem> {
 
   Widget buildChecklistButton(ChecklistValue value, String text) {
     // debugPrint("checkButton : ${pointChecklist.hasil} = ${value.name}");
-    return Consumer(
-      builder: (context, ref, child) {
-        bool isEditable = ref.watch(isEditableChecklist);
-
-        return OutlinedButton(
-          onPressed: isEditable
-              ? () {
-                  pointChecklist.hasil = value.name;
-                  ref
-                      .read(taskControllerProvider.notifier)
-                      .updatePointChecklist(pointChecklist);
-                  setState(() {
-                    ckValue = value;
-                  });
-                }
-              : null,
-          style: OutlinedButton.styleFrom(
-            minimumSize: const Size(100, 40),
-            backgroundColor: (pointChecklist.hasil.toLowerCase() == value.name)
+    return OutlinedButton(
+      onPressed: widget.isEditable
+          ? () {
+              pointChecklist.hasil = value.name;
+              ref
+                  .read(taskControllerProvider.notifier)
+                  .updatePointChecklist(pointChecklist);
+              setState(() {
+                ckValue = value;
+              });
+            }
+          : null,
+      style: OutlinedButton.styleFrom(
+        minimumSize: const Size(100, 40),
+        backgroundColor: (pointChecklist.hasil.toLowerCase() == value.name)
+            ? Colors.lightBlueAccent
+            : Colors.transparent,
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        side: BorderSide(
+            width: 1.5,
+            color: (pointChecklist.hasil.toLowerCase() == value.name)
                 ? Colors.lightBlueAccent
-                : Colors.transparent,
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            side: BorderSide(
-                width: 1.5,
-                color: (pointChecklist.hasil.toLowerCase() == value.name)
-                    ? Colors.lightBlueAccent
-                    : Colors.black),
-          ),
-          child: Text(
-            text,
-            style: TextStyle(
-                color: (pointChecklist.hasil.toLowerCase() == value.name)
-                    ? Colors.white
-                    : Colors.black),
-          ),
-        );
-      },
+                : Colors.black),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+            color: (pointChecklist.hasil.toLowerCase() == value.name)
+                ? Colors.white
+                : Colors.black),
+      ),
     );
   }
 

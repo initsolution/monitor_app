@@ -143,13 +143,13 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   for (var asset in assets!) {
                     if (idx % 3 == 0) {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1702518316507.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1703651268255.jpg";
                     } else if (idx % 3 == 1) {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1702518316507.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1703651276460.jpg";
                     } else {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1702518316507.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1703651281588.jpg";
                     }
                     idx++;
                     await ref
@@ -673,7 +673,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               )
-            : Container(),
+            : Container(padding: const EdgeInsets.symmetric(vertical: 10)),
         ListView.separated(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,

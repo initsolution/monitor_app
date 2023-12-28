@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monitor_app/controller/app_provider.dart';
 
 import 'package:monitor_app/model/category_checklist_preventive.dart';
 import 'package:monitor_app/screen/components/point_checklist_item.dart';
@@ -61,16 +62,20 @@ class _FormChecklistScreenState extends ConsumerState<FormChecklistScreen> {
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
-              ListView.separated(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemBuilder: (context, index) => PointChecklistItem(
-                      pointChecklist: c.points![index]),
-                  // _buildChecklistItem(checklist, index),
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 10),
-                  itemCount:
-                      c.points != null ? c.points!.length : 0),
+              Consumer(builder: (context, ref, child) {
+                bool isEditable = ref.watch(isEditableChecklist);
+                return ListView.separated(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemBuilder: (context, index) => PointChecklistItem(
+                          pointChecklist: c.points![index],
+                          isEditable: isEditable,
+                        ),
+                    // _buildChecklistItem(checklist, index),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 10),
+                    itemCount: c.points != null ? c.points!.length : 0);
+              }),
             ],
           );
         },

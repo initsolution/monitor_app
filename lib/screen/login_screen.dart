@@ -5,6 +5,7 @@ import 'package:monitor_app/mstate/auth_state.dart';
 import 'package:monitor_app/screen/home_screen.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:monitor_app/screen/reset_password_screen.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -88,8 +89,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(),
+              const Spacer(),
               FormBuilderTextField(
                 name: 'username',
                 keyboardType: TextInputType.emailAddress,
@@ -123,6 +127,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     'LOGIN',
                     style: TextStyle(color: Colors.white),
                   )),
+              const Spacer(),
+              InkWell(
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => const ResetPasswordScreen()),
+                ),
+                child: const Text('forget password?',
+                    style: TextStyle(color: Colors.lightBlue)),
+              )
             ],
           ),
         ),

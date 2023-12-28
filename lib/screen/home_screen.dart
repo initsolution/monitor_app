@@ -1,10 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:monitor_app/constants/constants.dart';
 import 'package:monitor_app/controller/app_provider.dart';
+import 'package:monitor_app/helpers/utils.dart';
 import 'package:monitor_app/model/account.dart';
 import 'package:monitor_app/model/user_preferences.dart';
 import 'package:monitor_app/screen/account_screen.dart';
@@ -83,7 +85,12 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           ),
         ],
       ),
-      body: _getBody(),
+      body: WillPopScope(
+          onWillPop: () async => await showDialog(
+                context: context,
+                builder: (context) => _showDialogExit(),
+              ),
+          child: _getBody()),
     );
   }
 
@@ -130,12 +137,79 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                             task: state.tasks[index],
                             onSelectTask: () async {
                               if (state.tasks[index].status == STATUS_TODO) {
+                                debugPrint(
+                                    'not before ${state.tasks[index].notBefore}');
+                                DateTime? notBefore =
+                                    state.tasks[index].notBefore != null
+                                        ? DateTime.parse(
+                                            state.tasks[index].notBefore!)
+                                        : null;
+
+                                if (notBefore != null &&
+                                    DateTime.now().isBefore(notBefore)) {
+                                  debugPrint('Belum boleh dikerjakan');
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => const AlertDialog(
+                                      title: Text('Info'),
+                                      content: Text(
+                                          'Anda belum bisa mengerjakan tugas ini karena jangka waktu pengerjaan tugas selanjutnya minimal 20 hari dari pengerjaan tugas'),
+                                    ),
+                                  );
+                                  return;
+                                }
+
+                                debugPrint('Boleh dikerjakan');
                                 ref
                                     .read(taskControllerProvider.notifier)
                                     .isTaskFoundInLocal(
                                         task: state.tasks[index]);
                                 ref.read(isEditableChecklist.notifier).state =
                                     true;
+
+                                // if (state.tasks[index].notBefore != null &&
+                                //     DateTime.now().isBefore(DateTime.parse(
+                                //         state.tasks[index].notBefore!))) {
+                                //   debugPrint('Belum boleh dikerjakan');
+                                // } else {
+                                //   debugPrint('Boleh dikerjakan');
+                                // }
+
+                                // if (state.tasks[index].notBefore != null) {
+                                //   DateTime notBefore = DateTime.parse(
+                                //       state.tasks[index].notBefore!);
+                                //   if (DateTime.now().isBefore(notBefore)) {
+                                //     debugPrint('Belum boleh dikerjakan');
+                                //   } else {
+                                //     debugPrint('Boleh dikerjakan');
+                                //     // ref
+                                //     //     .read(taskControllerProvider.notifier)
+                                //     //     .isTaskFoundInLocal(
+                                //     //         task: state.tasks[index]);
+                                //     // ref
+                                //     //     .read(isEditableChecklist.notifier)
+                                //     //     .state = true;
+                                //   }
+                                // } else {
+                                //   debugPrint('Boleh dikerjakan');
+                                //   // ref
+                                //   //     .read(taskControllerProvider.notifier)
+                                //   //     .isTaskFoundInLocal(
+                                //   //         task: state.tasks[index]);
+                                //   // ref.read(isEditableChecklist.notifier).state =
+                                //   //     true;
+                                // }
+                              } else if (state.tasks[index].status ==
+                                  STATUS_EXPIRED) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => const AlertDialog(
+                                    title: Text('Peringatan'),
+                                    content: Text(
+                                        'Anda tidak bisa mengerjakan tugas ini karena jangka waktu pengerjaan tugas sudah habis!'),
+                                  ),
+                                );
+                                return;
                               } else {
                                 ref
                                     .read(taskControllerProvider.notifier)
@@ -344,5 +418,21 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         ),
       );
     });
+  }
+
+  _showDialogExit() {
+    return AlertDialog(
+      actionsAlignment: MainAxisAlignment.spaceBetween,
+      actions: [
+        TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Ya')),
+        TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Tidak'))
+      ],
+      title: const Text('Keluar Aplikasi'),
+      content: const Text('Apakah Anda yakin ingin keluar dari aplikasi?'),
+    );
   }
 }

@@ -24,6 +24,7 @@ class TaskDB {
   String? dueDate;
   String? submitedDate;
   String? verifiedDate;
+  String? notBefore;
   late String status;
 
   final assets = IsarLinks<AssetsDB>();

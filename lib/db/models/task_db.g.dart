@@ -32,23 +32,28 @@ const TaskDBSchema = CollectionSchema(
       name: r'idTask',
       type: IsarType.long,
     ),
-    r'status': PropertySchema(
+    r'notBefore': PropertySchema(
       id: 3,
+      name: r'notBefore',
+      type: IsarType.string,
+    ),
+    r'status': PropertySchema(
+      id: 4,
       name: r'status',
       type: IsarType.string,
     ),
     r'submitedDate': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'submitedDate',
       type: IsarType.string,
     ),
     r'type': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'type',
       type: IsarType.string,
     ),
     r'verifiedDate': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'verifiedDate',
       type: IsarType.string,
     )
@@ -131,6 +136,12 @@ int _taskDBEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
+  {
+    final value = object.notBefore;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.status.length * 3;
   {
     final value = object.submitedDate;
@@ -157,10 +168,11 @@ void _taskDBSerialize(
   writer.writeString(offsets[0], object.createdDate);
   writer.writeString(offsets[1], object.dueDate);
   writer.writeLong(offsets[2], object.idTask);
-  writer.writeString(offsets[3], object.status);
-  writer.writeString(offsets[4], object.submitedDate);
-  writer.writeString(offsets[5], object.type);
-  writer.writeString(offsets[6], object.verifiedDate);
+  writer.writeString(offsets[3], object.notBefore);
+  writer.writeString(offsets[4], object.status);
+  writer.writeString(offsets[5], object.submitedDate);
+  writer.writeString(offsets[6], object.type);
+  writer.writeString(offsets[7], object.verifiedDate);
 }
 
 TaskDB _taskDBDeserialize(
@@ -174,10 +186,11 @@ TaskDB _taskDBDeserialize(
   object.dueDate = reader.readStringOrNull(offsets[1]);
   object.id = id;
   object.idTask = reader.readLong(offsets[2]);
-  object.status = reader.readString(offsets[3]);
-  object.submitedDate = reader.readStringOrNull(offsets[4]);
-  object.type = reader.readString(offsets[5]);
-  object.verifiedDate = reader.readStringOrNull(offsets[6]);
+  object.notBefore = reader.readStringOrNull(offsets[3]);
+  object.status = reader.readString(offsets[4]);
+  object.submitedDate = reader.readStringOrNull(offsets[5]);
+  object.type = reader.readString(offsets[6]);
+  object.verifiedDate = reader.readStringOrNull(offsets[7]);
   return object;
 }
 
@@ -195,12 +208,14 @@ P _taskDBDeserializeProp<P>(
     case 2:
       return (reader.readLong(offset)) as P;
     case 3:
-      return (reader.readString(offset)) as P;
-    case 4:
       return (reader.readStringOrNull(offset)) as P;
-    case 5:
+    case 4:
       return (reader.readString(offset)) as P;
+    case 5:
+      return (reader.readStringOrNull(offset)) as P;
     case 6:
+      return (reader.readString(offset)) as P;
+    case 7:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -841,6 +856,152 @@ extension TaskDBQueryFilter on QueryBuilder<TaskDB, TaskDB, QFilterCondition> {
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> notBeforeIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'notBefore',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> notBeforeIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'notBefore',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> notBeforeEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'notBefore',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> notBeforeGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'notBefore',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> notBeforeLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'notBefore',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> notBeforeBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'notBefore',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> notBeforeStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'notBefore',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> notBeforeEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'notBefore',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> notBeforeContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'notBefore',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> notBeforeMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'notBefore',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> notBeforeIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'notBefore',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterFilterCondition> notBeforeIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'notBefore',
+        value: '',
       ));
     });
   }
@@ -1655,6 +1816,18 @@ extension TaskDBQuerySortBy on QueryBuilder<TaskDB, TaskDB, QSortBy> {
     });
   }
 
+  QueryBuilder<TaskDB, TaskDB, QAfterSortBy> sortByNotBefore() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'notBefore', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterSortBy> sortByNotBeforeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'notBefore', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskDB, TaskDB, QAfterSortBy> sortByStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'status', Sort.asc);
@@ -1753,6 +1926,18 @@ extension TaskDBQuerySortThenBy on QueryBuilder<TaskDB, TaskDB, QSortThenBy> {
     });
   }
 
+  QueryBuilder<TaskDB, TaskDB, QAfterSortBy> thenByNotBefore() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'notBefore', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskDB, TaskDB, QAfterSortBy> thenByNotBeforeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'notBefore', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskDB, TaskDB, QAfterSortBy> thenByStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'status', Sort.asc);
@@ -1823,6 +2008,13 @@ extension TaskDBQueryWhereDistinct on QueryBuilder<TaskDB, TaskDB, QDistinct> {
     });
   }
 
+  QueryBuilder<TaskDB, TaskDB, QDistinct> distinctByNotBefore(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'notBefore', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<TaskDB, TaskDB, QDistinct> distinctByStatus(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1874,6 +2066,12 @@ extension TaskDBQueryProperty on QueryBuilder<TaskDB, TaskDB, QQueryProperty> {
   QueryBuilder<TaskDB, int, QQueryOperations> idTaskProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'idTask');
+    });
+  }
+
+  QueryBuilder<TaskDB, String?, QQueryOperations> notBeforeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'notBefore');
     });
   }
 

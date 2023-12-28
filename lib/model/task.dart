@@ -26,6 +26,7 @@ class Task {
   final String? dueDate;
   late String? submitedDate;
   final String? verifiedDate;
+  final String? notBefore;
   late String status;
   final List<MasterAsset>? masterAsset;
   final List<MasterChecklist>? masterChecklist;
@@ -47,6 +48,7 @@ class Task {
     this.dueDate,
     this.submitedDate,
     this.verifiedDate,
+    this.notBefore,
     required this.status,
     this.masterAsset,
     this.masterChecklist,
@@ -88,6 +90,7 @@ class Task {
         dueDate: taskDB.dueDate,
         submitedDate: taskDB.submitedDate,
         verifiedDate: taskDB.verifiedDate,
+        notBefore: taskDB.notBefore,
         status: taskDB.status,
         masterAsset: null,
         masterChecklist: null,

@@ -168,111 +168,112 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
         appBar: AppBar(
           title: const Text('Rep. Verticality'),
           actions: [
-            IconButton(
-                onPressed: () async {
-                  if (theodoliteValue == theodoliteValue2) {
-                  warningDialog();
-                  return;
-                }
+            if (widget.task.status.toLowerCase() == "todo")
+              IconButton(
+                  onPressed: () async {
+                    if (theodoliteValue == theodoliteValue2) {
+                      warningDialog();
+                      return;
+                    }
 
-                if (widget.task.reportRegVerticality != null) {
-                    List<ValueVerticality> valueVerticalities = [];
-                    //theo 1
-                    for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                      ValueVerticality valueVerticality = ValueVerticality(
-                          id: widget.task.reportRegVerticality!
-                              .valueVerticality![i].id,
-                          theodoliteIndex: 1,
-                          section: i + 1,
-                          miringKe: miringKe[i],
-                          value: valueT1Con[i].text != ''
-                              ? int.parse(valueT1Con[i].text)
-                              : 0);
-                      valueVerticalities.add(valueVerticality);
+                    if (widget.task.reportRegVerticality != null) {
+                      List<ValueVerticality> valueVerticalities = [];
+                      //theo 1
+                      for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                        ValueVerticality valueVerticality = ValueVerticality(
+                            id: widget.task.reportRegVerticality!
+                                .valueVerticality![i].id,
+                            theodoliteIndex: 1,
+                            section: i + 1,
+                            miringKe: miringKe[i],
+                            value: valueT1Con[i].text != ''
+                                ? int.parse(valueT1Con[i].text)
+                                : 0);
+                        valueVerticalities.add(valueVerticality);
+                      }
+                      //theo 2
+                      for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                        ValueVerticality valueVerticality = ValueVerticality(
+                            id: widget.task.reportRegVerticality!
+                                .valueVerticality![MAX_SECTION_NUMBER + i].id,
+                            theodoliteIndex: 2,
+                            section: i + 1,
+                            miringKe: miringKe2[i],
+                            value: valueT2Con[i].text != ''
+                                ? int.parse(valueT2Con[i].text)
+                                : 0);
+                        valueVerticalities.add(valueVerticality);
+                      }
+                      ReportRegVerticality report = ReportRegVerticality(
+                          id: widget.task.reportRegVerticality!.id,
+                          horizontalityAb:
+                              horCon1.text != '' ? int.parse(horCon1.text) : 0,
+                          horizontalityBc:
+                              horCon2.text != '' ? int.parse(horCon2.text) : 0,
+                          horizontalityCd:
+                              horCon3.text != '' ? int.parse(horCon3.text) : 0,
+                          horizontalityDa:
+                              horCon4.text != '' ? int.parse(horCon4.text) : 0,
+                          theodolite1: theodoliteValue,
+                          theodolite2: theodoliteValue2,
+                          alatUkur: alatUkurCon.text,
+                          toleransiKetegakan: toleransiKetegakanMenara,
+                          valueVerticality: valueVerticalities);
+                      ref
+                          .read(taskControllerProvider.notifier)
+                          .saveReportVerticality(widget.task.id, report);
+                    } else {
+                      List<ValueVerticality> valueVerticalities = [];
+                      for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                        ValueVerticality valueVerticality = ValueVerticality(
+                            theodoliteIndex: 1,
+                            section: i + 1,
+                            miringKe: miringKe[i],
+                            value: valueT1Con[i].text != ''
+                                ? int.parse(valueT1Con[i].text)
+                                : 0);
+                        valueVerticalities.add(valueVerticality);
+                      }
+                      for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
+                        ValueVerticality valueVerticality = ValueVerticality(
+                            theodoliteIndex: 2,
+                            section: i + 1,
+                            miringKe: miringKe2[i],
+                            value: valueT2Con[i].text != ''
+                                ? int.parse(valueT2Con[i].text)
+                                : 0);
+                        valueVerticalities.add(valueVerticality);
+                      }
+                      ReportRegVerticality report = ReportRegVerticality(
+                          horizontalityAb:
+                              horCon1.text != '' ? int.parse(horCon1.text) : 0,
+                          horizontalityBc:
+                              horCon2.text != '' ? int.parse(horCon2.text) : 0,
+                          horizontalityCd:
+                              horCon3.text != '' ? int.parse(horCon3.text) : 0,
+                          horizontalityDa:
+                              horCon4.text != '' ? int.parse(horCon4.text) : 0,
+                          theodolite1: theodoliteValue,
+                          theodolite2: theodoliteValue2,
+                          alatUkur: alatUkurCon.text,
+                          toleransiKetegakan: toleransiKetegakanMenara,
+                          valueVerticality: valueVerticalities);
+                      ref
+                          .read(taskControllerProvider.notifier)
+                          .saveReportVerticality(widget.task.id, report);
                     }
-                    //theo 2
-                    for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                      ValueVerticality valueVerticality = ValueVerticality(
-                          id: widget.task.reportRegVerticality!
-                              .valueVerticality![MAX_SECTION_NUMBER + i].id,
-                          theodoliteIndex: 2,
-                          section: i + 1,
-                          miringKe: miringKe2[i],
-                          value: valueT2Con[i].text != ''
-                              ? int.parse(valueT2Con[i].text)
-                              : 0);
-                      valueVerticalities.add(valueVerticality);
-                    }
-                    ReportRegVerticality report = ReportRegVerticality(
-                        id: widget.task.reportRegVerticality!.id,
-                        horizontalityAb:
-                            horCon1.text != '' ? int.parse(horCon1.text) : 0,
-                        horizontalityBc:
-                            horCon2.text != '' ? int.parse(horCon2.text) : 0,
-                        horizontalityCd:
-                            horCon3.text != '' ? int.parse(horCon3.text) : 0,
-                        horizontalityDa:
-                            horCon4.text != '' ? int.parse(horCon4.text) : 0,
-                        theodolite1: theodoliteValue,
-                        theodolite2: theodoliteValue2,
-                        alatUkur: alatUkurCon.text,
-                        toleransiKetegakan: toleransiKetegakanMenara,
-                        valueVerticality: valueVerticalities);
-                    ref
-                        .read(taskControllerProvider.notifier)
-                        .saveReportVerticality(widget.task.id, report);
-                  } else {
-                    List<ValueVerticality> valueVerticalities = [];
-                    for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                      ValueVerticality valueVerticality = ValueVerticality(
-                          theodoliteIndex: 1,
-                          section: i + 1,
-                          miringKe: miringKe[i],
-                          value: valueT1Con[i].text != ''
-                              ? int.parse(valueT1Con[i].text)
-                              : 0);
-                      valueVerticalities.add(valueVerticality);
-                    }
-                    for (var i = 0; i < MAX_SECTION_NUMBER; i++) {
-                      ValueVerticality valueVerticality = ValueVerticality(
-                          theodoliteIndex: 2,
-                          section: i + 1,
-                          miringKe: miringKe2[i],
-                          value: valueT2Con[i].text != ''
-                              ? int.parse(valueT2Con[i].text)
-                              : 0);
-                      valueVerticalities.add(valueVerticality);
-                    }
-                    ReportRegVerticality report = ReportRegVerticality(
-                        horizontalityAb:
-                            horCon1.text != '' ? int.parse(horCon1.text) : 0,
-                        horizontalityBc:
-                            horCon2.text != '' ? int.parse(horCon2.text) : 0,
-                        horizontalityCd:
-                            horCon3.text != '' ? int.parse(horCon3.text) : 0,
-                        horizontalityDa:
-                            horCon4.text != '' ? int.parse(horCon4.text) : 0,
-                        theodolite1: theodoliteValue,
-                        theodolite2: theodoliteValue2,
-                        alatUkur: alatUkurCon.text,
-                        toleransiKetegakan: toleransiKetegakanMenara,
-                        valueVerticality: valueVerticalities);
-                    ref
-                        .read(taskControllerProvider.notifier)
-                        .saveReportVerticality(widget.task.id, report);
-                  }
-                },
-                // onPressed: () async {
-                //   if (reports != null) {
-                //     for (int i = 0; i < reports!.length; i++) {
-                //       reports![i].remark = controllers[i].text;
-                //     }
-                //     ref
-                //         .read(taskControllerProvider.notifier)
-                //         .updateReportTorque(reports!);
-                //   }
-                // },
-                icon: const Icon(Icons.save)),
+                  },
+                  // onPressed: () async {
+                  //   if (reports != null) {
+                  //     for (int i = 0; i < reports!.length; i++) {
+                  //       reports![i].remark = controllers[i].text;
+                  //     }
+                  //     ref
+                  //         .read(taskControllerProvider.notifier)
+                  //         .updateReportTorque(reports!);
+                  //   }
+                  // },
+                  icon: const Icon(Icons.save)),
           ],
         ),
         body: LayoutBuilder(
