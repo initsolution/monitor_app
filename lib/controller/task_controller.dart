@@ -16,6 +16,7 @@ import 'package:monitor_app/mstate/task_state.dart';
 
 import '../constants/constants.dart';
 import 'asset_controller.dart';
+import 'package:dio/dio.dart';
 
 final taskControllerProvider =
     AutoDisposeNotifierProvider<TaskController, TaskState>(
@@ -161,10 +162,16 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
   }
 
   uploadTaskByTaskId({required int taskId, required String token}) async {
+    try {
+      await ref.read(restServiceProvider).cancelUpload(taskId, token);
+    } on DioException catch (error) {
+      debugPrint('error $error');
+    }
+    
     var task = await ref.read(localdataServiceProvider).getTaskById(taskId);
     var status = _checkAllResourcesComplete(task);
     if (status["message"] == "complete") {
-      debugPrint('proses uploading');
+      // debugPrint('proses uploading');
       state = TaskLoading();
       var localTask =
           await ref.read(localdataServiceProvider).getTaskDBById(taskId);
@@ -267,8 +274,8 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
       await ref.read(localdataServiceProvider).deleteTask(taskId);
       state = TaskDataChangeSuccess();
     } else {
-      debugPrint('failed');
-      debugPrint(status["title"]);
+      // debugPrint('failed');
+      // debugPrint(status["title"]);
       state = TaskDataNotComplete(
           title: status["title"],
           message: status["message"],

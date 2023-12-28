@@ -67,3 +67,4 @@
 # 28/12/2023
 - proteksi report ketika status bukan todo
 - reset password
+- hit rest delete asset saat upload task

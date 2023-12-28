@@ -57,4 +57,8 @@ abstract class RestService {
     @Part(contentType: 'image/png', fileName: 'esign', name: 'file')
     List<int> file,
   );
+
+  @DELETE('/task/cancelUpload/{idTask}')
+  Future<HttpResponse> cancelUpload(
+      @Path() int idTask, @Header('Authorization') String token);
 }
