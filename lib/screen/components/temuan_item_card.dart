@@ -72,7 +72,7 @@ class _TemuanItemCardState extends ConsumerState<TemuanItemCard> {
                   )
                 : Center(
                     child: Image.network(
-                        '${urlRepo}/asset/getImage/${widget.asset.id}')),
+                        '$urlRepo/asset/getImage/${widget.asset.id}')),
           ),
         ),
         Container(

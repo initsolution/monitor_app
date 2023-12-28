@@ -1,12 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:monitor_app/constants/constants.dart';
 import 'package:monitor_app/controller/app_provider.dart';
-import 'package:monitor_app/helpers/utils.dart';
 import 'package:monitor_app/model/account.dart';
 import 'package:monitor_app/model/user_preferences.dart';
 import 'package:monitor_app/screen/account_screen.dart';

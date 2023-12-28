@@ -74,7 +74,7 @@ class _TemuanScreenState extends ConsumerState<TemuanScreen> {
       var state = ref.watch(assetControllerProvider);
       if (state is AssetLoaded) {
         var len = state.assets;
-        debugPrint('len : ${len}');
+        debugPrint('len : $len');
         // debugPrint('jumlah temuan card : ${state.assets.length.toString()}');
         return CustomScrollView(
           slivers: [

@@ -81,9 +81,13 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   Navigator.of(context)
                       .pushNamed(CameraScreen.routeName,
                           arguments: await availableCameras())
-                      .then((_) async => await ref
-                          .read(taskControllerProvider.notifier)
-                          .getTaskById(widget.task.id)),
+                      .then((_) async {
+                if (widget.task.status == STATUS_TODO) {
+                  await ref
+                      .read(taskControllerProvider.notifier)
+                      .getTaskById(widget.task.id);
+                }
+              }),
               icon: const Icon(Icons.camera_alt_rounded),
             ),
             IconButton(
@@ -242,9 +246,13 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
           GestureDetector(
             onTap: () => Navigator.of(context)
                 .pushNamed(FormReportVerticality.routeName, arguments: task)
-                .then((_) async => await ref
+                .then((_) async {
+              if (widget.task.status == STATUS_TODO) {
+                await ref
                     .read(taskControllerProvider.notifier)
-                    .getTaskById(widget.task.id)),
+                    .getTaskById(widget.task.id);
+              }
+            }),
             child: Container(
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(10),
@@ -510,12 +518,12 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
   }
 
   Widget _buildCategoriesAsset() {
-    bool isMultiTenant = false;
-    List<String> tenants =
-        task.site.tenants != null ? task.site.tenants!.split(';') : [];
-    if (tenants.length > 1) {
-      isMultiTenant = true;
-    }
+    // bool isMultiTenant = false;
+    // List<String> tenants =
+    //     task.site.tenants != null ? task.site.tenants!.split(';') : [];
+    // if (tenants.length > 1) {
+    //   isMultiTenant = true;
+    // }
     var sections = groupBy(task.asset!, (obj) => obj.section);
     Map<String, Map<String, List<Asset>>> result = {};
     for (var key in sections.keys) {
@@ -686,17 +694,21 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                     "TEMUAN") {
                   return await Navigator.of(context)
                       .push(
-                        MaterialPageRoute(
-                          builder: (context) => TemuanScreen(
-                            task: task,
-                            asset: categories.values.elementAt(index),
-                            section: key,
-                          ),
-                        ),
-                      )
-                      .then((_) async => await ref
+                    MaterialPageRoute(
+                      builder: (context) => TemuanScreen(
+                        task: task,
+                        asset: categories.values.elementAt(index),
+                        section: key,
+                      ),
+                    ),
+                  )
+                      .then((_) async {
+                    if (widget.task.status == STATUS_TODO) {
+                      await ref
                           .read(taskControllerProvider.notifier)
-                          .getTaskById(widget.task.id));
+                          .getTaskById(widget.task.id);
+                    }
+                  });
                 } else {
                   return await Navigator.of(context)
                       .push(

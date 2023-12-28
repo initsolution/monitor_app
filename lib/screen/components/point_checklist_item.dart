@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:monitor_app/constants/enum.dart';
-import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/controller/task_controller.dart';
 import 'package:monitor_app/model/point_checklist_preventive.dart';
 

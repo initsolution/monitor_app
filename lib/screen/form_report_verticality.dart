@@ -61,8 +61,8 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
     if (widget.task.reportRegVerticality == null) {
       theodoliteValue = theodoliteItems[0];
       theodoliteValue2 = theodoliteItems[0];
-      debugPrint('theoDolite : ${theodoliteValue}');
-      debugPrint('theoDolite : ${theodoliteValue2}');
+      debugPrint('theoDolite : $theodoliteValue');
+      debugPrint('theoDolite : $theodoliteValue2');
       miringKeItem = theodoliteItems[0].split('-');
       miringKeItem2 = theodoliteItems[0].split('-');
       for (int i = 0; i < MAX_SECTION_NUMBER; i++) {
@@ -77,8 +77,8 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
       } else {
         isEnable = false;
       }
-      var verticality = widget.task.reportRegVerticality!.valueVerticality!
-        ..sort((a, b) {
+      widget.task.reportRegVerticality!.valueVerticality!
+        .sort((a, b) {
           if (a.theodoliteIndex != b.theodoliteIndex) {
             return a.theodoliteIndex.compareTo(b.theodoliteIndex);
           } else {
