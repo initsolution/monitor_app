@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monitor_app/constants/constants.dart';
 import 'package:monitor_app/controller/task_controller.dart';
 import 'package:monitor_app/helpers/utils.dart';
 import 'package:monitor_app/model/report_reg_torque.dart';
@@ -32,7 +33,7 @@ class _FormReportTorqueState extends ConsumerState<FormReportTorque> {
       reports = null;
     }
 
-    if (widget.task.status.toLowerCase() == 'todo') {
+    if (widget.task.status.toLowerCase() == STATUS_TODO) {
       isEnable = true;
     } else {
       isEnable = false;
@@ -51,7 +52,7 @@ class _FormReportTorqueState extends ConsumerState<FormReportTorque> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        if (widget.task.status.toLowerCase() == "todo") {
+        if (widget.task.status.toLowerCase() == STATUS_TODO) {
           await showAlertDialog(context);
         }
         return true;
@@ -60,7 +61,7 @@ class _FormReportTorqueState extends ConsumerState<FormReportTorque> {
         appBar: AppBar(
           title: const Text('Rep. Bolt Tightening Torque'),
           actions: [
-            if (widget.task.status.toLowerCase() == "todo")
+            if (widget.task.status.toLowerCase() == STATUS_TODO)
               IconButton(
                   onPressed: () async {
                     if (reports != null) {
