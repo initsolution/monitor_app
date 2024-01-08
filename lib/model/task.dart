@@ -32,6 +32,7 @@ class Task {
   final List<MasterChecklist>? masterChecklist;
   final List<MasterReportRegTorque>? masterReportRegTorque;
   late List<Asset>? asset;
+  final String? note;
   @JsonKey(name: 'categorychecklistprev')
   late List<CategoryChecklistPreventive>? categoriesChecklist;
   @JsonKey(name: 'reportRegulerTorque')
@@ -54,6 +55,7 @@ class Task {
     this.masterChecklist,
     this.masterReportRegTorque,
     this.asset,
+    this.note,
     this.categoriesChecklist,
     this.reportRegTorque,
     this.reportRegVerticality,

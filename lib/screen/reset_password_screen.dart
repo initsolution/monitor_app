@@ -73,6 +73,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                     'RESET PASSWORD',
                     style: TextStyle(color: Colors.white),
                   )),
+              const SizedBox(height: 20),
               Consumer(
                 builder: (context, ref, child) {
                   var result = ref.watch(authControllerProvider);

@@ -67,3 +67,5 @@
 # 28/12/2023
 - proteksi report ketika status bukan todo
 - reset password
+# 08/01/2023
+- Add notes & feedback

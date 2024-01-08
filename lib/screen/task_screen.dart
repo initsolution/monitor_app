@@ -188,8 +188,10 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                 }
               })
             : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _getSiteInfo(),
+                  _buildNotes(),
                   task.type.toLowerCase() == "preventive"
                       ? _buildChecklistButton()
                       : _buildReportTorqueAndVerticality(),
@@ -397,6 +399,21 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
   //             style: TextStyle(color: Colors.white),
   //           )),
   //     );
+  Widget _buildNotes() {
+    return widget.task.note != null
+        ? Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text("Notes & Feedback\n",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                Text(widget.task.note!),
+              ],
+            ),
+          )
+        : Container();
+  }
 
   Widget _getSiteInfo() {
     return Visibility(
