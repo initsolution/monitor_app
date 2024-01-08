@@ -81,13 +81,9 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   Navigator.of(context)
                       .pushNamed(CameraScreen.routeName,
                           arguments: await availableCameras())
-                      .then((_) async {
-                if (widget.task.status == STATUS_TODO) {
-                  await ref
-                      .read(taskControllerProvider.notifier)
-                      .getTaskById(widget.task.id);
-                }
-              }),
+                      .then((_) async => await ref
+                          .read(taskControllerProvider.notifier)
+                          .getTaskById(widget.task.id)),
               icon: const Icon(Icons.camera_alt_rounded),
             ),
             IconButton(
@@ -147,13 +143,13 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   for (var asset in assets!) {
                     if (idx % 3 == 0) {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1703651268255.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1702518316507.jpg";
                     } else if (idx % 3 == 1) {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1703651276460.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1702518316507.jpg";
                     } else {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1703651281588.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1702518316507.jpg";
                     }
                     idx++;
                     await ref
@@ -248,13 +244,9 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
           GestureDetector(
             onTap: () => Navigator.of(context)
                 .pushNamed(FormReportVerticality.routeName, arguments: task)
-                .then((_) async {
-              if (widget.task.status == STATUS_TODO) {
-                await ref
+                .then((_) async => await ref
                     .read(taskControllerProvider.notifier)
-                    .getTaskById(widget.task.id);
-              }
-            }),
+                    .getTaskById(widget.task.id)),
             child: Container(
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(10),
@@ -535,12 +527,12 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
   }
 
   Widget _buildCategoriesAsset() {
-    // bool isMultiTenant = false;
-    // List<String> tenants =
-    //     task.site.tenants != null ? task.site.tenants!.split(';') : [];
-    // if (tenants.length > 1) {
-    //   isMultiTenant = true;
-    // }
+    bool isMultiTenant = false;
+    List<String> tenants =
+        task.site.tenants != null ? task.site.tenants!.split(';') : [];
+    if (tenants.length > 1) {
+      isMultiTenant = true;
+    }
     var sections = groupBy(task.asset!, (obj) => obj.section);
     Map<String, Map<String, List<Asset>>> result = {};
     for (var key in sections.keys) {
@@ -698,7 +690,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               )
-            : Container(padding: const EdgeInsets.symmetric(vertical: 10)),
+            : Container(),
         ListView.separated(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
@@ -711,21 +703,17 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                     "TEMUAN") {
                   return await Navigator.of(context)
                       .push(
-                    MaterialPageRoute(
-                      builder: (context) => TemuanScreen(
-                        task: task,
-                        asset: categories.values.elementAt(index),
-                        section: key,
-                      ),
-                    ),
-                  )
-                      .then((_) async {
-                    if (widget.task.status == STATUS_TODO) {
-                      await ref
+                        MaterialPageRoute(
+                          builder: (context) => TemuanScreen(
+                            task: task,
+                            asset: categories.values.elementAt(index),
+                            section: key,
+                          ),
+                        ),
+                      )
+                      .then((_) async => await ref
                           .read(taskControllerProvider.notifier)
-                          .getTaskById(widget.task.id);
-                    }
-                  });
+                          .getTaskById(widget.task.id));
                 } else {
                   return await Navigator.of(context)
                       .push(

@@ -67,5 +67,8 @@
 # 28/12/2023
 - proteksi report ketika status bukan todo
 - reset password
+- hit rest delete asset saat upload task
+# 02/01/2024
+- add constant variable
 # 08/01/2023
 - Add notes & feedback

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:monitor_app/constants/constants.dart';
 
 class IconTaskStatus extends StatelessWidget {
   final String taskStatus;
@@ -11,7 +12,7 @@ class IconTaskStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     // debugPrint(taskStatus);
     switch (taskStatus.toLowerCase()) {
-      case 'todo':
+      case STATUS_TODO:
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           decoration: BoxDecoration(
@@ -22,7 +23,7 @@ class IconTaskStatus extends StatelessWidget {
             style: TextStyle(fontSize: 12, color: Colors.white),
           ),
         );
-      case 'review':
+      case STATUS_REVIEW:
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           decoration: BoxDecoration(
@@ -33,7 +34,7 @@ class IconTaskStatus extends StatelessWidget {
             style: TextStyle(fontSize: 12, color: Colors.white),
           ),
         );
-      case 'accepted':
+      case STATUS_ACCEPTED:
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           decoration: BoxDecoration(
@@ -44,7 +45,7 @@ class IconTaskStatus extends StatelessWidget {
             style: TextStyle(fontSize: 12, color: Colors.white),
           ),
         );
-      case 'rejected':
+      case STATUS_REJECTED:
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           decoration: BoxDecoration(
@@ -55,7 +56,7 @@ class IconTaskStatus extends StatelessWidget {
             style: TextStyle(fontSize: 12, color: Colors.white),
           ),
         );
-      case 'expired':
+      case STATUS_EXPIRED:
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           decoration: BoxDecoration(

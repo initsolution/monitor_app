@@ -385,7 +385,6 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  List<String> dataStatus = ['All', 'Todo', 'Review', 'Verified'];
   Widget _buildDropdownStatus() {
     return Consumer(builder: (_, WidgetRef ref, __) {
       var status = ref.watch(statusTaskProvider);
@@ -407,7 +406,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
             //     email: widget.email, dateTimeRange: dateRange, status: value);
             ref.read(statusTaskProvider.notifier).state = value!;
           },
-          items: dataStatus.map<DropdownMenuItem<String>>((String value) {
+          items: listStatus.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value),

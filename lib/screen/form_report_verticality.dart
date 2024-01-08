@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monitor_app/constants/constants.dart';
 import 'package:monitor_app/controller/task_controller.dart';
 import 'package:monitor_app/helpers/utils.dart';
 import 'package:monitor_app/model/report_reg_verticality.dart';
@@ -72,7 +73,7 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
         valueT2Con.add(TextEditingController());
       }
     } else {
-      if (widget.task.status.toLowerCase() == 'todo') {
+      if (widget.task.status.toLowerCase() == STATUS_TODO) {
         isEnable = true;
       } else {
         isEnable = false;
@@ -158,7 +159,7 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        if (widget.task.status.toLowerCase() == "todo") {
+        if (widget.task.status.toLowerCase() == STATUS_TODO) {
           await showAlertDialog(context);
         }
         return true;
@@ -168,7 +169,7 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
         appBar: AppBar(
           title: const Text('Rep. Verticality'),
           actions: [
-            if (widget.task.status.toLowerCase() == "todo")
+            if (widget.task.status.toLowerCase() == STATUS_TODO)
               IconButton(
                   onPressed: () async {
                     if (theodoliteValue == theodoliteValue2) {
