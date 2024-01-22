@@ -72,3 +72,5 @@
 - add constant variable
 # 08/01/2023
 - Add notes & feedback
+# 22/01/2024
+- resize font camera

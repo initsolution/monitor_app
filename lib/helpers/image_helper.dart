@@ -22,18 +22,18 @@ Future<void> captureDrawImageInfo(
       dateTimeInfo,
       font: font,
       x: image.width - 50,
-      y: image.height - 250,
+      y: image.height - 280,
       rightJustify: true,
-      color: img.ColorRgb8(0, 255, 255),
+      color: img.ColorRgb8(253, 216, 53),
     );
     img.drawString(
       image,
       "${currentPosition?.longitude}, ${currentPosition?.latitude}",
       font: font,
       x: image.width - 50,
-      y: image.height - 220,
+      y: image.height - 240,
       rightJustify: true,
-      color: img.ColorRgb8(0, 255, 255),
+      color: img.ColorRgb8(253, 216, 53),
     );
     int limitH = 190;
     for (var string in currentAddress) {
@@ -44,9 +44,9 @@ Future<void> captureDrawImageInfo(
         x: image.width - 50,
         y: image.height - limitH,
         rightJustify: true,
-        color: img.ColorRgb8(0, 255, 255),
+        color: img.ColorRgb8(253, 216, 53),
       );
-      limitH -= 30;
+      limitH -= 40;
     }
 
     await img.encodeJpgFile(path, image);
