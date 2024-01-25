@@ -74,3 +74,5 @@
 - Add notes & feedback
 # 22/01/2024
 - resize font camera
+# 25/01/2024
+- Sorting TEMUAN di idx terakhir saat akan Upload

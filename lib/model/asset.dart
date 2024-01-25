@@ -27,6 +27,8 @@ class Asset {
     required this.orderIndex,
   });
 
+  get length => null;
+
   Map<String, dynamic> toJson() => _$AssetToJson(this);
   factory Asset.fromJson(Map<String, dynamic> json) => _$AssetFromJson(json);
 

@@ -167,7 +167,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
     } on DioException catch (error) {
       debugPrint('error $error');
     }
-    
+
     var task = await ref.read(localdataServiceProvider).getTaskById(taskId);
     var status = _checkAllResourcesComplete(task);
     if (status["message"] == "complete") {
@@ -177,13 +177,39 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
           await ref.read(localdataServiceProvider).getTaskDBById(taskId);
       //UPLOAD ASSET
       var assets = task?.asset;
+      var dataAsset = [];
+      var dataTemuan = [];
       for (var asset in assets!) {
+        if (asset.category == "TEMUAN") {
+          dataTemuan.add(asset);
+        } else {
+          dataAsset.add(asset);
+        }
+      }
+
+      for (var asset in dataAsset) {
         if (asset.url != "-") {
           var file = File(asset.url);
           ref.read(assetUrlProvider.notifier).state = file.path.split("/").last;
           await ref
               .read(assetControllerProvider.notifier)
               .uploadAsset(taskId, asset, token);
+        }
+      }
+
+      if (dataTemuan.isNotEmpty) {
+        var idx = 1;
+        for (var asset in dataTemuan) {
+          if (asset.url != "-") {
+            asset.orderIndex = dataAsset.length + idx;
+            var file = File(asset.url);
+            ref.read(assetUrlProvider.notifier).state =
+                file.path.split("/").last;
+            await ref
+                .read(assetControllerProvider.notifier)
+                .uploadAsset(taskId, asset, token);
+            idx++;
+          }
         }
       }
 
