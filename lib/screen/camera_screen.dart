@@ -44,6 +44,8 @@ class _CameraScreenState extends State<CameraScreen>
   // ignore: unused_field
   FlashMode? _currentFlashMode;
 
+  int textColor = 1;
+
   Position? _currentPosition;
   late List<String?> _currentAddress;
 
@@ -508,7 +510,8 @@ class _CameraScreenState extends State<CameraScreen>
                                               imageFile,
                                               '${directory.path}/$currentUnix.$fileFormat',
                                               _currentPosition,
-                                              _currentAddress);
+                                              _currentAddress,
+                                              textColor);
                                           // await imageFile.copy(
                                           //   '${directory.path}/$currentUnix.$fileFormat',
                                           // );
@@ -590,93 +593,170 @@ class _CameraScreenState extends State<CameraScreen>
                           ],
                         ),
                       ),
-                      // Expanded(
-                      //   child: SingleChildScrollView(
-                      //     physics: const BouncingScrollPhysics(),
-                      //     child: Column(
-                      //       children: [
-                      //         Padding(
-                      //           padding: const EdgeInsets.fromLTRB(
-                      //               16.0, 8.0, 16.0, 8.0),
-                      //           child: Row(
-                      //             mainAxisAlignment:
-                      //                 MainAxisAlignment.spaceBetween,
-                      //             children: [
-                      //               IconButton(
-                      //                 onPressed: () async {
-                      //                   setState(() {
-                      //                     _currentFlashMode = FlashMode.off;
-                      //                   });
-                      //                   await controller!.setFlashMode(
-                      //                     FlashMode.off,
-                      //                   );
-                      //                 },
-                      //                 icon: Icon(
-                      //                   Icons.flash_off,
-                      //                   color:
-                      //                       _currentFlashMode == FlashMode.off
-                      //                           ? Colors.amber
-                      //                           : Colors.white,
-                      //                 ),
-                      //               ),
-                      //               IconButton(
-                      //                 onPressed: () async {
-                      //                   setState(() {
-                      //                     _currentFlashMode = FlashMode.auto;
-                      //                   });
-                      //                   await controller!.setFlashMode(
-                      //                     FlashMode.auto,
-                      //                   );
-                      //                 },
-                      //                 icon: Icon(
-                      //                   Icons.flash_auto,
-                      //                   color:
-                      //                       _currentFlashMode == FlashMode.auto
-                      //                           ? Colors.amber
-                      //                           : Colors.white,
-                      //                 ),
-                      //               ),
-                      //               IconButton(
-                      //                 onPressed: () async {
-                      //                   setState(() {
-                      //                     _currentFlashMode = FlashMode.always;
-                      //                   });
-                      //                   await controller!.setFlashMode(
-                      //                     FlashMode.always,
-                      //                   );
-                      //                 },
-                      //                 icon: Icon(
-                      //                   Icons.flash_on,
-                      //                   color: _currentFlashMode ==
-                      //                           FlashMode.always
-                      //                       ? Colors.amber
-                      //                       : Colors.white,
-                      //                 ),
-                      //               ),
-                      //               IconButton(
-                      //                 onPressed: () async {
-                      //                   setState(() {
-                      //                     _currentFlashMode = FlashMode.torch;
-                      //                   });
-                      //                   await controller!.setFlashMode(
-                      //                     FlashMode.torch,
-                      //                   );
-                      //                 },
-                      //                 icon: Icon(
-                      //                   Icons.highlight,
-                      //                   color:
-                      //                       _currentFlashMode == FlashMode.torch
-                      //                           ? Colors.amber
-                      //                           : Colors.white,
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         )
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    16.0, 8.0, 16.0, 8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () async {
+                                          setState(() {
+                                            // _currentFlashMode = FlashMode.off;
+                                            textColor = 1;
+                                          });
+                                          // await controller!.setFlashMode(
+                                          //   FlashMode.off,
+                                          // );
+                                        },
+                                        icon: textColor == 1
+                                            ? const Icon(
+                                                Icons.check_circle_rounded,
+                                                color: Colors.amber)
+                                            : const Icon(Icons.circle,
+                                                color: Colors.amber)
+                                        // icon: Icon(
+                                        //   Icons.flash_off,
+                                        //   color:
+                                        //       _currentFlashMode == FlashMode.off
+                                        //           ? Colors.amber
+                                        //           : Colors.white,
+                                        // ),
+                                        ),
+                                    IconButton(
+                                        onPressed: () async {
+                                          setState(() {
+                                            textColor = 2;
+                                            // _currentFlashMode = FlashMode.off;
+                                          });
+                                          // await controller!.setFlashMode(
+                                          //   FlashMode.off,
+                                          // );
+                                        },
+                                        icon: textColor == 2
+                                            ? const Icon(
+                                                Icons.check_circle_rounded,
+                                                color: Colors.green)
+                                            : const Icon(Icons.circle,
+                                                color: Colors.green)
+                                        // icon: Icon(
+                                        //   Icons.flash_off,
+                                        //   color:
+                                        //       _currentFlashMode == FlashMode.off
+                                        //           ? Colors.amber
+                                        //           : Colors.white,
+                                        // ),
+                                        ),
+                                    IconButton(
+                                        onPressed: () async {
+                                          setState(() {
+                                            // _currentFlashMode = FlashMode.auto;
+                                            textColor = 3;
+                                          });
+                                          // await controller!.setFlashMode(
+                                          //   FlashMode.auto,
+                                          // );
+                                        },
+                                        icon: textColor == 3
+                                            ? const Icon(
+                                                Icons.check_circle_rounded,
+                                                color: Colors.lightBlue)
+                                            : const Icon(Icons.circle,
+                                                color: Colors.lightBlue)
+                                        // icon: Icon(
+                                        //   Icons.flash_auto,
+                                        //   color:
+                                        //       _currentFlashMode == FlashMode.auto
+                                        //           ? Colors.amber
+                                        //           : Colors.white,
+                                        // ),
+                                        ),
+                                    IconButton(
+                                        onPressed: () async {
+                                          setState(() {
+                                            textColor = 4;
+                                            // _currentFlashMode =
+                                            //     FlashMode.always;
+                                          });
+                                          // await controller!.setFlashMode(
+                                          //   FlashMode.always,
+                                          // );
+                                        },
+                                        icon: textColor == 4
+                                            ? const Icon(
+                                                Icons.check_circle_rounded,
+                                                color: Colors.red)
+                                            : const Icon(Icons.circle,
+                                                color: Colors.red)
+                                        // icon: Icon(
+                                        //   Icons.flash_on,
+                                        //   color: _currentFlashMode ==
+                                        //           FlashMode.always
+                                        //       ? Colors.amber
+                                        //       : Colors.white,
+                                        // ),
+                                        ),
+                                    IconButton(
+                                        onPressed: () async {
+                                          setState(() {
+                                            textColor = 5;
+                                            // _currentFlashMode = FlashMode.torch;
+                                          });
+                                          // await controller!.setFlashMode(
+                                          //   FlashMode.torch,
+                                          // );
+                                        },
+                                        icon: textColor == 5
+                                            ? const Icon(
+                                                Icons.check_circle_rounded,
+                                                color: Colors.white)
+                                            : const Icon(Icons.circle,
+                                                color: Colors.white)
+                                        // icon: Icon(
+                                        //   Icons.highlight,
+                                        //   color:
+                                        //       _currentFlashMode == FlashMode.torch
+                                        //           ? Colors.amber
+                                        //           : Colors.white,
+                                        // ),
+                                        ),
+                                    IconButton(
+                                        onPressed: () async {
+                                          setState(() {
+                                            textColor = 6;
+                                            // _currentFlashMode = FlashMode.torch;
+                                          });
+                                          // await controller!.setFlashMode(
+                                          //   FlashMode.torch,
+                                          // );
+                                        },
+                                        icon: textColor == 6
+                                            ? const Icon(
+                                                Icons.check_circle_rounded,
+                                                color: Color.fromRGBO(48, 48, 48, 1))
+                                            : const Icon(Icons.circle,
+                                                color: Color.fromRGBO(48, 48, 48, 1))
+                                        // icon: Icon(
+                                        //   Icons.highlight,
+                                        //   color:
+                                        //       _currentFlashMode == FlashMode.torch
+                                        //           ? Colors.amber
+                                        //           : Colors.white,
+                                        // ),
+                                        ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   )
                 : const Center(
