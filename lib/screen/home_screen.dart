@@ -157,7 +157,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                                   return;
                                 }
 
-                                debugPrint('Boleh dikerjakan');
+                                debugPrint('Boleh dikerjakan ${state.tasks[index].id}');
                                 ref
                                     .read(taskControllerProvider.notifier)
                                     .isTaskFoundInLocal(

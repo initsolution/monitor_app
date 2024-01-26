@@ -78,21 +78,7 @@ const SiteDBSchema = CollectionSchema(
   deserialize: _siteDBDeserialize,
   deserializeProp: _siteDBDeserializeProp,
   idName: r'id',
-  indexes: {
-    r'idSite': IndexSchema(
-      id: -8125339858928096689,
-      name: r'idSite',
-      unique: true,
-      replace: true,
-      properties: [
-        IndexPropertySchema(
-          name: r'idSite',
-          type: IndexType.hash,
-          caseSensitive: true,
-        )
-      ],
-    )
-  },
+  indexes: {},
   links: {},
   embeddedSchemas: {},
   getId: _siteDBGetId,
@@ -227,60 +213,6 @@ void _siteDBAttach(IsarCollection<dynamic> col, Id id, SiteDB object) {
   object.id = id;
 }
 
-extension SiteDBByIndex on IsarCollection<SiteDB> {
-  Future<SiteDB?> getByIdSite(String idSite) {
-    return getByIndex(r'idSite', [idSite]);
-  }
-
-  SiteDB? getByIdSiteSync(String idSite) {
-    return getByIndexSync(r'idSite', [idSite]);
-  }
-
-  Future<bool> deleteByIdSite(String idSite) {
-    return deleteByIndex(r'idSite', [idSite]);
-  }
-
-  bool deleteByIdSiteSync(String idSite) {
-    return deleteByIndexSync(r'idSite', [idSite]);
-  }
-
-  Future<List<SiteDB?>> getAllByIdSite(List<String> idSiteValues) {
-    final values = idSiteValues.map((e) => [e]).toList();
-    return getAllByIndex(r'idSite', values);
-  }
-
-  List<SiteDB?> getAllByIdSiteSync(List<String> idSiteValues) {
-    final values = idSiteValues.map((e) => [e]).toList();
-    return getAllByIndexSync(r'idSite', values);
-  }
-
-  Future<int> deleteAllByIdSite(List<String> idSiteValues) {
-    final values = idSiteValues.map((e) => [e]).toList();
-    return deleteAllByIndex(r'idSite', values);
-  }
-
-  int deleteAllByIdSiteSync(List<String> idSiteValues) {
-    final values = idSiteValues.map((e) => [e]).toList();
-    return deleteAllByIndexSync(r'idSite', values);
-  }
-
-  Future<Id> putByIdSite(SiteDB object) {
-    return putByIndex(r'idSite', object);
-  }
-
-  Id putByIdSiteSync(SiteDB object, {bool saveLinks = true}) {
-    return putByIndexSync(r'idSite', object, saveLinks: saveLinks);
-  }
-
-  Future<List<Id>> putAllByIdSite(List<SiteDB> objects) {
-    return putAllByIndex(r'idSite', objects);
-  }
-
-  List<Id> putAllByIdSiteSync(List<SiteDB> objects, {bool saveLinks = true}) {
-    return putAllByIndexSync(r'idSite', objects, saveLinks: saveLinks);
-  }
-}
-
 extension SiteDBQueryWhereSort on QueryBuilder<SiteDB, SiteDB, QWhere> {
   QueryBuilder<SiteDB, SiteDB, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
@@ -352,50 +284,6 @@ extension SiteDBQueryWhere on QueryBuilder<SiteDB, SiteDB, QWhereClause> {
         upper: upperId,
         includeUpper: includeUpper,
       ));
-    });
-  }
-
-  QueryBuilder<SiteDB, SiteDB, QAfterWhereClause> idSiteEqualTo(String idSite) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'idSite',
-        value: [idSite],
-      ));
-    });
-  }
-
-  QueryBuilder<SiteDB, SiteDB, QAfterWhereClause> idSiteNotEqualTo(
-      String idSite) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'idSite',
-              lower: [],
-              upper: [idSite],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'idSite',
-              lower: [idSite],
-              includeLower: false,
-              upper: [],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'idSite',
-              lower: [idSite],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'idSite',
-              lower: [],
-              upper: [idSite],
-              includeUpper: false,
-            ));
-      }
     });
   }
 }

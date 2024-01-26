@@ -78,3 +78,4 @@
 - Sorting TEMUAN di idx terakhir saat akan Upload
 # 26/01/2024
 - add color option for text camera
+- bug fixing : site id uniq and replace cause problem

@@ -7,7 +7,6 @@ part 'site_db.g.dart';
 class SiteDB {
   Id id = Isar.autoIncrement; // you can also use id = null to auto increment
 
-  @Index(unique: true, replace: true)
   late String idSite;
   late String name;
   late String towerType;
