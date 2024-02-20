@@ -4,26 +4,28 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/helpers/image_helper.dart';
 import 'package:monitor_app/screen/album_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class CameraScreen extends StatefulWidget {
+class CameraScreen extends ConsumerStatefulWidget {
   static String routeName = 'camera';
   final List<CameraDescription> cameras;
 
   const CameraScreen({super.key, required this.cameras});
 
   @override
-  State<CameraScreen> createState() {
+  ConsumerState<CameraScreen> createState() {
     return _CameraScreenState();
   }
 }
 
-class _CameraScreenState extends State<CameraScreen>
+class _CameraScreenState extends ConsumerState<CameraScreen>
     with WidgetsBindingObserver, TickerProviderStateMixin {
   CameraController? controller;
   File? _imageFile;
@@ -49,6 +51,8 @@ class _CameraScreenState extends State<CameraScreen>
   Position? _currentPosition;
   late List<String?> _currentAddress;
 
+  late int taskId;
+
   getPermissionStatus() async {
     await Permission.camera.request();
     var status = await Permission.camera.status;
@@ -61,6 +65,7 @@ class _CameraScreenState extends State<CameraScreen>
       _getCurrentPosition().then((value) {
         // Set and initialize the new camera
         onNewCameraSelected(widget.cameras[0]);
+        prepareFolder(taskId);
         refreshAlreadyCapturedImages();
       });
     } else {
@@ -132,7 +137,9 @@ class _CameraScreenState extends State<CameraScreen>
   refreshAlreadyCapturedImages() async {
     final directory = await getExternalStorageDirectory() ??
         await getApplicationDocumentsDirectory();
-    List<FileSystemEntity> fileList = await directory.list().toList();
+
+    List<FileSystemEntity> fileList =
+        await Directory('${directory.path}/$taskId').list().toList();
     allFileList.clear();
     List<Map<int, dynamic>> fileNames = [];
 
@@ -150,7 +157,8 @@ class _CameraScreenState extends State<CameraScreen>
           fileNames.reduce((curr, next) => curr[0] > next[0] ? curr : next);
       String recentFileName = recentFile[1];
       debugPrint('recentFileName : $recentFileName');
-      _imageFile = File('${directory.path}/$recentFileName');
+
+      _imageFile = File('${directory.path}/$taskId/$recentFileName');
       setState(() {});
     } else {
       if (_imageFile != null) {
@@ -254,7 +262,7 @@ class _CameraScreenState extends State<CameraScreen>
   @override
   void initState() {
     // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
+    taskId = ref.read(selectedTaskId);
     getPermissionStatus();
     super.initState();
   }
@@ -505,10 +513,10 @@ class _CameraScreenState extends State<CameraScreen>
 
                                           print(fileFormat);
                                           print(
-                                              '${directory.path}/$currentUnix.$fileFormat');
+                                              '${directory.path}/$taskId/$currentUnix.$fileFormat');
                                           await captureDrawImageInfo(
                                               imageFile,
-                                              '${directory.path}/$currentUnix.$fileFormat',
+                                              '${directory.path}/$taskId/$currentUnix.$fileFormat',
                                               _currentPosition,
                                               _currentAddress,
                                               textColor);
@@ -739,9 +747,11 @@ class _CameraScreenState extends State<CameraScreen>
                                         icon: textColor == 6
                                             ? const Icon(
                                                 Icons.check_circle_rounded,
-                                                color: Color.fromRGBO(48, 48, 48, 1))
+                                                color: Color.fromRGBO(
+                                                    48, 48, 48, 1))
                                             : const Icon(Icons.circle,
-                                                color: Color.fromRGBO(48, 48, 48, 1))
+                                                color: Color.fromRGBO(
+                                                    48, 48, 48, 1))
                                         // icon: Icon(
                                         //   Icons.highlight,
                                         //   color:
@@ -796,5 +806,11 @@ class _CameraScreenState extends State<CameraScreen>
               ),
       ),
     );
+  }
+
+  Future<void> prepareFolder(int taskId) async {
+    final directory = await getExternalStorageDirectory() ??
+        await getApplicationDocumentsDirectory();
+    await Directory('${directory.path}/$taskId').create(recursive: true);
   }
 }

@@ -15,7 +15,7 @@ final isEditableChecklist = StateProvider((ref) => true);
 final assetUrlProvider = StateProvider((ref) => '');
 
 final statusTaskProvider = StateProvider<String>((ref) => 'All');
-
+final selectedTaskId = StateProvider<int>((ref) => 0);
 
 // final masterAssetProvider =
 //     FutureProvider.family<List<MasterAsset>, Param>((ref, params) async {

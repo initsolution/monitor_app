@@ -95,6 +95,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     ref.listen<TaskState>(taskControllerProvider,
         (TaskState? prevState, TaskState newState) async {
       if (newState is PrepareTaskSuccess) {
+        ref.read(selectedTaskId.notifier).state = newState.task.id;
         await Navigator.of(context)
             .pushNamed(TaskScreen.routeName, arguments: newState.task)
             .then((_) => Future(

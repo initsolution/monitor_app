@@ -82,3 +82,4 @@
 # 20/02/2024
 - add keterangan di pointchecklist
 - add notif and keterangan ketika tidak ada koneksi internet
+- pisahkan folder camera sesuai dengan task id yang dipilih

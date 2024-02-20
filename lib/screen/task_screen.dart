@@ -76,14 +76,14 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
           // title: Text(widget.task.site.name),
           actions: [
             IconButton(
-              onPressed: () async =>
-                  // context.push('/task/camera', extra: await availableCameras()),
-                  Navigator.of(context)
-                      .pushNamed(CameraScreen.routeName,
-                          arguments: await availableCameras())
-                      .then((_) async => await ref
-                          .read(taskControllerProvider.notifier)
-                          .getTaskById(widget.task.id)),
+              onPressed: () async => Navigator.of(context)
+                  .pushNamed(
+                    CameraScreen.routeName,
+                    arguments: await availableCameras(),
+                  )
+                  .then((_) async => await ref
+                      .read(taskControllerProvider.notifier)
+                      .getTaskById(widget.task.id)),
               icon: const Icon(Icons.camera_alt_rounded),
             ),
             IconButton(
@@ -143,13 +143,13 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   for (var asset in assets!) {
                     if (idx % 3 == 0) {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1708399879085.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/65/1708418310554.jpg";
                     } else if (idx % 3 == 1) {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1708399882682.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/65/1708418314613.jpg";
                     } else {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1708399886183.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/65/1708418319435.jpg";
                     }
                     idx++;
                     await ref

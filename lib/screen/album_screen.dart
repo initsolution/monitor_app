@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:monitor_app/controller/app_provider.dart';
 import 'package:monitor_app/screen/preview_screen.dart';
 import 'package:path_provider/path_provider.dart';
 
-class AlbumScreen extends StatefulWidget {
+class AlbumScreen extends ConsumerStatefulWidget {
   static String routeName = 'album';
   final bool isPickable;
   final File? lastImage;
@@ -16,14 +18,15 @@ class AlbumScreen extends StatefulWidget {
   });
 
   @override
-  State<AlbumScreen> createState() => _AlbumScreenState();
+  ConsumerState<AlbumScreen> createState() => _AlbumScreenState();
 }
 
-class _AlbumScreenState extends State<AlbumScreen> {
+class _AlbumScreenState extends ConsumerState<AlbumScreen> {
   List<File> allFileList = [];
-
+  late int taskId;
   @override
   void initState() {
+    taskId = ref.read(selectedTaskId);
     refreshAlreadyCapturedImages();
     super.initState();
   }
@@ -31,7 +34,8 @@ class _AlbumScreenState extends State<AlbumScreen> {
   refreshAlreadyCapturedImages() async {
     final directory = await getExternalStorageDirectory() ??
         await getApplicationDocumentsDirectory();
-    List<FileSystemEntity> fileList = await directory.list().toList();
+    List<FileSystemEntity> fileList =
+        await Directory('${directory.path}/$taskId').list().toList();
     allFileList.clear();
     List<Map<int, dynamic>> fileNames = [];
 
