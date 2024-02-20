@@ -21,6 +21,8 @@ class PointChecklistItem extends ConsumerStatefulWidget {
 class _PointChecklistItemState extends ConsumerState<PointChecklistItem> {
   final TextEditingController uraianTextController = TextEditingController();
   final TextEditingController kriteriaTextController = TextEditingController();
+  final TextEditingController keteranganTextController =
+      TextEditingController();
   late String uraian;
   late String kriteria;
   late ChecklistValue ckValue;
@@ -45,12 +47,14 @@ class _PointChecklistItemState extends ConsumerState<PointChecklistItem> {
     uraianTextController.text = uraian;
     kriteria = pointChecklist.kriteria ?? "";
     kriteriaTextController.text = kriteria;
+    keteranganTextController.text = pointChecklist.keterangan ?? "";
   }
 
   @override
   void dispose() {
     uraianTextController.dispose();
     kriteriaTextController.dispose();
+    keteranganTextController.dispose();
     super.dispose();
   }
 
@@ -88,6 +92,21 @@ class _PointChecklistItemState extends ConsumerState<PointChecklistItem> {
                 buildChecklistButton(ChecklistValue.notok, "NOT OK"),
                 buildChecklistButton(ChecklistValue.na, "NA"),
               ],
+            ),
+            const SizedBox(height: 10),
+            const Text('Keterangan : '),
+            const SizedBox(height: 10),
+            InkWell(
+              onTap: () =>
+                  widget.isEditable ? _displayKeteranganDialog(context) : null,
+              child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(pointChecklist.keterangan ?? "-")),
             ),
           ],
         ),
@@ -223,6 +242,42 @@ class _PointChecklistItemState extends ConsumerState<PointChecklistItem> {
                         .read(taskControllerProvider.notifier)
                         .updatePointChecklist(pointChecklist);
                     Navigator.pop(context, kriteriaTextController.text);
+                  });
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  Future<void> _displayKeteranganDialog(BuildContext context) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Colors.white,
+            title: const Text(
+              "Keterangan",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            content: TextField(
+              controller: keteranganTextController,
+              maxLines: 3,
+              decoration:
+                  const InputDecoration(hintText: "Silahkan isi keterangan"),
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                color: Colors.green,
+                textColor: Colors.white,
+                child: const Text('OK'),
+                onPressed: () {
+                  setState(() {
+                    pointChecklist.keterangan = keteranganTextController.text;
+                    ref
+                        .read(taskControllerProvider.notifier)
+                        .updatePointChecklist(pointChecklist);
+                    Navigator.pop(context, keteranganTextController.text);
                   });
                 },
               ),

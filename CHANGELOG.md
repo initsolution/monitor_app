@@ -79,3 +79,6 @@
 # 26/01/2024
 - add color option for text camera
 - bug fixing : site id uniq and replace cause problem
+# 20/02/2024
+- add keterangan di pointchecklist
+- add notif and keterangan ketika tidak ada koneksi internet

@@ -37,6 +37,7 @@ class PointChecklistPreventive {
         uraian: pointDB.uraian,
         hasil: pointDB.hasil,
         kriteria: pointDB.kriteria,
+        keterangan: pointDB.keterangan,
         orderIndex: pointDB.orderIndex,
         isChecklist: pointDB.isChecklist,
       );

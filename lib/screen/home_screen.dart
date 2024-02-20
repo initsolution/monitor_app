@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:monitor_app/constants/constants.dart';
@@ -25,6 +28,8 @@ class HomeScreen extends ConsumerStatefulWidget {
 class HomeScreenState extends ConsumerState<HomeScreen> {
   late DateTimeRange dateRange;
   late UserPreferences pref;
+  late StreamSubscription<InternetConnectionStatus> listener;
+
   @override
   void initState() {
     super.initState();
@@ -41,6 +46,47 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
             token: pref.token,
           );
     });
+    checkInternetConnection(InternetConnectionChecker());
+  }
+
+  Future<void> checkInternetConnection(
+      InternetConnectionChecker internetConnectionChecker) async {
+    listener = InternetConnectionChecker()
+        .onStatusChange
+        .listen((InternetConnectionStatus status) {
+      switch (status) {
+        case InternetConnectionStatus.connected:
+          debugPrint('connected');
+          break;
+        case InternetConnectionStatus.disconnected:
+          debugPrint('disconnected');
+          var snackBar = SnackBar(
+            action: SnackBarAction(
+                label: 'Muat ulang',
+                onPressed: () async {
+                  Future(
+                    () => ref.read(taskControllerProvider.notifier).getAllTasks(
+                          email: pref.username,
+                          dateTimeRange: dateRange,
+                          status: 'All',
+                          token: pref.token,
+                        ),
+                  );
+                }),
+            content: const Text(
+                'Koneksi internet Anda tidak stabil! Silahkan cek koneksi internet Anda'),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          break;
+        default:
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    listener.cancel();
   }
 
   @override
@@ -157,7 +203,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                                   return;
                                 }
 
-                                debugPrint('Boleh dikerjakan ${state.tasks[index].id}');
+                                debugPrint(
+                                    'Boleh dikerjakan ${state.tasks[index].id}');
                                 ref
                                     .read(taskControllerProvider.notifier)
                                     .isTaskFoundInLocal(
@@ -224,7 +271,27 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                       );
                     }
                   } else if (state is TaskLoadedWithError) {
-                    return Center(child: Text(state.message));
+                    return Center(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(state.message, textAlign: TextAlign.center),
+                        TextButton(
+                            onPressed: () async {
+                              Future(
+                                () => ref
+                                    .read(taskControllerProvider.notifier)
+                                    .getAllTasks(
+                                      email: pref.username,
+                                      dateTimeRange: dateRange,
+                                      status: status,
+                                      token: pref.token,
+                                    ),
+                              );
+                            },
+                            child: const Text('Muat Ulang'))
+                      ],
+                    ));
                   } else {
                     return const Center(child: CircularProgressIndicator());
                   }

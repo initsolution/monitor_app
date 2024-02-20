@@ -134,7 +134,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                     width: 0,
                   ),
             Visibility(
-              visible: false,
+              visible: true,
               child: IconButton(
                 onPressed: () async {
                   // progressDialogue();
@@ -143,13 +143,13 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   for (var asset in assets!) {
                     if (idx % 3 == 0) {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1706262577684.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1708399879085.jpg";
                     } else if (idx % 3 == 1) {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1706262583367.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1708399882682.jpg";
                     } else {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1706262589958.jpg";
+                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/1708399886183.jpg";
                     }
                     idx++;
                     await ref

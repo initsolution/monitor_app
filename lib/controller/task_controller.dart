@@ -117,6 +117,19 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
       // }
 
       // state = TasksLoaded(tasks: localTasks);
+    } on DioException catch (e) {
+      debugPrint('error dio : ${e.error}');
+      if (e.error is SocketException) {
+        state =
+            TaskLoadedWithError(message: 'Jaringan internet Anda bermasalah');
+      } else if (e.error is HttpException) {
+        state =
+            TaskLoadedWithError(message: 'Ada kendala ketika mengakses server.\nSilahkan coba beberapa saat lagi');
+      } else {
+        state = TaskLoadedWithError(message: e.toString());
+      }
+    } on SocketException catch (_) {
+      state = TaskLoadedWithError(message: 'Jaringan internet Anda bermasalah');
     } on Exception catch (e) {
       state = TaskLoadedWithError(message: e.toString());
     }
