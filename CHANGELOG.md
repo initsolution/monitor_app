@@ -83,3 +83,6 @@
 - add keterangan di pointchecklist
 - add notif and keterangan ketika tidak ada koneksi internet
 - pisahkan folder camera sesuai dengan task id yang dipilih
+# 22/02/2024
+- Improvement menu AlbumScreen untuk get All Image
+- Add fitur DeleteAll Image di menu AlbumScreen
