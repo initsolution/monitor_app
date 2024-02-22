@@ -81,6 +81,59 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
     _getImageData();
   }
 
+  void deleteAllFile() async {
+    final directory = await getExternalStorageDirectory() ??
+        await getApplicationDocumentsDirectory();
+    List<FileSystemEntity> fileList =
+        await Directory('${directory.path}/$taskId').list().toList();
+
+    for (var file in fileList) {
+      if (file.path.contains('.jpg')) {
+        await file.delete();
+      }
+    }
+    _refresh();
+  }
+
+  dialogDeleteConfirmation() {
+    Widget cancelButton = TextButton(
+      child: const Text("Cancel"),
+      onPressed: () {
+        dismissDialog();
+      },
+    );
+    Widget okButton = TextButton(
+      child: const Text("OK"),
+      onPressed: () {
+        deleteAllFile();
+        dismissDialog();
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      elevation: 0,
+      title: const Text("Delete Images"),
+      content: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * 0.05,
+        child: const Text("Do you want to Delete All Images?"),
+      ),
+      actions: [cancelButton, okButton],
+    );
+    showDialog(
+      //prevent outside touch
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        //prevent Back button press
+        return WillPopScope(onWillPop: () async => false, child: alert);
+      },
+    );
+  }
+
+  dismissDialog() {
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,17 +141,7 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
         actions: [
           IconButton(
             onPressed: () async {
-              final directory = await getExternalStorageDirectory() ??
-                  await getApplicationDocumentsDirectory();
-              List<FileSystemEntity> fileList =
-                  await Directory('${directory.path}/$taskId').list().toList();
-
-              for (var file in fileList) {
-                if (file.path.contains('.jpg')) {
-                  await file.delete();
-                }
-              }
-              _refresh();
+              dialogDeleteConfirmation();
             },
             icon: const Icon(Icons.delete_forever),
           )

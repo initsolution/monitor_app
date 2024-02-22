@@ -86,3 +86,4 @@
 # 22/02/2024
 - Improvement menu AlbumScreen untuk get All Image
 - Add fitur DeleteAll Image di menu AlbumScreen
+- Add Dialog Confirmation saat deleteAll Image
