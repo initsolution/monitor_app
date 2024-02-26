@@ -16,6 +16,7 @@ import 'package:monitor_app/constants/strings.dart';
 import 'package:monitor_app/mstate/task_state.dart';
 import 'package:monitor_app/controller/task_controller.dart';
 import 'package:monitor_app/screen/task_screen.dart';
+import 'package:location/location.dart' as loc;
 
 class HomeScreen extends ConsumerStatefulWidget {
   static String routeName = 'home';
@@ -47,6 +48,15 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           );
     });
     checkInternetConnection(InternetConnectionChecker());
+
+    enableLocation();
+  }
+
+  Future<void> enableLocation() async{
+     bool locEnabled = await loc.Location().serviceEnabled();
+      while (!locEnabled) {
+        locEnabled = await loc.Location().requestService();
+      }
   }
 
   Future<void> checkInternetConnection(

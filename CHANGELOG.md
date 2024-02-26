@@ -87,3 +87,6 @@
 - Improvement menu AlbumScreen untuk get All Image
 - Add fitur DeleteAll Image di menu AlbumScreen
 - Add Dialog Confirmation saat deleteAll Image
+# 26/02/2024
+- add req enable location on homescreen
+- change App Name : Simba, icon launcher, and package name : com.balcom.simba

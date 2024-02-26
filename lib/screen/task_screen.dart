@@ -143,13 +143,13 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                   for (var asset in assets!) {
                     if (idx % 3 == 0) {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/65/1708418310554.jpg";
+                          "/storage/emulated/0/Android/data/com.balcom.simba/files/65/1708418310554.jpg";
                     } else if (idx % 3 == 1) {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/65/1708418314613.jpg";
+                          "/storage/emulated/0/Android/data/com.balcom.simba/files/65/1708418314613.jpg";
                     } else {
                       asset.url =
-                          "/storage/emulated/0/Android/data/com.bci.monitor_app/files/65/1708418319435.jpg";
+                          "/storage/emulated/0/Android/data/com.balcom.simba/files/65/1708418319435.jpg";
                     }
                     idx++;
                     await ref

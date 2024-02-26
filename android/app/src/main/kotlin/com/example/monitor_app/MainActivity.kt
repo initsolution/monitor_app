@@ -1,4 +1,4 @@
-package com.bci.monitor_app
+package com.balcom.simba
 
 import io.flutter.embedding.android.FlutterActivity
 
