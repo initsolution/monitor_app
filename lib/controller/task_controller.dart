@@ -449,7 +449,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
             // status["type"] = "asset";
             if (asset.category != "TEMUAN") {
               return status = {
-                "title": "Informasi",
+                "title": "Warning",
                 "message": "${asset.category};${asset.description}",
                 "type": "asset"
               };
@@ -461,7 +461,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
               // status["message"] = asset.category + ";" + asset.description;
               // status["type"] = "asset";
               return status = {
-                "title": "File Gambar Tidak Ada",
+                "title": "Please Fill the Image",
                 "message": "${asset.category};${asset.description}",
                 "type": "asset"
               };
@@ -480,7 +480,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
             // status["type"] = "asset";
             if (asset.category != "TEMUAN") {
               return status = {
-                "title": "Informasi",
+                "title": "Warning",
                 "message": "${asset.category};${asset.description}",
                 "type": "asset"
               };
@@ -492,7 +492,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
               // status["message"] = asset.category + ";" + asset.description;
               // status["type"] = "asset";
               return status = {
-                "title": "File Gambar Tidak Ada",
+                "title": "Please Fill the Image",
                 "message": "${asset.category};${asset.description}",
                 "type": "asset"
               };
@@ -508,7 +508,7 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
             // status["message"] = e.towerSegment + ";" + "nul";
             // status["type"] = "torque";
             return status = {
-              "title": "Informasi",
+              "title": "Warning",
               "message": "${e.towerSegment};",
               "type": "torque"
             };
@@ -518,28 +518,28 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
         var report = task.reportRegVerticality;
         if (report?.horizontalityAb == null) {
           return status = {
-            "title": "Informasi",
+            "title": "Warning",
             "message": "horizontality pondasi AB;",
             "type": "horizontality"
           };
         }
         if (report?.horizontalityBc == null) {
           return status = {
-            "title": "Informasi",
+            "title": "Warning",
             "message": "horizontality pondasi BC;",
             "type": "horizontality"
           };
         }
         if (report?.horizontalityCd == null) {
           return status = {
-            "title": "Informasi",
+            "title": "Warning",
             "message": "horizontality pondasi CD;",
             "type": "horizontality"
           };
         }
         if (report?.horizontalityDa == null) {
           return status = {
-            "title": "Informasi",
+            "title": "Warning",
             "message": "horizontality pondasi DA;",
             "type": "horizontality"
           };
@@ -548,8 +548,8 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
         debugPrint("theodolite1 ${report?.theodolite1}");
         if (report?.theodolite1 == null) {
           return status = {
-            "title": "Informasi",
-            "message": "Theodolite1 Kosong;",
+            "title": "Warning",
+            "message": "Please Fill Theodolite1;",
             "type": "theodolite"
           };
         }
@@ -557,8 +557,8 @@ class TaskController extends AutoDisposeNotifier<TaskState> {
         debugPrint("theodolite2 ${report?.theodolite2}");
         if (report?.theodolite2 == null) {
           return status = {
-            "title": "Informasi",
-            "message": "Theodolite2 Kosong;",
+            "title": "Warning",
+            "message": "Please Fill Theodolite1=2;",
             "type": "theodolite"
           };
         }

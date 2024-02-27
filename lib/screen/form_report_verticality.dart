@@ -912,8 +912,8 @@ class _FormReportVerticalityState extends ConsumerState<FormReportVerticality> {
     );
     AlertDialog alert = AlertDialog(
       elevation: 0,
-      title: const Text('Informasi'),
-      content: const Text('Lengkapi Posisi Theodolite'),
+      title: const Text('Warning'),
+      content: const Text('Please Fill Theodolite'),
       actions: [closeButton],
     );
     showDialog(

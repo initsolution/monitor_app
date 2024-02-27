@@ -33,7 +33,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     });
     return Scaffold(
       body: Container(
-        color: const Color.fromARGB(255, 160, 0, 0),
+        color: Colors.white,
         child: TweenAnimationBuilder<double>(
           tween: Tween<double>(begin: 0, end: 1),
           duration: const Duration(seconds: 3),
