@@ -52,11 +52,11 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     enableLocation();
   }
 
-  Future<void> enableLocation() async{
-     bool locEnabled = await loc.Location().serviceEnabled();
-      while (!locEnabled) {
-        locEnabled = await loc.Location().requestService();
-      }
+  Future<void> enableLocation() async {
+    bool locEnabled = await loc.Location().serviceEnabled();
+    while (!locEnabled) {
+      locEnabled = await loc.Location().requestService();
+    }
   }
 
   Future<void> checkInternetConnection(
@@ -192,6 +192,20 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                             task: state.tasks[index],
                             onSelectTask: () async {
                               if (state.tasks[index].status == STATUS_TODO) {
+                                int selisih =
+                                    selisihTanggal(state.tasks[index].dueDate!);
+                                debugPrint('selisih : ${selisih}');
+                                if (selisih < 0) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => const AlertDialog(
+                                      title: Text('Peringatan'),
+                                      content: Text(
+                                          'Anda tidak bisa mengerjakan tugas ini karena jangka waktu pengerjaan tugas sudah habis!'),
+                                    ),
+                                  );
+                                  return;
+                                }
                                 debugPrint(
                                     'not before ${state.tasks[index].notBefore}');
                                 DateTime? notBefore =
@@ -313,6 +327,15 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         ),
       ],
     );
+  }
+
+  int selisihTanggal(String tanggal) {
+    if (tanggal.contains('T')) {
+      tanggal = tanggal.substring(0, tanggal.indexOf('T'));
+    }
+
+    DateTime dateTime = DateTime.parse(tanggal);
+    return dateTime.difference(DateTime.now()).inDays;
   }
 
   // Container _buildSortAndFilter() {

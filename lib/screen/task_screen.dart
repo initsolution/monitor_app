@@ -134,7 +134,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                     width: 0,
                   ),
             Visibility(
-              visible: false,
+              visible: true,
               child: IconButton(
                 onPressed: () async {
                   // progressDialogue();
