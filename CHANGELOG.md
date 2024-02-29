@@ -92,3 +92,4 @@
 - change App Name : Simba, icon launcher, and package name : com.bci.monitor_app
 # 29/02/2024
 - Jika Task Expired muncul notifikasi : tidak bisa dikerjakan
+- Tambah Informasi Nama App di SplashScreen

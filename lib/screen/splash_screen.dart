@@ -41,9 +41,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
             return Opacity(
               opacity: value,
               child: Center(
-                  child: ClipOval(
-                      child: Image.asset('assets/images/ic_logo.png',
-                          fit: BoxFit.none))),
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/images/ic_logo.png', fit: BoxFit.none),
+                  const Text(
+                    "Sistem Informasi MS PT Balcom Indonesia",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              )),
             );
           },
           onEnd: () => ref.read(authControllerProvider.notifier).appStarted(),
