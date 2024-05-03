@@ -679,6 +679,22 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
   }
 
   Widget buildListView(String key, Map<String, List<Asset>> categories) {
+    var temuan = {};
+    //tampung temuan
+    categories.isNotEmpty
+        ? categories.forEach((key, value) {
+            if (key == "TEMUAN") {
+              temuan[key] = value;
+            }
+          })
+        : null;
+    //remove temuan
+    categories.isNotEmpty
+        ? categories.removeWhere((key, value) => key == "TEMUAN")
+        : null;
+    //tambahkan temuan
+    categories = {...categories, ...temuan};
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
