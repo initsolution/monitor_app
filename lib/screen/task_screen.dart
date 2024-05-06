@@ -497,6 +497,8 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text('Task ID : ${task.id}',
+                  style: const TextStyle(color: Colors.white)),
               Text('Height : ${task.site.towerHeight.toString()}',
                   style: const TextStyle(color: Colors.white)),
               Text('Type : ${task.site.towerType}',

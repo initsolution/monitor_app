@@ -93,3 +93,6 @@
 # 29/02/2024
 - Jika Task Expired muncul notifikasi : tidak bisa dikerjakan
 - Tambah Informasi Nama App di SplashScreen
+# 06/05/2024
+- Sort List Temuan di paling bawah / bottom
+- Tambah Informasi TaskID pada TaskScreen
