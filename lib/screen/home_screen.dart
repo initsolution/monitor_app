@@ -15,6 +15,7 @@ import 'package:monitor_app/screen/components/task_card.dart';
 import 'package:monitor_app/constants/strings.dart';
 import 'package:monitor_app/mstate/task_state.dart';
 import 'package:monitor_app/controller/task_controller.dart';
+import 'package:monitor_app/screen/local_db_task_screen.dart';
 import 'package:monitor_app/screen/task_screen.dart';
 import 'package:location/location.dart' as loc;
 
@@ -122,6 +123,20 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         forceMaterialTransparency: false,
         title: const Text(titleHomeScreen),
         actions: [
+          IconButton(
+            onPressed: () async {
+              var localTasks =
+                  await ref.read(localdataServiceProvider).getAllTasks();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => LocalDbTaskScreen(
+                    localTask: localTasks,
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.task),
+          ),
           IconButton(
             onPressed: () async => _buildModalBottomSheet(),
             icon: const Icon(Icons.filter_alt_rounded),
