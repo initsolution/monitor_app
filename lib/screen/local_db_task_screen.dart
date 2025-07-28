@@ -37,8 +37,8 @@ class _LocalDbTaskScreen extends ConsumerState<LocalDbTaskScreen> {
 
   _buildBody() {
     List<LocalTaskData> data = [];
-    List<Task>? tasks = widget.localTask;
-    for (var task in tasks!) {
+    List<Task>? tasks = widget.localTask ?? [];
+    for (var task in tasks) {
       List<Asset> assets = task.asset!;
       var nImage = 0;
       for (var asset in assets) {

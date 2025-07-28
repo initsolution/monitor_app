@@ -33,7 +33,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
   List<String> header = [];
   List<dynamic> items = [];
   int current = 0;
-  final CarouselController _controller = CarouselController();
+  final CarouselSliderController  _controller = CarouselSliderController ();
   late Task task;
   late UserPreferences pref;
   bool infoVisible = true;
